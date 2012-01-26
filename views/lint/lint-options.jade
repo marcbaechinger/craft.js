@@ -1,0 +1,6 @@
+if typeof report !== "undefined" && report.options !== "undefined"
+	.options
+		each val, key in report.options
+			.option.clearfix
+				.key #{key}
+				.val #{val}

@@ -1,0 +1,7 @@
+.source
+	each line, i in lines 
+		if typeof report === "undefined" || typeof report.errors==='undefined' || typeof report.errorLines[i+1] === 'undefined'
+			pre(id="line-#{i+1}") #{i+1}:\t#{line}
+		else
+			pre.error(id="line-#{i+1}") #{i+1}:\t#{line}
+				.reason #{report.errorLines[i+1]}

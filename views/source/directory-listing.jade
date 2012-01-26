@@ -1,0 +1,31 @@
+ul.directory
+	each file,idx in sourceTree.children
+		if file.children
+			li.directory-item
+				a.file(href="/#{displayMode}/#{file.path}") #{file.name} &nbsp;
+				label.children 
+				if file.children.length === 0
+					span contains no entries
+				else if file.children.length === 1
+					span contains a single entry
+				else
+					span contains #{file.children.length} entries
+		else
+			li.directory-item
+				a.file(href="/#{displayMode}/#{file.path}") #{file.name}
+				label(for="plaintext-#{idx}") text/plain
+					input.plain(id="plaintext-#{idx}", type="checkbox")
+				label(for="expand-#{idx}")  expand
+					input.expand(id="expand-#{idx}", type="checkbox")
+				label(for="mangle-#{idx}")  mangle
+					input.mangle(id="mangle-#{idx}", type="checkbox")
+				label(for="squeeze-#{idx}")  squeeze
+					input.squeeze(id="squeeze-#{idx}", type="checkbox")
+				label(for="minimize-#{idx}")  minimize
+					input.minimize(id="minimize-#{idx}", type="checkbox")
+				label(for="beautify-#{idx}")  beautify
+					input.beautify(id="beautify-#{idx}", type="checkbox")
+				label(for="lint-#{idx}") lint
+					input.lint(id="lint-#{idx}", type="checkbox", checked="checked")
+				button.transform(data-action="build", data-path="#{file.path}") show
+					

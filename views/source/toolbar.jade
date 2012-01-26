@@ -1,0 +1,48 @@
+div.directory-item
+	button.transform(data-path="#{path}", data-action="build") show
+	
+	div(style="float: right; margin-left: 42px;")
+		if typeof breadcrumb!=="undefined"
+			each path, name in breadcrumb
+				a(href="/build/#{path}") #{name}/
+			#{path.substring(path.lastIndexOf("/") + 1)}
+			
+	label(for="plain", style="float: right") text/javascript
+		input(id="plain", type="checkbox", style="float: left;")
+	
+	if displayMode === "build"
+		label(for="expand")  expand
+			if typeof expanded !== "undefined" && expanded
+				input(id="expand", type="checkbox", checked="checked")
+			else 
+				input(id="expand", type="checkbox")
+	
+	label(for="mangle")  mangle
+		if mangled
+			input(id="mangle", type="checkbox", checked="checked")
+		else 
+			input(id="mangle", type="checkbox")
+
+	label(for="squeeze")  squeeze
+		if squeezed
+			input(id="squeeze", type="checkbox", checked="checked")
+		else
+			input(id="squeeze", type="checkbox")
+		
+	label(for="minimize")  minimize
+		if minimized
+			input(id="minimize", type="checkbox", checked="checked")
+		else
+			input(id="minimize", type="checkbox")
+
+	label(for="beautify")  beautify
+		if beautified
+			input(id="beautify", type="checkbox", checked="checked")
+		else
+			input(id="beautify", type="checkbox")
+
+	label(for="lint") lint
+		if linted
+			input(id="lint", type="checkbox", checked="checked")
+		else 
+			input(id="lint", type="checkbox")

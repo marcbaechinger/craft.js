@@ -1,0 +1,15 @@
+if typeof report !== "undefined"
+	if report.status === "error"
+		.errors.collapse #{report.statusMessage}
+		ol
+			each error in report.errors
+				if error
+					li 
+						a(href="#line-#{error.line}") #{path}:#{error.line}:#{error.character}
+						.reason #{error.reason}
+						code.evidence
+							pre #{error.evidence}
+	else if report.status === "ok"
+		.no-errors #{report.statusMessage}
+else
+	.no-checks No checks
