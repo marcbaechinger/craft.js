@@ -28,17 +28,17 @@
 
 /* -- */
 header {
-	position: absolute;
-	z-index: -1;
-	font-size: 32px;
-	left: 72px;
-	top: 15px;
+	border-bottom: 1px solid #ccc;
 	color: #ededed;
+	font-size: 32px;
 	text-shadow: 2px 2px 2px #999;
 	font-family: "Arial Black";
 	font-weight: 700;
-	border-bottom: 1px solid #ccc;
-	right: 58px;
+	
+	a {
+		color: #ededed;
+		text-decoration: none;
+	}
 }
 a {
   color: #00B7FF;
@@ -72,20 +72,6 @@ ul.directory {
 		margin-left: 22px;
 	}
 	.children {
-	}
-}
-#project-files {
-	label {
-		margin-right: 12px;
-	}
-	ul {
-		margin-left: 12px;
-		margin-top: 8px;
-	}
-	.build {
-		float: right;
-		display: inline-block;
-		margin-top: -2px;
 	}
 }
 li.directory-item button.transform {
@@ -122,7 +108,7 @@ a.file {
 }
 
 body {
-  padding: 50px;
+  padding: 6px 50px 12px 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -153,6 +139,7 @@ div.text-box {
 }
 div.page {
 	width: 840px;
+	top: 32px;
 }
 .size {
 	font-size: 14px;
@@ -187,7 +174,7 @@ label.project {
 	position: absolute;
 	background-color: #efefef;
 	width: 636px;
-	height: 120px;
+	min-height: 120px;
 	left: -300px;
 	border-bottom: solid 1px #333;
 	border-left: solid 1px #fff;
@@ -200,6 +187,18 @@ label.project {
 		list-style: none;
 		padding-left: 8px;
 		font-size: 14px;
+	}
+	label {
+		margin-right: 12px;
+	}
+	ul {
+		margin-left: 12px;
+		margin-top: 8px;
+	}
+	.build {
+		float: right;
+		display: inline-block;
+		margin-top: -2px;
 	}
 }
 .bag-button {
