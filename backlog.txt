@@ -1,5 +1,10 @@
 backlog
 
+US 0: make IO async
+----------------------------
+- reading file is done asynchronously
+- writing files is done asynchronously
+
 US 1: error handling
 ----------------------------
 - all errors are caught
