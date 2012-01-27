@@ -25,6 +25,7 @@ header {
   text-shadow: 2px 2px 2px #999;
   font-family: "Arial Black";
   font-weight: 700;
+  padding-left: 80px;
 }
 header a {
   color: #ededed;
@@ -313,4 +314,20 @@ ul.dependencies li a {
   display: block;
   border-radius: 5px;
   padding: 8px;
+}
+.ribbon {
+  position: fixed;
+  left: -90px;
+  top: 60px;
+  font-size: 16px;
+  width: 300px;
+  box-shadow: 3px 3px 9px #333;
+  background-color: #333;
+  color: #fff;
+  padding: 4px 0 6px 0;
+  text-align: center;
+  -moz-transform: rotate(-45deg);
+  -webkit-transform: rotate(120deg);
+  -o-transform: rotate(120deg);
+  -ms-transform: rotate(120deg);
 }
