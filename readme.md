@@ -2,7 +2,7 @@
 
 See http://marc.no.de for a live demo.
 
-craft.js help in managing, assessing, building and distributing from a common JavaScript source code base.
+craft.js helps to manage, assess, build and distribute from a common JavaScript source code base.
 
 ## Installation 
 
