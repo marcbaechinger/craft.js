@@ -32,11 +32,14 @@
 		return function (req, res, next) {
 			var path = req.params[0].replace(/^\/*/, "");
 			path = path.replace(/ *\/$/, "");
-			console.log("path", path);
 			req.data.path = path;
 			req.data.realPath = base + "/" + path;
-			req.data.fileDescriptor = fs.statSync(base + "/" + path);
-			next();
+			try {
+				req.data.fileDescriptor = fs.statSync(base + "/" + path);
+				next();
+			} catch (e) {
+				exports.error(req, res, e);
+			}
 		};
 	};
 	exports.createBreadcrumpTokens = function (req, res, next) {
@@ -146,5 +149,12 @@
 				res.render('file-viewer', req.data);
 			}
 		}
+	};
+	
+	exports.error = function (req, res, err) {
+		res.render('error', {
+			title: "An error occured",
+			error: err
+		});
 	};
 }());
