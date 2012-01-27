@@ -29,3 +29,4 @@ node server.js
 - Show java script an play with the `expand`, `mangle`, `squeeze`, `minimize`, `beautify` and `lint` options. The transformed JavaScript file is doisplayed accordingly.
 - Use the `text/javascript` option to have the file delivered with content type `text/javascript`.
 	
+![JavaScript source code viewer](screenshot.jpg)
