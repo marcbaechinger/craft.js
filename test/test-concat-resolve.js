@@ -1,7 +1,7 @@
 /*global require:false, exports:false, console: false */
 (function () {
 	"use strict";
-	var concat = require("../app/concat.js"),
+	var concat = require("../app/dependency.js"),
 		files = {
 			"base": {dependencies: []},
 			"base-2": {dependencies: []},

@@ -2,7 +2,7 @@
 (function () {
 	
 	"use strict";
-	var concat = require("../app/concat.js"),
+	var concat = require("../app/dependency.js"),
 		nodeunit = require('nodeunit'),
 		concatenator;
 
@@ -11,7 +11,7 @@
 		
 		setUp: function (callback) {
 			concatenator = new concat.Concatenator({
-				basePath: "/Users/marcbaechinger/projects/node/quality-js/stuff"
+				basePath: "/Users/marcbaechinger/projects/node/craft-js/stuff"
 			});
 			callback();
 		},
@@ -34,11 +34,11 @@
 		},
 		
 		"test resolving file": function (test) {
-			var path = "/Users/marcbaechinger/projects/node/quality-js/stuff/src/model/collection.js",
+			var path = "/Users/marcbaechinger/projects/node/craft-js/stuff/src/model/collection.js",
 				expectedDependencies = [
-					"/Users/marcbaechinger/projects/node/quality-js/stuff/src/model/init-module.js",
-					"/Users/marcbaechinger/projects/node/quality-js/stuff/src/model/observable.js",
-					"/Users/marcbaechinger/projects/node/quality-js/stuff/src/model/collection.js"
+					"/Users/marcbaechinger/projects/node/craft-js/stuff/src/model/init-module.js",
+					"/Users/marcbaechinger/projects/node/craft-js/stuff/src/model/observable.js",
+					"/Users/marcbaechinger/projects/node/craft-js/stuff/src/model/collection.js"
 				],
 				dependencies = concatenator.resolve(path);
 				
@@ -48,7 +48,7 @@
 		},
 		
 		"test concatenating file and its dependencies": function (test) {
-			var path = "/Users/marcbaechinger/projects/node/quality-js/stuff/src/model/collection.js",
+			var path = "/Users/marcbaechinger/projects/node/craft-js/stuff/src/model/collection.js",
 				content = concatenator.expand(path);
 			
 			//console.log("content", content);

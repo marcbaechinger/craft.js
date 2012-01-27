@@ -2,7 +2,7 @@
 (function () {
 	
 	"use strict";
-	var concat = require("../app/concat.js"),
+	var concat = require("../app/dependency.js"),
 		nodeunit = require('nodeunit');
 
 
