@@ -14,8 +14,6 @@ cd craft.js/
  # install dependencies
 npm install
 
- # create source repository and dist directory (names must match for v0.0.1) 
-mkdir stuff stuffdist
  # put sample JavaScript files into repository directory 
 echo "var i = 0;" > stuff/sample.js
 
