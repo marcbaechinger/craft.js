@@ -3,15 +3,14 @@
 
 ## in work
 
-
-
-
-## sprint stories
-
 ### US 2: zero config
 - stuff directory is auto-created after installation
 - stuffdist directory is auto-created after installation
 - stuff and stuffdist can be configured
+
+
+
+## sprint stories
 
 ### US 1: error handling
 - all errors are caught
