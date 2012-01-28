@@ -66,12 +66,16 @@ ul.directory {
 	border-radius: 5px;
 	padding: 4px 12px 2px 12px;
 	border: solid 1px #ccc;
-	box-shadow: 3px 3px 6px #999;
+	box-shadow: inset -1px -18px 2px #bbb;
+	border: 1px solid #999;
 	list-style: none;
 	label {
 		margin-left: 22px;
 	}
 	.children {
+	}
+	a {
+		color: #243F6F;
 	}
 }
 li.directory-item button.transform {
@@ -305,6 +309,9 @@ ul.dependencies {
 	}
 }
 
+h3.collapse {
+	box-shadow: inset -1px -18px 2px #555;
+}
 .collapse {
 	background-color: #3d3d3d;
 	border-radius: 6px;
@@ -337,7 +344,10 @@ ul.dependencies {
 	padding: 4px 0 6px 0;
 	text-align: center;
 	-moz-transform:rotate(-45deg);
-	-webkit-transform:rotate(120deg);
-	-o-transform:rotate(120deg);
-	-ms-transform:rotate(120deg);
+	-webkit-transform:rotate(-45deg);
+	-o-transform:rotate(-45deg);
+	-ms-transform:rotate(-45deg);
+	a {
+		text-decoration: none;
+	}
 }

@@ -28,5 +28,32 @@ node server.js
 - Browse to a JavaScript of your choice.
 - Show JavaScript and play with the `expand`, `mangle`, `squeeze`, `minimize`, `beautify` and `lint` options. The transformed JavaScript file is displayed accordingly.
 - Use the `text/javascript` option to have the file delivered with content type `text/javascript`.
-	
+
+
+## Resolving script dependencies
+
+Declare dependencies of a script at the top of a JavaScript file:
+
+```
+//= require "../../model/collection"
+```
+
+- choose the `expand` option to let craft.js resolve direct and transitive dependencies automatically
+
+## Configuration
+
+Change the `app-config.js` to adjust the `port` on which the appication should listen.
+
+```
+exports.server = {
+	port: 3000
+};
+exports.path = {
+	src: __dirname + "/stuff",
+	dist: __dirname + "/stuffdist",
+	views: __dirname + "/views",
+	docroot: __dirname + '/public'
+};
+
+```
 ![JavaScript source code viewer](/marcbaechinger/craft.js/raw/master/screenshot.jpg)
