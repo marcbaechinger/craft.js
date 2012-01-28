@@ -1,26 +1,34 @@
-/*global exports: false */
-(function () {	
+/*global exports: false, require: false, console: false */
+(function () {
 	"use strict";
-	exports.each = function (array, func) {
-		var i, name;
-		if (array.isArray) {
-			for (i = 0; i < array.length; i += 1) {
-				if (func.apply(array[i], [i, array[i]]) === false) {
-					break;
-				}
-			}	
-		} else {
-			for (name in array) {
-				if (array.hasOwnProperty(name)) {
-					if (func.apply(array[name], [name, array[name]]) === false) {
-						break;
-					}
-				}
+	
+	var fs = require("fs");
+	
+	exports.mkdir = function (path, mode) {
+		var slashIdx,
+			parent;
+	    try {
+			fs.mkdirSync(path, mode);
+			console.log("created directory", path);
+	    } catch (e) {
+	        if (e.code === "EEXIST") {
+	            return;
+	        } else if (e.code === "ENOENT") {
+	            slashIdx = path.lastIndexOf("/");
+	            if (slashIdx > 0) {
+	                parent = path.substring(0, slashIdx);
+	                exports.mkdir(parent, mode);
+	                exports.mkdir(path, mode);
+	            } else {
+	                throw e;
+	            }
+	        } else {
+				throw e;
 			}
-		}
+	    }
 	};
-	exports.inherit = function(sub, sup) {
-		exports.each(sup, function(key) {
+	exports.inherit = function (sub, sup) {
+		exports.each(sup, function (key) {
 			if (typeof sub[key] === "undefined") {
 				sub[key] = this;
 			}

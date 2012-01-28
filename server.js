@@ -9,6 +9,7 @@
 		express = require('express'),
 		build = require('./routes/build.js'),
 		project = require('./routes/project.js'),
+		util = require('./app/util'),
 		app = module.exports = express.createServer(),
 		
 		
@@ -27,8 +28,8 @@
 		app.use(express.static(conf.path.docroot));
 	});
 
-	conf.mkdir(conf.path.src);
-	conf.mkdir(conf.path.dist);
+	util.mkdir(conf.path.src);
+	util.mkdir(conf.path.dist);
 	
 	app.configure('development', function () {
 		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));

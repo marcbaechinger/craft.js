@@ -2,8 +2,7 @@
 (function () {
 	"use strict";
 	
-	var util = require("./util.js"),
-		jshint = require('jshint'),
+	var jshint = require('jshint'),
 		DEFAULT_OPTIONS = {
 			browser: true,
 			devel: true,
@@ -25,10 +24,10 @@
 		createErrorReport = function (report, errors) {
 			report.errors = errors;
 			report.errorLines = {};
-			util.each(errors, function () {
-				if (this && this.evidence) {
-					this.evidence = this.evidence.replace(/^\t*/, "");
-					report.errorLines[this.line] = this.reason;
+			errors.forEach(function (error) {
+				if (error && error.evidence) {
+					error.evidence = error.evidence.replace(/^\t*/, "");
+					report.errorLines[error.line] = error.reason;
 				}
 			});
 		},
