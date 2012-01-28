@@ -3,12 +3,6 @@
 
 ## in work
 
-### US 2: zero config
-- stuff directory is auto-created after installation
-- stuffdist directory is auto-created after installation
-- stuff and stuffdist can be configured
-
-
 
 ## sprint stories
 
@@ -43,3 +37,12 @@
 - mulitple projects can be stored locally
 - changing to another project is possible
 
+
+
+## ready for review ;-)
+
+
+### US 2: zero config
+- stuff directory is auto-created after installation
+- stuffdist directory is auto-created after installation
+- stuff and stuffdist can be configured

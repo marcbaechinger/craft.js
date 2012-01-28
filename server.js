@@ -5,25 +5,30 @@
 (function () {
 	"use strict";
 
-	var express = require('express'),
+	var conf = require("./app-config"),
+		express = require('express'),
 		build = require('./routes/build.js'),
 		project = require('./routes/project.js'),
 		app = module.exports = express.createServer(),
-		distDirectory = __dirname + "/stuffdist",
-		srcDirectory = __dirname + "/stuff";
+		
+		
+		distDirectory = conf.path.dist,
+		srcDirectory = conf.path.src;
 
 	// Configuration
 	app.configure(function () {
-		app.set('views', __dirname + '/views');
+		app.set('views', conf.path.views);
 		app.set('view engine', 'jade');
 		app.set('view options', { layout: false });
 		app.use(express.bodyParser());
 		app.use(express.methodOverride());
-		app.use(express.compiler({ src: __dirname + '/public', enable: ['less'] }));
+		app.use(express.compiler({ src: conf.path.docroot, enable: ['less'] }));
 		app.use(app.router);
-		app.use(express.static(__dirname + '/public'));
+		app.use(express.static(conf.path.docroot));
 	});
 
+	conf.mkdir(conf.path.src);
+	conf.mkdir(conf.path.dist);
 	
 	app.configure('development', function () {
 		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
@@ -34,7 +39,7 @@
 
 	// Routes
 	app.get('/', function (req, res) {
-		res.render('index', { title: 'quality-js' });
+		res.render('index', { title: 'craft.js' });
 	});
 	
 	app.post("/project/build",
@@ -75,6 +80,6 @@
 		build.fileViewer("dist")
 	);
 
-	app.listen(3000);
+	app.listen(conf.server.port);
 	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 }());
