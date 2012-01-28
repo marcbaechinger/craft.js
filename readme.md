@@ -2,6 +2,8 @@
 
 See http://marc.no.de for a live demo.
 
+![JavaScript source code viewer](/marcbaechinger/craft.js/raw/master/screenshot.jpg)
+
 craft.js helps to manage, assess, build and distribute from a common JavaScript source code base.
 
 ## Installation 
@@ -56,4 +58,3 @@ exports.path = {
 };
 
 ```
-![JavaScript source code viewer](/marcbaechinger/craft.js/raw/master/screenshot.jpg)
