@@ -82,12 +82,15 @@
 			try {
 				req.data.realPathDependencies = concatenator.resolve(req.data.realPath);
 				req.data.dependencies = translateDependencies(req.data.realPathDependencies);
+				next();
 			} catch (e) {
-				
+				error.sendErrorPage({
+					type: "resolve-failed",
+					path: req.data.realPath
+					statusCode: 400
+				});
 			}
-			
 		}
-		next();
 	};
 	exports.expand = function (req, res, next) {
 		var sourceCode;
