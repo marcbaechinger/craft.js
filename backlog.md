@@ -3,20 +3,16 @@
 
 ## in work
 
+### US7: make jshint options editable
+- jshint options can be edited
+- jshint option are persistens across requests and sessions
 
 ## sprint stories
-
-### US 1: error handling
-- all errors are caught
-- layouted error page
 
 ### US 0: make IO async
 - reading file is done asynchronously
 - writing files is done asynchronously
 
-### US7: make jshint options editable
-- jshint options can be edited
-- jshint option are persistens across requests and sessions
 
 
 ## project backlog
@@ -44,8 +40,14 @@
 - hightlight line of failed test according to node unit
 - trigger tests in interval (triggered by web client)
 
+
+
 ## ready for review ;-)
 
+### US 1: error handling
+
+- all errors are caught
+- layouted error page
 
 ### US 2: zero config
 - stuff directory is auto-created after installation

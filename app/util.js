@@ -9,7 +9,6 @@
 			parent;
 	    try {
 			fs.mkdirSync(path, mode);
-			console.log("created directory", path);
 	    } catch (e) {
 	        if (e.code === "EEXIST") {
 	            return;
@@ -23,7 +22,8 @@
 	                throw e;
 	            }
 	        } else {
-				throw e;
+				console.log("ERROR: uncaught error in mkdir for", path, e.code, e);
+				//throw e;
 			}
 	    }
 	};

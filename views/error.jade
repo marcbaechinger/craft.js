@@ -1,5 +1,14 @@
 extends layout
 
 block content
-	h1 An error occured 
-	#{error.message}
+	h1
+		if typeof error.statusCode === "undefined"
+			|Uncaught error
+		else if error.statusCode === 404
+			|We're sorry! The requested file could not be found.
+	
+	.panel 
+		.error-message
+			#{error.message}
+		
+		pre #{errorString}

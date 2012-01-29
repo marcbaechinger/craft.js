@@ -3,6 +3,7 @@
 	"use strict";
 
 	var fs = require("fs"),
+		err = require("./error.js"),
 		concat = require("../app/dependency.js"),
 		uglify = require("../app/uglify.js"),
 		jshint = require('../app/jshint.js'),
@@ -38,7 +39,8 @@
 				req.data.fileDescriptor = fs.statSync(base + "/" + path);
 				next();
 			} catch (e) {
-				exports.error(req, res, e);
+				e.statusCode = 404;
+				err.sendErrorPage(req, res, e);
 			}
 		};
 	};
@@ -60,19 +62,30 @@
 	exports.getFileContent = function (base) {
 		return function (req, res, next) {
 			var sourceCode;
-			if (req.data.fileDescriptor.isFile()) {
-				sourceCode = fs.readFileSync(req.data.realPath).toString();
-				req.data.sourceCode = sourceCode;
-			} else if (req.data.fileDescriptor.isDirectory()) {
-				req.data.sourceTree = fsmgmt.createSourceTree(base, req.data.path);
+			try {
+				if (req.data.fileDescriptor.isFile()) {
+					sourceCode = fs.readFileSync(req.data.realPath).toString();
+					req.data.sourceCode = sourceCode;
+				} else if (req.data.fileDescriptor.isDirectory()) {
+					req.data.sourceTree = fsmgmt.createSourceTree(base, req.data.path);
+				}
+				next();
+			} catch (e) {
+			    e.statusCode = e.statusCode || 404;
+			    err.sendErrorPage(req, res, e);
 			}
-			next();
+			
 		};
 	};
 	exports.resolve = function (req, res, next) {
 		if (req.data.fileDescriptor.isFile() && req.data.realPath) {
-			req.data.realPathDependencies = concatenator.resolve(req.data.realPath);
-			req.data.dependencies = translateDependencies(req.data.realPathDependencies);
+			try {
+				req.data.realPathDependencies = concatenator.resolve(req.data.realPath);
+				req.data.dependencies = translateDependencies(req.data.realPathDependencies);
+			} catch (e) {
+				
+			}
+			
 		}
 		next();
 	};
@@ -151,10 +164,4 @@
 		}
 	};
 	
-	exports.error = function (req, res, err) {
-		res.render('error', {
-			title: "An error occured",
-			error: err
-		});
-	};
 }());

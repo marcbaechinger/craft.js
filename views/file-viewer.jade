@@ -12,13 +12,12 @@ block content
 
 	if typeof sourceTree!=="undefined"	
 		h2.collapse.directory Content of directory #{path}
-		
-		div(style="float: right;")
-			if typeof breadcrumb!=="undefined" 
-				a(href="/build/") 
-				each path, name in breadcrumb
-					a(href="/build/#{path}") #{name}/
-				#{path.substring(path.lastIndexOf("/") + 1)}
+			div(style="float: right;")
+				if typeof breadcrumb!=="undefined" 
+					a(href="/build/") 
+					each path, name in breadcrumb
+						a(href="/build/#{path}") #{name}/
+					#{path.substring(path.lastIndexOf("/") + 1)}
 		include source/directory-listing
 
 	if typeof dependencies !== "undefined"

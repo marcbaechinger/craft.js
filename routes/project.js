@@ -2,6 +2,7 @@
 	"use strict";
 	
 	var concat = require("../app/dependency.js"),
+		error = require("./error.js"),
 		fs = require("fs"),
 		basePath = process.cwd() + "/stuff/",
 		translateDependencies = function (dependencies) {
@@ -39,7 +40,6 @@
 			file, deps = [];
 		
 		for (file in files) {
-			console.log("resolve", basePath + file);
 			deps.push(concat.resolve(basePath + file));
 		}
 		req.data.realPathDependencies = concat.joinDependencies.apply(undefined, deps);
@@ -54,12 +54,13 @@
 			try {
 				fd = fs.openSync(req.data.realPath, "w");
 				fs.writeSync(fd, buffer, 0, buffer.length, null);
+				next();
 			} catch (e) {
-				console.log("error", e);
+				error.logError(e);
+				error.sendErrorPage(req, res, e);
 			} finally {
 				fs.closeSync(fd);
 			}
-			next();
 		};
 	};
 	exports.sendBuildOutput = function (req, res) {
