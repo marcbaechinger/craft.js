@@ -19,7 +19,7 @@
 - jshint option are persistens across requests and sessions
 
 
-## project backlog --------------------
+## project backlog
 
 ### US 3: deletable dist files
 - files in the dist directory can be deleted
@@ -37,7 +37,12 @@
 - mulitple projects can be stored locally
 - changing to another project is possible
 
-
+### US7: integrate unit testing with nodeunit
+- browse unit tests
+- run unit tests
+- show results of unit tests
+- hightlight line of failed test according to node unit
+- trigger tests in interval (triggered by web client)
 
 ## ready for review ;-)
 
