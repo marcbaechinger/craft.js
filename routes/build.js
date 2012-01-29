@@ -86,7 +86,7 @@
 			} catch (e) {
 				error.sendErrorPage({
 					type: "resolve-failed",
-					path: req.data.realPath
+					path: req.data.realPath,
 					statusCode: 400
 				});
 			}
