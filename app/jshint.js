@@ -33,9 +33,7 @@
 		},
 		process = function (sourceCode, options) {
 			var report = { status: "ok", statusMessage: "JSHint detected no code smells" };
-				
 			report.options = options || DEFAULT_OPTIONS;
-			
 			report.isClean = jshint.JSHINT(sourceCode, report.options, []);
 			if (!report.isClean) {
 				createErrorReport(report, jshint.JSHINT.errors);

@@ -82,7 +82,6 @@
 			try {
 				req.data.realPathDependencies = concatenator.resolve(req.data.realPath);
 				req.data.dependencies = translateDependencies(req.data.realPathDependencies);
-				next();
 			} catch (e) {
 				error.sendErrorPage({
 					type: "resolve-failed",
@@ -91,6 +90,7 @@
 				});
 			}
 		}
+		next();
 	};
 	exports.expand = function (req, res, next) {
 		var sourceCode;
@@ -140,10 +140,21 @@
 		}
 		next();
 	};
+	exports.extractLintOptions = function (req, res, next) {
+		var name, options = {}, val;
+		for (name in req.query) {
+			if (name.match(/^lint-/)) {
+				val = req.query[name];
+				options[name.replace(/^lint-/, "")] = val === "true" ? true : false;
+			}
+		}
+		req.data.lintOptions = options;
+		next();
+	};
 	exports.lint = function (req, res, next) {
 		if (req.query.lint === "true") {
 			if (req.data.path.match(/\.js$/)) {
-				req.data.report = jshint.processJSHint(req.data.sourceCode);
+				req.data.report = jshint.processJSHint(req.data.sourceCode, req.data.lintOptions);
 			}
 			req.data.linted = true;
 		} else {

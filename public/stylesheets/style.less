@@ -7,12 +7,42 @@
 	border-radius: 5px;
 	padding: 8px;
 }
-.shadow-panel {
+.shadow-panel() {
 	.panel();
 	box-shadow: 3px 3px 12px #333;
 	position: relative;
 	padding-top: 18px;
 }
+
+.button(@bg-color: #cecece, @bg-color-on: darkgreen) {
+	background-color: @bg-color;
+	border-radius: 4px;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	padding: 3px 12px;
+	text-align: center; 
+	&.contained {
+		background-color: @bg-color-on;
+		color: #eee;
+	}
+}
+
+.popup() {
+	background-color: #efefef;
+	border-top: solid 1px #ccc;
+	border-bottom: solid 1px #333;
+	border-left: solid 1px #ccc;
+	border-right: solid 1px #333;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	box-shadow: 2px 4px 4px #333;
+	display: none;
+	position: absolute;
+	z-index: 100;
+}
+
+/**********    cleafix ***************/
 .clearfix:after {
 	content: ".";
 	display: block;
@@ -40,13 +70,7 @@ header {
 		text-decoration: none;
 	}
 }
-a {
-  color: #00B7FF;
-}
 
-button {
-	cursor: pointer;
-}
 
 h2.directory {
 	margin-top: 50px;
@@ -62,12 +86,13 @@ ul.directory {
 }
 .directory-item {
 	background-color: #dedede;
-	margin-bottom: 12px;
 	border-radius: 5px;
 	padding: 4px 12px 2px 12px;
 	border: solid 1px #ccc;
-	box-shadow: inset -1px -18px 2px #bbb;
 	border: 1px solid #999;
+	box-shadow: 2px 2px 4px #999,
+		inset -1px -18px 2px #bbb;
+	margin-bottom: 12px;
 	list-style: none;
 	label {
 		margin-left: 22px;
@@ -106,25 +131,33 @@ ul.dependencies {
 body > div.directory-item {	
 	margin-top: 52px;
 }
-a.file {
-	width: 280px; 
-	display: inline-block
-}
 
 body {
   padding: 6px 50px 12px 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+
+/****** headers   ********/
 h2 {
 	margin-top: 28px;
+	background-color: #3d3d3d;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	padding: 4px 8px;
 }
 
-h3.collapse a {
+h3 {
+	box-shadow: inset -1px -18px 2px #555;
+}
+
+h3 a {
 	font-size: 12px;
 	font-weight: 300;
 	margin-left: 12px; 
 }
+
 
 code.evidence pre {
 	.panel();
@@ -152,11 +185,6 @@ div.page {
 	margin-top: 4px;
 }
 
-div.project {
-	position: absolute;
-	right: 52px;
-	top: 32px;
-}
 
 label.project {
 	background-color: #C94F1A;
@@ -169,24 +197,59 @@ label.project {
 	width: 320px;
 }
 
+.value-list {
+	margin-bottom: 8px;
+	padding: 12px;
+	li {
+		height: 2em;
+	}
+	
+	.boolean-editor {
+		display: block;
+		background-color: #999;
+		border-radius: 4px;
+		color: #fff;
+		cursor: pointer;
+		float: left;
+		padding: 1px 8px;
+		margin: 6px;
+		&.on {
+		 	background-color: darkgreen;
+		}
+	}
+	input {
+		border-radius: 4px;
+		display: block;
+		margin-left: 160px;
+	}
+}
+
 .project-name {
 	font-weight: 700;
 	padding-left: 12px;
 }
+a {
+  color: #00B7FF;
+}
+
+button {
+	cursor: pointer;
+}
+a.file {
+	width: 280px; 
+	display: inline-block
+}
+
+
+
+#lint-options {
+	.popup();
+	margin-right: 24px;
+}
 #project-files {
-	display: none;
-	position: absolute;
-	background-color: #efefef;
-	width: 636px;
+	.popup();
 	min-height: 120px;
-	left: -300px;
-	border-bottom: solid 1px #333;
-	border-left: solid 1px #fff;
-	border-right: solid 1px #333;
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-	box-shadow: 2px 4px 4px #333;
-	
+	width: 636px;
 	ul {
 		list-style: none;
 		padding-left: 8px;
@@ -205,20 +268,30 @@ label.project {
 		margin-top: -2px;
 	}
 }
-.bag-button {
-	background-color: #cecece;
-	display: inline-block;
-	text-align: center; 
-	font-size: 14px;
-	width: 180px;
-	border-radius: 4px;
-	cursor: pointer;
-	margin-right: 4px;
-	padding: 3px 12px;
-	&.contained {
-		background-color: darkgreen;
-		color: #eee;
+
+#project-tools {
+	float: right;
+	margin-top: -28px;
+	
+	> label {
+		margin-left: 24px;
+		margin-bottom: 12px;
 	}
+}
+.lint-button {
+	.button(#C98C58);
+}
+
+.project-button {
+	.button(#C98C58);
+	width: 280px;
+	text-align: left;
+}
+
+.bag-button {
+	.button();
+	width: 180px;
+	margin-right: 4px;
 }
 div.source {
 	.shadow-panel();
@@ -309,16 +382,6 @@ ul.dependencies {
 	}
 }
 
-h3.collapse {
-	box-shadow: inset -1px -18px 2px #555;
-}
-.collapse {
-	background-color: #3d3d3d;
-	border-radius: 6px;
-	color: white;
-	cursor: pointer;
-	padding: 4px 8px;
-}
 .errors {
 	background-color: @error-bg-color;
 	color: @error-font-color;

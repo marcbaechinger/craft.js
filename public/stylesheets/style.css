@@ -1,11 +1,4 @@
-.shadow-panel {
-  display: block;
-  border-radius: 5px;
-  padding: 8px;
-  box-shadow: 3px 3px 12px #333;
-  position: relative;
-  padding-top: 18px;
-}
+/**********    cleafix ***************/
 .clearfix:after {
   content: ".";
   display: block;
@@ -31,12 +24,6 @@ header a {
   color: #ededed;
   text-decoration: none;
 }
-a {
-  color: #00B7FF;
-}
-button {
-  cursor: pointer;
-}
 h2.directory {
   margin-top: 50px;
 }
@@ -51,12 +38,12 @@ ul.directory {
 }
 .directory-item {
   background-color: #dedede;
-  margin-bottom: 12px;
   border-radius: 5px;
   padding: 4px 12px 2px 12px;
   border: solid 1px #ccc;
-  box-shadow: inset -1px -18px 2px #bbbbbb;
   border: 1px solid #999;
+  box-shadow: 2px 2px 4px #999999, inset -1px -18px 2px #bbbbbb;
+  margin-bottom: 12px;
   list-style: none;
 }
 .directory-item label {
@@ -98,18 +85,23 @@ ul.dependencies a:hover {
 body > div.directory-item {
   margin-top: 52px;
 }
-a.file {
-  width: 280px;
-  display: inline-block;
-}
 body {
   padding: 6px 50px 12px 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+/****** headers   ********/
 h2 {
   margin-top: 28px;
+  background-color: #3d3d3d;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  padding: 4px 8px;
 }
-h3.collapse a {
+h3 {
+  box-shadow: inset -1px -18px 2px #555555;
+}
+h3 a {
   font-size: 12px;
   font-weight: 300;
   margin-left: 12px;
@@ -141,11 +133,6 @@ div.page {
   float: right;
   margin-top: 4px;
 }
-div.project {
-  position: absolute;
-  right: 52px;
-  top: 32px;
-}
 label.project {
   background-color: #C94F1A;
   opacity: 0.6;
@@ -156,23 +143,73 @@ label.project {
   margin-right: 18px;
   width: 320px;
 }
+.value-list {
+  margin-bottom: 8px;
+  padding: 12px;
+}
+.value-list li {
+  height: 2em;
+}
+.value-list .boolean-editor {
+  display: block;
+  background-color: #999;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  float: left;
+  padding: 1px 8px;
+  margin: 6px;
+}
+.value-list .boolean-editor.on {
+  background-color: darkgreen;
+}
+.value-list input {
+  border-radius: 4px;
+  display: block;
+  margin-left: 160px;
+}
 .project-name {
   font-weight: 700;
   padding-left: 12px;
 }
-#project-files {
-  display: none;
-  position: absolute;
+a {
+  color: #00B7FF;
+}
+button {
+  cursor: pointer;
+}
+a.file {
+  width: 280px;
+  display: inline-block;
+}
+#lint-options {
   background-color: #efefef;
-  width: 636px;
-  min-height: 120px;
-  left: -300px;
+  border-top: solid 1px #ccc;
   border-bottom: solid 1px #333;
-  border-left: solid 1px #fff;
+  border-left: solid 1px #ccc;
   border-right: solid 1px #333;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   box-shadow: 2px 4px 4px #333;
+  display: none;
+  position: absolute;
+  z-index: 100;
+  margin-right: 24px;
+}
+#project-files {
+  background-color: #efefef;
+  border-top: solid 1px #ccc;
+  border-bottom: solid 1px #333;
+  border-left: solid 1px #ccc;
+  border-right: solid 1px #333;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  box-shadow: 2px 4px 4px #333;
+  display: none;
+  position: absolute;
+  z-index: 100;
+  min-height: 120px;
+  width: 636px;
 }
 #project-files ul {
   list-style: none;
@@ -191,19 +228,55 @@ label.project {
   display: inline-block;
   margin-top: -2px;
 }
-.bag-button {
-  background-color: #cecece;
-  display: inline-block;
-  text-align: center;
-  font-size: 14px;
-  width: 180px;
+#project-tools {
+  float: right;
+  margin-top: -28px;
+}
+#project-tools > label {
+  margin-left: 24px;
+  margin-bottom: 12px;
+}
+.lint-button {
+  background-color: #c98c58;
   border-radius: 4px;
   cursor: pointer;
-  margin-right: 4px;
+  display: inline-block;
+  font-size: 14px;
   padding: 3px 12px;
+  text-align: center;
+}
+.lint-button.contained {
+  background-color: #006400;
+  color: #eee;
+}
+.project-button {
+  background-color: #c98c58;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 3px 12px;
+  text-align: center;
+  width: 280px;
+  text-align: left;
+}
+.project-button.contained {
+  background-color: #006400;
+  color: #eee;
+}
+.bag-button {
+  background-color: #cecece;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 3px 12px;
+  text-align: center;
+  width: 180px;
+  margin-right: 4px;
 }
 .bag-button.contained {
-  background-color: darkgreen;
+  background-color: #006400;
   color: #eee;
 }
 div.source {
@@ -296,16 +369,6 @@ ul.dependencies li a {
   background-color: #dedede;
   border-radius: 5px;
   padding: 2px 6px 4px 6px;
-}
-h3.collapse {
-  box-shadow: inset -1px -18px 2px #555555;
-}
-.collapse {
-  background-color: #3d3d3d;
-  border-radius: 6px;
-  color: white;
-  cursor: pointer;
-  padding: 4px 8px;
 }
 .errors {
   background-color: #990009;

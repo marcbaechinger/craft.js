@@ -65,6 +65,7 @@
 		build.mangle,
 		build.squeeze,
 		build.astToSourceCode,
+		build.extractLintOptions,
 		build.lint,
 		build.fileViewer("build")
 	);
@@ -77,6 +78,7 @@
 		build.mangle,
 		build.squeeze,
 		build.astToSourceCode,
+		build.extractLintOptions,
 		build.lint,
 		build.fileViewer("dist")
 	);

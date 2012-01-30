@@ -1,12 +1,14 @@
 extends layout
 
 block content
-	.project.clearfix
-		label.project.collapse current project: 
+	#project-tools.clearfix
+		label.lint-button.collapse lint opts
+		#lint-options
+		label.project-button.collapse current project: 
 			span.project-name(data-action="edit-project-name") default
 		#project-files
 		if typeof sourceCode!=="undefined" && displayMode == "build"
-			.bag-button(data-action="toggle-bag")
+			label.bag-button(data-action="toggle-bag")
 	if typeof sourceCode!=="undefined"
 		include source/toolbar
 
