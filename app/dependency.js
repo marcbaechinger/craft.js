@@ -3,6 +3,7 @@
 	"use strict";
 
 	var fs = require("fs"),
+		ALLOW_ABSOULTE_DEPENDENCIES = false,
 		ABSOLUTE_PATH_PATTERN = /^\//,
 		DEFAULTS = {
 			postFix: ".js",
@@ -17,7 +18,14 @@
 			baseDir = path.substring(0, path.lastIndexOf("/"));
 			dep = dep.replace(/^[ \t]+|[ \t]+$/g, "");
 			if (dep.match(ABSOLUTE_PATH_PATTERN)) {
-				return dep;
+				if (ALLOW_ABSOULTE_DEPENDENCIES === true) {
+					return dep;
+				} else {
+					throw { 
+						type: "illegal-access",
+						dep: dep
+					};
+				}
 			}
 			while (dep.indexOf("../") > -1) {
 				dep = dep.substring(dep.indexOf("../") + 3);
@@ -130,6 +138,9 @@
 	exports.activeFileProvider = DEFAULTS.fileProvider;
 	exports.resolve = resolve;
 	exports.parseRequireLine = parseRequireLine;
+	exports.allowAbsoluteDependencies = function (allow) {
+		ALLOW_ABSOULTE_DEPENDENCIES = allow;
+	};
 	exports.Concatenator = function (spec) {
 		var basePath = spec.basePath || __dirname,
 			checkAccess = function (path) {

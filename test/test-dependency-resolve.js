@@ -325,10 +325,24 @@
 			test.done();
 		},
 		"parse require line: absolute dependencies": function (test) {
-			var deps = dependency.parseRequireLine("/path/to/file.js", "//= require \"dep-1, /path/to/lib/dep.js\"");
+			var deps;
+			dependency.allowAbsoluteDependencies(true);
+			deps = dependency.parseRequireLine("/path/to/file.js", "//= require \"dep-1, /path/to/lib/dep.js\"");
 			test.equal(2, deps.length);
 			test.equal("/path/to/dep-1.js", deps[0]);
 			test.equal("/path/to/lib/dep.js", deps[1]);
+			dependency.allowAbsoluteDependencies(false);
+			test.done();
+		},
+		"illegal access for absolute dependencies": function (test) {
+			var deps;
+			test.expect(2);
+			try {
+				deps = dependency.parseRequireLine("/path/to/file.js", "//= require \"dep-1, /path/to/lib/dep.js\"");
+			} catch (e) {
+				test.equal("illegal-access", e.type);
+				test.equal("/path/to/lib/dep.js", e.dep);
+			}
 			test.done();
 		},
 		"parse require line: multiple dependencies in a single line expression": function (test) {
