@@ -238,7 +238,7 @@
 	
 	exports["dependency.parseRequireLine"] = {
 		"single dependency": function (test) {
-			var path = "/repo/",
+			var path = "/repo/base.js",
 				line = "//= require \"dep1\"",
 				deps = dependency.parseRequireLine(path, line);
 			
@@ -247,7 +247,7 @@
 			test.done();
 		},
 		"multiple dependencies": function (test) {
-			var path = "/repo/",
+			var path = "/repo/base.js",
 				line = "//= require \"dep1 , dep2\"",
 				deps = dependency.parseRequireLine(path, line);
 			
@@ -256,7 +256,7 @@
 			test.done();
 		},
 		"leading and trailing blanks within quotes": function (test) {
-			var path = "/repo/",
+			var path = "/repo/base.js",
 				line = "//= require \"      dep1           ,       dep2        \"",
 				deps = dependency.parseRequireLine(path, line);
 			
@@ -265,7 +265,7 @@
 			test.done();
 		},
 		"leading and trailing tabs within quotes": function (test) {
-			var path = "/repo/",
+			var path = "/repo/base.js",
 				line = "//= require \"		dep1		,		dep2		\"",
 				deps = dependency.parseRequireLine(path, line);
 			
@@ -274,7 +274,7 @@
 			test.done();
 		},
 		"trailing blanks after closing quote": function (test) {
-			var path = "/repo/",
+			var path = "/repo/base.js",
 				line = "//= require \"      dep1           ,       dep2        \"         ",
 				deps = dependency.parseRequireLine(path, line);
 			
@@ -283,7 +283,7 @@
 			test.done();
 		},
 		"trailing tabs after closing quote": function (test) {
-			var path = "/repo/",
+			var path = "/repo/base.js",
 				line = "//= require \"		dep1		,		dep2		\"			",
 				deps = dependency.parseRequireLine(path, line);
 			
@@ -292,12 +292,59 @@
 			test.done();
 		},
 		"missing closing quote": function (test) {
-			var path = "/repo/",
+			var path = "/repo/base.js",
 				line = "//= require \"	dep1, dep2	",
 				deps = dependency.parseRequireLine(path, line);
 			
 			test.expect(1);
 			test.deepEqual(["/repo/dep1.js", "/repo/dep2.js"], deps);
+			test.done();
+		},
+		"reference to parent directory with ..": function (test) {
+			var path = "/repo/base.js",
+				line = "//= require \"	dep1, ../dep2	",
+				deps = dependency.parseRequireLine(path, line);
+			
+			test.expect(1);
+			test.deepEqual(["/repo/dep1.js", "/dep2.js"], deps);
+			test.done();
+		},
+		"reference to parent of parent directory with ../..": function (test) {
+			var path = "/repo/src/",
+				line = "//= require \"	../../dep1, ../dep2	",
+				deps = dependency.parseRequireLine(path, line);
+			
+			test.expect(1);
+			test.deepEqual(["/dep1.js", "/repo/dep2.js"], deps);
+			test.done();
+		},
+		"parse require line: single dependency": function (test) {
+			var deps = dependency.parseRequireLine("/path/to/file.js", "//= require \" dep \"");
+			test.equal(1, deps.length);
+			test.equal("/path/to/dep.js", deps[0]);
+			test.done();
+		},
+		"parse require line: absolute dependencies": function (test) {
+			var deps = dependency.parseRequireLine("/path/to/file.js", "//= require \"dep-1, /path/to/lib/dep.js\"");
+			test.equal(2, deps.length);
+			test.equal("/path/to/dep-1.js", deps[0]);
+			test.equal("/path/to/lib/dep.js", deps[1]);
+			test.done();
+		},
+		"parse require line: multiple dependencies in a single line expression": function (test) {
+			var deps = dependency.parseRequireLine("/path/to/file.js", "//= require \"dep, dep2     , dep3  \"");
+			test.equal(3, deps.length);
+			test.equal("/path/to/dep.js", deps[0]);
+			test.equal("/path/to/dep2.js", deps[1]);
+			test.equal("/path/to/dep3.js", deps[2]);
+			test.done();
+		},
+		"parse require line: dependencies in parent directories": function (test) {
+			var deps = dependency.parseRequireLine("/path/to/file.js", "//= require \"dep, ../dep2, ../../dep3\"");
+			test.equal(3, deps.length);
+			test.equal("/path/to/dep.js", deps[0]);
+			test.equal("/path/dep2.js", deps[1]);
+			test.equal("/dep3.js", deps[2]);
 			test.done();
 		}
 	};

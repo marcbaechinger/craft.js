@@ -42,11 +42,9 @@
 			task = specs[i].task;
 			switch (task) {
 			case "mangle":
-				console.log("mangle -", "options: " + JSON.stringify(specs[i].options));
 				ast = exports.mangle(ast, specs[i].options);
 				break;
 			case "squeeze":
-				console.log("squeeze -", "options: " + JSON.stringify(specs[i].options));
 				ast = pro.ast_squeeze(ast, specs[i].options);
 				break;
 			default:

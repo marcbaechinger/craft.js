@@ -4,38 +4,7 @@
 	"use strict";
 	var concat = require("../app/dependency.js");
 	
-	exports["concat.parseRequiredLine"] = {
 	
-		"parse require line: single dependency": function (test) {
-			var deps = concat.parseRequireLine("/path/to/file.js", "//= require \" dep \"");
-			test.equal(1, deps.length);
-			test.equal("/path/to/dep.js", deps[0]);
-			test.done();
-		},
-		"parse require line: absolute dependencies": function (test) {
-			var deps = concat.parseRequireLine("/path/to/file.js", "//= require \"dep-1, /path/to/lib/dep.js\"");
-			test.equal(2, deps.length);
-			test.equal("/path/to/dep-1.js", deps[0]);
-			test.equal("/path/to/lib/dep.js", deps[1]);
-			test.done();
-		},
-		"parse require line: multiple dependencies in a single line expression": function (test) {
-			var deps = concat.parseRequireLine("/path/to/file.js", "//= require \"dep, dep2     , dep3  \"");
-			test.equal(3, deps.length);
-			test.equal("/path/to/dep.js", deps[0]);
-			test.equal("/path/to/dep2.js", deps[1]);
-			test.equal("/path/to/dep3.js", deps[2]);
-			test.done();
-		},
-		"parse require line: dependencies in parent directories": function (test) {
-			var deps = concat.parseRequireLine("/path/to/file.js", "//= require \"dep, ../dep2, ../../dep3\"");
-			test.equal(3, deps.length);
-			test.equal("/path/to/dep.js", deps[0]);
-			test.equal("/path/dep2.js", deps[1]);
-			test.equal("/dep3.js", deps[2]);
-			test.done();
-		}
-	};
 	
 	exports["concat.readDependencies"] = {
 		"read require lines from file": function (test) {

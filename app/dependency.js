@@ -3,6 +3,7 @@
 	"use strict";
 
 	var fs = require("fs"),
+		ABSOLUTE_PATH_PATTERN = /^\//,
 		DEFAULTS = {
 			postFix: ".js",
 			fileProvider: function (filename) {
@@ -12,9 +13,10 @@
 			}
 		},
 		createPath = function (path, dep) {
-			var baseDir = path.substring(0, path.lastIndexOf("/"));
+			var baseDir;
+			baseDir = path.substring(0, path.lastIndexOf("/"));
 			dep = dep.replace(/^[ \t]+|[ \t]+$/g, "");
-			if (dep.indexOf("/") === 0) {
+			if (dep.match(ABSOLUTE_PATH_PATTERN)) {
 				return dep;
 			}
 			while (dep.indexOf("../") > -1) {
