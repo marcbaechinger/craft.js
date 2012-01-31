@@ -26,9 +26,14 @@
 		parseRequireLine = function (path, line) {
 			// format to parse: //= require "dep1, dep2"
 			var offset = line.indexOf("\""),
-				deps = [];
+				deps = [],
+				lastPos;
 			if (offset > -1) {
-				line = line.substring(offset + 1, line.length - 1);
+				lastPos = line.lastIndexOf("\"");
+				if (lastPos <= offset) { // missing closing quote
+					lastPos = line.length - 1;
+				}
+				line = line.substring(offset + 1, lastPos);
 				if (line.indexOf(",") > -1) {
 					deps = line.split(",").map(function (item) {
 						return createPath(path, item);

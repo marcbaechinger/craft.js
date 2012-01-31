@@ -1,7 +1,7 @@
 /*global require:false, exports:false, console: false */
 (function () {
 	"use strict";
-	var concat = require("../app/dependency.js"),
+	var dependency = require("../app/dependency.js"),
 		files = {
 			"base": {dependencies: []},
 			"base-2": {dependencies: []},
@@ -34,7 +34,7 @@
 		};
 	
 	// set a mock for the file provider
-	concat.activeFileProvider = function (filename) {
+	dependency.activeFileProvider = function (filename) {
 		var file = files[filename];
 		if (!file) {
 			throw {
@@ -46,11 +46,11 @@
 		return file;
 	};
 
-	exports["concat.resolve"] = {
+	exports["dependency.resolve"] = {
 		"resolve direct dependency": function (test) {
 			var resolvedList = [];
 
-			resolvedList = concat.resolve("dependency-on-base");
+			resolvedList = dependency.resolve("dependency-on-base");
 
 			test.equal(2, resolvedList.length);
 			test.equal("base", resolvedList[0]);
@@ -66,7 +66,7 @@
 					"dependency-on-base"
 				]
 			};
-			concat.resolve("transitive-dependency-on-base", {}, resolvedList);
+			dependency.resolve("transitive-dependency-on-base", {}, resolvedList);
 			delete files["transitive-dependency-on-base"];
 
 			test.equal(3, resolvedList.length);
@@ -83,7 +83,7 @@
 					"base", "base-2", "base-3"
 				]
 			};
-			concat.resolve("multiple-direct-dependencies", {}, resolvedList);
+			dependency.resolve("multiple-direct-dependencies", {}, resolvedList);
 			delete files["multiple-direct-dependencies"];
 
 			test.equal(4, resolvedList.length);
@@ -111,7 +111,7 @@
 					"dependency-on-base", "dependency-on-base-2", "dependency-on-base-3"
 				]
 			};
-			concat.resolve("multiple-transitive-dependencies", {}, resolvedList);
+			dependency.resolve("multiple-transitive-dependencies", {}, resolvedList);
 			delete files["multiple-transitive-dependencies"];
 
 			test.expect(1);
@@ -135,7 +135,7 @@
 					"redundant-dependency-on-base", "another-dependency-on-base", "dependency-on-base"
 				]
 			};
-			concat.resolve("joined-dependencies", {}, resolvedList);
+			dependency.resolve("joined-dependencies", {}, resolvedList);
 			delete files["joined-dependencies"];
 
 			test.expect(1, resolvedList.length);
@@ -161,7 +161,7 @@
 					"redundant-dependency-on-base", "dependency-on-base", "dependency-on-base-3"
 				]
 			};
-			concat.resolve("multiple-transitive-redundant-dependency", {}, resolvedList);
+			dependency.resolve("multiple-transitive-redundant-dependency", {}, resolvedList);
 			delete files["multiple-transitive-redundant-dependency"];
 
 			test.expect(1);
@@ -189,7 +189,7 @@
 					"another-dependency-on-base"
 				]
 			};
-			concat.resolve("dependency-on-intermediate-base", {}, resolvedList);
+			dependency.resolve("dependency-on-intermediate-base", {}, resolvedList);
 			delete files["dependency-on-intermediate-base"];
 
 			test.expect(1);
@@ -214,7 +214,7 @@
 			};
 			test.expect(1);
 			try {
-				concat.resolve("recursive-dependency", {}, resolvedList);
+				dependency.resolve("recursive-dependency", {}, resolvedList);
 				console.log("error", e.type, e.msg, e);
 			} catch (e) {
 				test.equals("recursive-dependency", e.type);
@@ -227,11 +227,77 @@
 				
 			test.expect(2);
 			try {
-				concat.resolve(filename, {}, resolvedList);
+				dependency.resolve(filename, {}, resolvedList);
 			} catch (e) {
 				test.equals("file-not-found", e.type);
 				test.equals(filename, e.filename);
 			}
+			test.done();
+		}
+	};
+	
+	exports["dependency.parseRequireLine"] = {
+		"single dependency": function (test) {
+			var path = "/repo/",
+				line = "//= require \"dep1\"",
+				deps = dependency.parseRequireLine(path, line);
+			
+			test.expect(1);
+			test.deepEqual(["/repo/dep1.js"], deps);
+			test.done();
+		},
+		"multiple dependencies": function (test) {
+			var path = "/repo/",
+				line = "//= require \"dep1 , dep2\"",
+				deps = dependency.parseRequireLine(path, line);
+			
+			test.expect(1);
+			test.deepEqual(["/repo/dep1.js", "/repo/dep2.js"], deps);
+			test.done();
+		},
+		"leading and trailing blanks within quotes": function (test) {
+			var path = "/repo/",
+				line = "//= require \"      dep1           ,       dep2        \"",
+				deps = dependency.parseRequireLine(path, line);
+			
+			test.expect(1);
+			test.deepEqual(["/repo/dep1.js", "/repo/dep2.js"], deps);
+			test.done();
+		},
+		"leading and trailing tabs within quotes": function (test) {
+			var path = "/repo/",
+				line = "//= require \"		dep1		,		dep2		\"",
+				deps = dependency.parseRequireLine(path, line);
+			
+			test.expect(1);
+			test.deepEqual(["/repo/dep1.js", "/repo/dep2.js"], deps);
+			test.done();
+		},
+		"trailing blanks after closing quote": function (test) {
+			var path = "/repo/",
+				line = "//= require \"      dep1           ,       dep2        \"         ",
+				deps = dependency.parseRequireLine(path, line);
+			
+			test.expect(1);
+			test.deepEqual(["/repo/dep1.js", "/repo/dep2.js"], deps);
+			test.done();
+		},
+		"trailing tabs after closing quote": function (test) {
+			var path = "/repo/",
+				line = "//= require \"		dep1		,		dep2		\"			",
+				deps = dependency.parseRequireLine(path, line);
+			
+			test.expect(1);
+			test.deepEqual(["/repo/dep1.js", "/repo/dep2.js"], deps);
+			test.done();
+		},
+		"missing closing quote": function (test) {
+			var path = "/repo/",
+				line = "//= require \"	dep1, dep2	",
+				deps = dependency.parseRequireLine(path, line);
+			
+			test.expect(1);
+			test.deepEqual(["/repo/dep1.js", "/repo/dep2.js"], deps);
 			test.done();
 		}
 	};
