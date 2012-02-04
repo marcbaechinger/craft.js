@@ -22,10 +22,39 @@ node server.js
 
 ## Usage
 
+### Browse repository
+
 - Navigate your Browser to [http://localhost:3000/repo/](http://localhost:3000/repo/) to browse the JavaScript in the `stuff` directory (see installation instructions).
 - Browse to a JavaScript of your choice.
 - Show JavaScript and play with the `expand`, `mangle`, `squeeze`, `minimize`, `beautify` and `lint` options. The transformed JavaScript file is displayed accordingly.
-- Use the `text/javascript` option to have the file delivered with content type `text/javascript`.
+
+### Create a distribution
+
+- Browse to a file
+- Add teh file to the project by clicking 'add to project' on the top right of the page
+- Repeat with as many files as you require for build
+- Click the project name to change the name of the project (part of the dist file name)
+- Click the project bar on the top to show current project configuration
+- Click the 'build' button to create a build 
+- The browser is redirected to the new file stored on the server side
+
+### Delivering JavaScripts on the fly
+
+Expanding repositories and transforming the resulting source code can be done on the fly and delivered with content type text/javascript. Hence it's easy to create a single 'bootstrap.js' declare the required dependencies with the 'require' processing instructions and load the file on the fly while development or for testing.
+ 
+```
+curl http://marc.no.de/repo/src/applications/craftjs/bootstrap.js?plain=true&mangle=true&squeeze=true&minimize=true
+```
+
+*Query parameters*
+
+- plain: deliver raw script with content type text/javascript
+- mangle: rename local variables to miminize script
+- squeeze: minimize even more (see JSHint docu)
+- minimize: transforme to minimized script
+- beautify: transform to pretty-printed script   
+
+The web applicaton of craft.js uses this technique to serve the JavaScript for its web user interface.
 
 ## Resolving script dependencies
 
