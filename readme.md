@@ -49,7 +49,7 @@ Declare dependencies of a script with a processing instruction at the top of a J
 //= require "ui-helper"
 ```
 
-Multiple dependencies can be declared in a single processing instruction or with multiple instructions. craft.js takes care to concatenate the script in the declared order and avoids including the same file twice.
+Multiple dependencies can be declared in a single processing instruction or with multiple instructions. craft.js takes care to concatenate the script in the declared order and avoids including the same file twice. The .js post fix must be omitted when declaring dependencies with a processing instruction. 
 
 
 ## Usage
