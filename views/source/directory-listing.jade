@@ -2,7 +2,7 @@ ul.directory
 	each file,idx in sourceTree.children
 		if file.children
 			li.directory-item
-				a.file(href="/#{displayMode}/#{file.path}") #{file.name} &nbsp;
+				a.file(href="/#{src}/#{file.path}") #{file.name} &nbsp;
 				label.children 
 				if file.children.length === 0
 					span contains no entries
@@ -12,11 +12,12 @@ ul.directory
 					span contains #{file.children.length} entries
 		else
 			li.directory-item
-				a.file(href="/#{displayMode}/#{file.path}") #{file.name}
+				a.file(href="/#{context}/#{file.path}") #{file.name}
 				label(for="plaintext-#{idx}") text/plain
 					input.plain(id="plaintext-#{idx}", type="checkbox")
-				label(for="expand-#{idx}")  expand
-					input.expand(id="expand-#{idx}", type="checkbox")
+				if displayMode === "src"
+					label(for="expand-#{idx}") expand
+						input.expand(id="expand-#{idx}", type="checkbox")
 				label(for="mangle-#{idx}")  mangle
 					input.mangle(id="mangle-#{idx}", type="checkbox")
 				label(for="squeeze-#{idx}")  squeeze

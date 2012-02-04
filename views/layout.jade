@@ -11,11 +11,31 @@ html
 		.ribbon &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fork me at <a href="https://github.com/marcbaechinger/craft.js">github</a>
 		
 		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
-		script(src="/build/src/controller/model-aware-controller.js?plain=true&expand=true")
-		script(src="/javascripts/ui-utils.js")
+		script(src="/repo/src/applications/craftjs/bootstrap.js?plain=true&expand=true")
+		script(type="template/mustache", id="project-file")
+			li
+				[
+				a(href="#", data-action="remove-from-project", data-path="{{path}}")-
+				]
+				a(href="/#{src}/{{path}}")
+					{{path}}
+				br
+		script(type="template/mustache", id="lint-options-tmpl")
+			.lint-flags {{title}}
+				label.maxerr(data-action="edit-maxerr") maxerr: 
+					span {{maxerr}}
+				label.indent(data-action="edit-indent") indent: 
+					span {{indent}}
+			.value-list
+				{{#options}}
+				label.boolean-editor(data-name="{{key}}", title="{{desc}}", class="{{on}}") {{key}}
+				{{/options}} 
 		if typeof path !== "undefined"
 			script
 				var data = {
 					path: "#{path}",
-					displayMode: "#{displayMode}"
+					displayMode: "#{displayMode}",
+					src: "#{src}",
+					dist: "#{dist}",
+					context: "#{context}"
 				};

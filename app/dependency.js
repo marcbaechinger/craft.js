@@ -54,12 +54,14 @@
 			}
 			return deps;
 		},
-		readDependencies = function (path) {
+		readDependencies = function (path) {	
 			var content = fs.readFileSync(path).toString(),
 				lines = content.split("\n"),
-				dependencies = [];
+				dependencies = [],
+				currentLine;
 			lines.forEach(function (item) {
 				if (item.indexOf("//= require") === 0) {
+					currentLine = item;
 					dependencies = dependencies.concat(parseRequireLine(path, item));
 				}
 			});
@@ -144,6 +146,8 @@
 	exports.Concatenator = function (spec) {
 		var basePath = spec.basePath || __dirname,
 			checkAccess = function (path) {
+				console.log("basepath", basePath);
+				console.log("path", path);
 				if (path.indexOf(basePath) !== 0) {
 					console.error("error: access denied for ", path);
 					console.error("error: access denied for ", path);

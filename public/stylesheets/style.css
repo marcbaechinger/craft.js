@@ -30,11 +30,20 @@ h2.directory {
 ul.directory {
   padding-left: 0px;
 }
-.build-flags {
+.lint-flags, .build-flags {
   border-bottom: solid 1px #333;
   margin-left: 12px;
   margin-right: 12px;
   margin-top: 12px;
+}
+.lint-flags label {
+  display: block;
+  cursor: pointer;
+  float: right;
+}
+.lint-flags label span {
+  display: inline-block;
+  width: 40px;
 }
 .directory-item {
   background-color: #dedede;

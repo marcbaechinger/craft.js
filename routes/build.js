@@ -5,10 +5,11 @@
 	var fs = require("fs"),
 		err = require("./error.js"),
 		concat = require("../app/dependency.js"),
+		appConfig = require("../app-config.js"),
 		uglify = require("../app/uglify.js"),
 		jshint = require('../app/jshint.js'),
 		fsmgmt = require('./fs-management.js'),
-		basePath = process.cwd() + "/stuff",
+		basePath = appConfig.path.src,
 		concatenator = new concat.Concatenator({
 			basePath: basePath
 		}),
@@ -83,10 +84,11 @@
 				req.data.realPathDependencies = concatenator.resolve(req.data.realPath);
 				req.data.dependencies = translateDependencies(req.data.realPathDependencies);
 			} catch (e) {
-				error.sendErrorPage({
+				err.sendErrorPage(req, res, {
 					type: "resolve-failed",
 					path: req.data.realPath,
-					statusCode: 400
+					statusCode: 400,
+					error: e
 				});
 			}
 		}
@@ -145,9 +147,21 @@
 		for (name in req.query) {
 			if (name.match(/^lint-/)) {
 				val = req.query[name];
-				options[name.replace(/^lint-/, "")] = val === "true" ? true : false;
+				if (val === "false") {
+					val = false;
+				} else if (val === "true") {
+					val = true;
+				} else {
+					try { 
+						val = parseInt(val, 10); 
+					} catch (e) { 
+						/* ignored */
+					}
+				}
+				options[name.replace(/^lint-/, "")] = val;
 			}
 		}
+		console.log("lint options from query", options);
 		req.data.lintOptions = options;
 		next();
 	};
@@ -172,6 +186,9 @@
 				if (req.data.sourceCode) {
 					req.data.lines = req.data.sourceCode.split("\n");
 				}
+				req.data.context = displayMode === "src" ? appConfig.context.src : appConfig.context.dist;
+				req.data.dist = appConfig.context.dist;
+				req.data.src = appConfig.context.src;
 				req.data.title = req.data.path;
 				res.render('file-viewer', req.data);
 			}

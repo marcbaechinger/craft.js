@@ -20,7 +20,7 @@
 	app.configure(function () {
 		app.set('views', conf.path.views);
 		app.set('view engine', 'jade');
-		app.set('view options', { layout: false });
+		app.set('view options', { layout: false, pretty: false });
 		app.use(express.bodyParser());
 		app.use(express.methodOverride());
 		app.use(express.compiler({ src: conf.path.docroot, enable: ['less'] }));
@@ -55,7 +55,7 @@
 		project.sendBuildOutput
 	);
 	
-	app.get('/build/*',
+	app.get("/" + conf.context.src + "/*",
 		build.setupRenderData,
 		build.createFileInfoFactory(srcDirectory),
 		build.createBreadcrumpTokens,
@@ -67,10 +67,10 @@
 		build.astToSourceCode,
 		build.extractLintOptions,
 		build.lint,
-		build.fileViewer("build")
+		build.fileViewer("src")
 	);
 	
-	app.get('/dist/*',
+	app.get("/" + conf.context.dist + "/*",
 		build.setupRenderData,
 		build.createFileInfoFactory(distDirectory),
 		build.createBreadcrumpTokens,

@@ -1,0 +1,1 @@
+//= require "model-aware-controller"

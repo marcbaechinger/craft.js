@@ -7,7 +7,7 @@ block content
 		label.project-button.collapse current project: 
 			span.project-name(data-action="edit-project-name") default
 		#project-files
-		if typeof sourceCode!=="undefined" && displayMode == "build"
+		if typeof sourceCode!=="undefined" && displayMode == "src"
 			label.bag-button(data-action="toggle-bag")
 	if typeof sourceCode!=="undefined"
 		include source/toolbar
@@ -16,9 +16,9 @@ block content
 		h2.collapse.directory Content of directory #{path}
 			div(style="float: right;")
 				if typeof breadcrumb!=="undefined" 
-					a(href="/build/") 
+					a(href="/#{src}/") 
 					each path, name in breadcrumb
-						a(href="/build/#{path}") #{name}/
+						a(href="/#{src}/#{path}") #{name}/
 					#{path.substring(path.lastIndexOf("/") + 1)}
 		include source/directory-listing
 
@@ -26,7 +26,7 @@ block content
 		h2.collapse Dependencies of #{path}
 		ul.dependencies
 			each dep in dependencies
-				li: a(href="/build#{dep}") #{dep}
+				li: a(href="/#{src}#{dep}") #{dep}
 					
 	if typeof report !== "undefined"
 		h2.collapse JSHint report

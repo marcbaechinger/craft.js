@@ -320,6 +320,7 @@
 		},
 		"parse require line: single dependency": function (test) {
 			var deps = dependency.parseRequireLine("/path/to/file.js", "//= require \" dep \"");
+			test.expect(2);
 			test.equal(1, deps.length);
 			test.equal("/path/to/dep.js", deps[0]);
 			test.done();
@@ -328,6 +329,7 @@
 			var deps;
 			dependency.allowAbsoluteDependencies(true);
 			deps = dependency.parseRequireLine("/path/to/file.js", "//= require \"dep-1, /path/to/lib/dep.js\"");
+			test.expect(3);
 			test.equal(2, deps.length);
 			test.equal("/path/to/dep-1.js", deps[0]);
 			test.equal("/path/to/lib/dep.js", deps[1]);
@@ -347,6 +349,7 @@
 		},
 		"parse require line: multiple dependencies in a single line expression": function (test) {
 			var deps = dependency.parseRequireLine("/path/to/file.js", "//= require \"dep, dep2     , dep3  \"");
+			test.expect(4);
 			test.equal(3, deps.length);
 			test.equal("/path/to/dep.js", deps[0]);
 			test.equal("/path/to/dep2.js", deps[1]);
@@ -355,6 +358,7 @@
 		},
 		"parse require line: dependencies in parent directories": function (test) {
 			var deps = dependency.parseRequireLine("/path/to/file.js", "//= require \"dep, ../dep2, ../../dep3\"");
+			test.expect(4);
 			test.equal(3, deps.length);
 			test.equal("/path/to/dep.js", deps[0]);
 			test.equal("/path/dep2.js", deps[1]);

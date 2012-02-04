@@ -3,8 +3,9 @@
 	
 	var concat = require("../app/dependency.js"),
 		error = require("./error.js"),
+		appConfig = require("../app-config.js"),
 		fs = require("fs"),
-		basePath = process.cwd() + "/stuff/",
+		basePath = appConfig.path.src,
 		translateDependencies = function (dependencies) {
 			return dependencies.map(function (dep) {
 				return dep.replace(basePath, "");
@@ -40,7 +41,7 @@
 			file, deps = [];
 		
 		for (file in files) {
-			deps.push(concat.resolve(basePath + file));
+			deps.push(concat.resolve(basePath + "/" + file));
 		}
 		req.data.realPathDependencies = concat.joinDependencies.apply(undefined, deps);
 		req.data.dependencies = translateDependencies(req.data.realPathDependencies);
