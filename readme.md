@@ -20,6 +20,39 @@ node server.js
 
 ```
 
+## Configuration
+
+Change the `app-config.js` to adjust the `port` on which the appication should listen.
+
+```
+exports.server = {
+	port: 3000
+};
+exports.context = {
+	src: "repo",  // context of src directory -> localhost:3000/repo/sample.js
+	dist: "dist"  // context of distribution directory -> localhost:3000/dist/craftjs_20120204-205351_450.js
+};
+exports.path = {
+	src: __dirname + "/resources",
+	dist: __dirname + "/dist",
+	views: __dirname + "/views",
+	docroot: __dirname + '/public'
+};
+```
+
+
+## declaring dependencies in a script
+
+Declare dependencies of a script with a processing instruction at the top of a JavaScript file:
+
+```
+//= require "../../model/collection, ../../model/model"
+//= require "ui-helper"
+```
+
+Multiple dependencies can be declared in a single processing instruction or with multiple instructions. craft.js takes care to concatenate the script in the declared order and avoids including the same file twice.
+
+
 ## Usage
 
 ### Browse repository
@@ -55,33 +88,3 @@ curl http://marc.no.de/repo/src/applications/craftjs/bootstrap.js?plain=true&man
 - beautify: transform to pretty-printed script   
 
 The web applicaton of craft.js uses this technique to serve the JavaScript for its web user interface.
-
-## Resolving script dependencies
-
-Declare dependencies of a script at the top of a JavaScript file:
-
-```
-//= require "../../model/collection"
-```
-
-- choose the `expand` option to let craft.js resolve direct and transitive dependencies automatically
-
-## Configuration
-
-Change the `app-config.js` to adjust the `port` on which the appication should listen.
-
-```
-exports.server = {
-	port: 3000
-};
-exports.context = {
-	src: "repo",  // context of src directory -> localhost:3000/repo/sample.js
-	dist: "dist"  // context of distribution directory -> localhost:3000/dist/craftjs_20120204-205351_450.js
-};
-exports.path = {
-	src: __dirname + "/resources",
-	dist: __dirname + "/dist",
-	views: __dirname + "/views",
-	docroot: __dirname + '/public'
-};
-```
