@@ -1,8 +1,7 @@
 # craft.js - javascript build tool
 
 See http://marc.no.de for a live demo.
-
-![JavaScript source code viewer](/marcbaechinger/craft.js/raw/master/public/images/screenshot.jpg)
+![JavaScript source code viewer](/marcbaechinger/craft.js/raw/master/public/images/screenshots.jpg)
 
 craft.js helps to manage, assess, build and distribute from a common JavaScript source code base.
 
