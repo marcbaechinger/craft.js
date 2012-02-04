@@ -40,7 +40,7 @@
 
 	// Routes
 	app.get('/', function (req, res) {
-		res.render('index', { title: 'craft.js' });
+		res.render('index', { title: 'craft.js', src: conf.context.src });
 	});
 	
 	app.post("/project/build",
@@ -56,6 +56,22 @@
 	);
 	
 	app.get("/" + conf.context.src + "/*",
+		build.setupRenderData,
+		build.createFileInfoFactory(srcDirectory),
+		build.createBreadcrumpTokens,
+		build.getFileContent(srcDirectory),
+		build.resolve,
+		build.expand,
+		build.mangle,
+		build.squeeze,
+		build.astToSourceCode,
+		build.extractLintOptions,
+		build.lint,
+		build.fileViewer("src")
+	);
+	
+	// preserve legacy url published on bit.ly
+	app.get("/build/*",
 		build.setupRenderData,
 		build.createFileInfoFactory(srcDirectory),
 		build.createBreadcrumpTokens,
