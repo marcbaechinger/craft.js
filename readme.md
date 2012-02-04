@@ -57,7 +57,7 @@ Multiple dependencies can be declared in a single processing instruction or with
 
 ### Browse repository
 
-- Navigate your Browser to [http://localhost:3000/repo/](http://localhost:3000/repo/) to browse the JavaScript in the `stuff` directory (see installation instructions).
+- Navigate your Browser to [http://localhost:3000/repo/](http://localhost:3000/repo/) to browse the JavaScript in the `resources` directory (see installation instructions).
 - Browse to a JavaScript of your choice.
 - Show JavaScript and play with the `expand`, `mangle`, `squeeze`, `minimize`, `beautify` and `lint` options. The transformed JavaScript file is displayed accordingly.
 
