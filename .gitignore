@@ -11,8 +11,7 @@ pids
 logs
 results
 
-stuff/*
-stuffdist/*
+dist/*
 testrunner/*
 node_modules
 npm-debug.log
