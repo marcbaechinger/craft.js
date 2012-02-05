@@ -322,7 +322,7 @@ $(function () {
 				}
 			},
 			"@toggle-source-markers": function () {
-				var markerPattern = /\/\/.*(FIXME|TODO)/,
+				var markerPattern = /^[ \d]*:.*\/\/.*(FIXME|TODO)/,
 					buf = [],
 					markerList = $("#markers");
 				markerList.empty();
@@ -332,16 +332,20 @@ $(function () {
 					if (txt.match(markerPattern)) {
 						line.toggleClass("marker");
 						if (line.hasClass("marker")) {
-							buf.push("<li><a href='#" + line.attr("id") + "'>");
-							buf.push(txt.replace(/.*\/\//, ""));
-							buf.push("</a></li>");
+							var convert = txt.replace(/\/\//, ""),
+								fixme = convert.indexOf("FIXME") > -1;
+							convert = convert.replace(/FIXME/, "");
+							convert = convert.replace(/TODO/, "");
+							buf.push("<li><a href='#" + line.attr("id") + "' class='" 
+								+ (fixme ? "fixme" : "todo") + "'>" 
+								+ (fixme ? "FIXME" : "TODO") + "</a> line " + convert + "</li>");
 						}
 					}
 				});
 				if (buf.length < 1) {
 					buf.push("<li><a>no markers found</a></li>");
-					$(".marker-button").remove();
-				}
+				}	
+				$(".marker-button").remove();
 				markerList.html(buf.join(""));
 			},
 			"@remove-from-project": function (e) {

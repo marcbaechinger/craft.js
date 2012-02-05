@@ -30,6 +30,9 @@ html
 				{{#options}}
 				label.boolean-editor(data-name="{{key}}", title="{{desc}}", class="{{on}}") {{key}}
 				{{/options}} 
+		script(type="template/mustache", id="marker-list")
+			li 
+				span.marker {{marker}}
 		if typeof path !== "undefined"
 			script
 				var data = {

@@ -12,17 +12,24 @@
 }
 /* -- */
 header {
+  background-color: #ededed;
   border-bottom: 1px solid #ccc;
-  color: #ededed;
+  color: #fff;
   font-size: 32px;
-  text-shadow: 2px 2px 2px #999;
+  text-shadow: 1px 1px 2px #333;
   font-family: "Arial Black";
   font-weight: 700;
-  padding-left: 80px;
+  padding-left: 160px;
+  margin-left: -60px;
+  margin-right: -58px;
+  margin-top: -14px;
 }
 header a {
-  color: #ededed;
+  color: #fefefe;
   text-decoration: none;
+}
+a {
+  color: #20539D;
 }
 h2.directory {
   margin-top: 50px;
@@ -59,7 +66,7 @@ ul.directory {
   margin-left: 22px;
 }
 .directory-item a {
-  color: #243F6F;
+  color: #20539D;
 }
 li.directory-item button.transform {
   margin-left: 20px;
@@ -188,15 +195,28 @@ label.project {
   font-weight: 700;
   padding-left: 12px;
 }
-a {
-  color: #00B7FF;
-}
 button {
   cursor: pointer;
 }
 a.file {
   width: 280px;
   display: inline-block;
+}
+#markers .fixme, #markers .todo {
+  background-color: #FFD800;
+  border-radius: 4px;
+  box-shadow: 2px 2px 6px #777;
+  display: absolute;
+  margin-top: 2px;
+  margin-left: 22px;
+  margin-right: 12px;
+  padding: 2px 8px;
+  text-decoration: none;
+  color: #000 !important;
+}
+#markers .todo {
+  background-color: #20539D;
+  color: #fff !important;
 }
 #lint-options {
   background-color: #efefef;
@@ -226,6 +246,7 @@ a.file {
   z-index: 100;
   min-height: 120px;
   width: 636px;
+  right: 24px;
 }
 #project-files ul {
   list-style: none;
@@ -253,26 +274,28 @@ a.file {
   margin-bottom: 12px;
 }
 .lint-button {
-  background-color: #c98c58;
+  background-color: #20539d;
   border-radius: 4px;
   cursor: pointer;
   display: inline-block;
   font-size: 14px;
   padding: 3px 12px;
   text-align: center;
+  color: #fff;
 }
 .lint-button.contained {
   background-color: #006400;
   color: #eee;
 }
 .project-button {
-  background-color: #c98c58;
+  background-color: #999999;
   border-radius: 4px;
   cursor: pointer;
   display: inline-block;
   font-size: 14px;
   padding: 3px 12px;
   text-align: center;
+  color: #fff;
   width: 280px;
   text-align: left;
 }
@@ -281,14 +304,14 @@ a.file {
   color: #eee;
 }
 .marker-button {
-  background-color: #cecece;
+  background-color: #20539d;
   border-radius: 4px;
   cursor: pointer;
   display: inline-block;
   font-size: 14px;
   padding: 3px 12px;
   text-align: center;
-  margin-bottom: 12px;
+  color: #fff;
   margin-left: 24px;
 }
 .marker-button.contained {
@@ -396,6 +419,7 @@ ul#markers {
   padding-left: 16px;
   list-style: none;
   padding: 0px;
+  margin-left: 12px;
 }
 ul#markers li {
   height: 22px;

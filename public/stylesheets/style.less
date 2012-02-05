@@ -74,19 +74,26 @@
 
 /* -- */
 header {
+	background-color: #ededed;
 	border-bottom: 1px solid #ccc;
-	color: #ededed;
+	color: #fff;
 	font-size: 32px;
-	text-shadow: 2px 2px 2px #999;
+	text-shadow: 1px 1px 2px #333;
 	font-family: "Arial Black";
 	font-weight: 700;
-	padding-left: 80px;
+	padding-left: 160px;
+	margin-left: -60px;
+	margin-right: -58px;
+	margin-top: -14px;
 	a {
-		color: #ededed;
+		color: #fefefe;
 		text-decoration: none;
 	}
 }
 
+a {
+	color: #20539D;
+}
 
 h2.directory {
 	margin-top: 50px;
@@ -129,7 +136,7 @@ ul.directory {
 	.children {
 	}
 	a {
-		color: #243F6F;
+		color: #20539D;
 	}
 }
 li.directory-item button.transform {
@@ -253,18 +260,32 @@ label.project {
 	font-weight: 700;
 	padding-left: 12px;
 }
-a {
-  color: #00B7FF;
-}
 
 button {
 	cursor: pointer;
 }
 a.file {
 	width: 280px; 
-	display: inline-block
+	display: inline-block;
 }
 
+#markers .fixme,
+#markers .todo {
+	background-color: #FFD800;
+	border-radius: 4px;
+	box-shadow: 2px 2px 6px #777;
+	display: absolute;
+	margin-top: 2px;
+	margin-left: 22px;
+	margin-right: 12px;
+	padding: 2px 8px;
+	text-decoration: none;
+	color: #000 !important;
+}
+#markers .todo {
+	background-color: #20539D;
+	color: #fff !important;
+}
 
 
 #lint-options {
@@ -275,6 +296,7 @@ a.file {
 	.popup();
 	min-height: 120px;
 	width: 636px;
+	right: 24px;
 	ul {
 		list-style: none;
 		padding-left: 8px;
@@ -304,18 +326,20 @@ a.file {
 	}
 }
 .lint-button {
-	.button(#C98C58);
+	.button(#20539D);
+	color: #fff;
 }
 
 .project-button {
-	.button(#C98C58);
+	.button(#999);
+	color: #fff;
 	width: 280px;
 	text-align: left;
 }
 
 .marker-button {
-	.button();
-	margin-bottom: 12px;
+	.button(#20539D);
+	color: #fff;
 	margin-left: 24px;
 }
 .bag-button {
@@ -403,6 +427,7 @@ div.options {
 
 ul#markers {
 	.button-list();
+	margin-left: 12px;
 }
 
 .errors {
