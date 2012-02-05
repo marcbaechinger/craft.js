@@ -41,6 +41,22 @@
 	position: absolute;
 	z-index: 100;
 }
+.button-list() {
+	padding-left: 16px;
+	list-style: none;
+	padding: 0px;
+	li {
+		height: 22px;
+		margin-bottom: 2px;
+		padding: 4px 16px;
+		
+		a {
+			background-color: #dedede;
+			border-radius: 5px;
+			padding: 2px 6px 4px 6px;
+		}
+	}
+}
 
 /**********    cleafix ***************/
 .clearfix:after {
@@ -123,13 +139,9 @@ li.directory-item button.transform {
 .page {
 	.shadow-panel();
 }
+
 ul.dependencies {
-	list-style: none;
-	padding: 0px;
-	li {
-		margin-bottom: 18px;
-		padding: 4px 6px;
-	}
+	.button-list();
 	.dep {
 		background-color: #e3e3e3;
 		border-radius: 3px;
@@ -301,6 +313,11 @@ a.file {
 	text-align: left;
 }
 
+.marker-button {
+	.button();
+	margin-bottom: 12px;
+	margin-left: 24px;
+}
 .bag-button {
 	.button();
 	width: 180px;
@@ -329,6 +346,9 @@ div.source {
 		&.error {
 			background-color: @error-bg-color;
 			color: @error-font-color;
+		}
+		&.marker {
+			background-color: #FFD800;
 		}
 	}
 	.reason {
@@ -381,18 +401,8 @@ div.options {
 	.panel;
 }
 
-ul.dependencies {
-	padding-left: 16px;
-	li {
-		margin-bottom: 2px;
-		height: 22px;
-		
-		a {
-			background-color: #dedede;
-			border-radius: 5px;
-			padding: 2px 6px 4px 6px;
-		}
-	}
+ul#markers {
+	.button-list();
 }
 
 .errors {

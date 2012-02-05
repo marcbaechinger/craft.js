@@ -1,5 +1,5 @@
 /*global $: false, document: true, model: false, controller: false,
-	localStorage: false, console: false, data: false, prompt: false, Mustache: false */
+	data: false, craftjs: false, Mustache: false */
 //= require "renderer, ../../controller/model-aware-controller"
 $(function () {
 	var bag, bagModel, lintOptions, lintModel, pageController, projectPanelController, lintOptionPanelController,
@@ -158,7 +158,6 @@ $(function () {
 		renderCheckBox = function (name) {
 			return craftjs.render("<label>{{name}}<input type='checkbox' name='{{name}}'/></label>", {name: name});
 		},
-		// TODO move template into view
 		renderProjectItem = function (path) {
 			return craftjs.renderById("project-file", {path: path});
 		},
@@ -179,16 +178,8 @@ $(function () {
 			}
 			return buf.join("");
 		},
-		renderLintOptions = function (options, title) {
-			var buf = ["<div class='build-flags'>" + title + "</div><div class='value-list'>"];
-
-			$.each(options, function (key, val) {
-				buf.push(renderPropertyEditor(key, val));
-			});
-
-			buf.push("</div>");
-			//return buf.join("");
-			var opts = $.map(options, function(val, key) {
+		filterBooleanLintOptions = function (options) {
+			return $.map(options, function(val, key) {
 				var renderData;
 				if (typeof val === "boolean") {
 					renderData = {
@@ -200,9 +191,11 @@ $(function () {
 					};
 				}
 				return renderData; 
-			});
+			});	
+		},
+		renderLintOptions = function (options, title) {
 			return craftjs.renderById("lint-options-tmpl", {
-				options: opts,
+				options: filterBooleanLintOptions(options),
 				maxerr: options.maxerr,
 				indent: options.indent,
 				title: title
@@ -282,6 +275,7 @@ $(function () {
 				});
 			}
 		},
+		// TODO render by template
 		render: function () {
 			var buf = ["<div class='build-flags'>Build flags: "];
 			buf.push($.map(["mangle", "squeeze", "minimize", "beautify"], renderCheckBox).join(""));
@@ -326,6 +320,29 @@ $(function () {
 				} else {
 					this.model.set(slice);
 				}
+			},
+			"@toggle-source-markers": function () {
+				var markerPattern = /\/\/.*(FIXME|TODO)/,
+					buf = [],
+					markerList = $("#markers");
+				markerList.empty();
+				$(".source pre").each(function() {
+					var line = $(this),
+						txt = line.text();
+					if (txt.match(markerPattern)) {
+						line.toggleClass("marker");
+						if (line.hasClass("marker")) {
+							buf.push("<li><a href='#" + line.attr("id") + "'>");
+							buf.push(txt.replace(/.*\/\//, ""));
+							buf.push("</a></li>");
+						}
+					}
+				});
+				if (buf.length < 1) {
+					buf.push("<li><a>no markers found</a></li>");
+					$(".marker-button").remove();
+				}
+				markerList.html(buf.join(""));
 			},
 			"@remove-from-project": function (e) {
 				var target = $(e.target),

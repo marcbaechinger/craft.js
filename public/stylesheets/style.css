@@ -74,12 +74,19 @@ li.directory-item button.transform {
   padding-top: 18px;
 }
 ul.dependencies {
+  padding-left: 16px;
   list-style: none;
   padding: 0px;
 }
 ul.dependencies li {
-  margin-bottom: 18px;
-  padding: 4px 6px;
+  height: 22px;
+  margin-bottom: 2px;
+  padding: 4px 16px;
+}
+ul.dependencies li a {
+  background-color: #dedede;
+  border-radius: 5px;
+  padding: 2px 6px 4px 6px;
 }
 ul.dependencies .dep {
   background-color: #e3e3e3;
@@ -273,6 +280,21 @@ a.file {
   background-color: #006400;
   color: #eee;
 }
+.marker-button {
+  background-color: #cecece;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 3px 12px;
+  text-align: center;
+  margin-bottom: 12px;
+  margin-left: 24px;
+}
+.marker-button.contained {
+  background-color: #006400;
+  color: #eee;
+}
 .bag-button {
   background-color: #cecece;
   border-radius: 4px;
@@ -316,6 +338,9 @@ div.source pre {
 div.source pre.error {
   background-color: #990009;
   color: #ffff00;
+}
+div.source pre.marker {
+  background-color: #FFD800;
 }
 div.source .reason {
   display: block;
@@ -367,14 +392,17 @@ div.options div.option:nth-child(odd) {
   border-radius: 5px;
   padding: 8px;
 }
-ul.dependencies {
+ul#markers {
   padding-left: 16px;
+  list-style: none;
+  padding: 0px;
 }
-ul.dependencies li {
-  margin-bottom: 2px;
+ul#markers li {
   height: 22px;
+  margin-bottom: 2px;
+  padding: 4px 16px;
 }
-ul.dependencies li a {
+ul#markers li a {
   background-color: #dedede;
   border-radius: 5px;
   padding: 2px 6px 4px 6px;
