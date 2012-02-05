@@ -15,8 +15,8 @@ block content
 	if typeof sourceTree!=="undefined"	
 		h2.collapse.directory Content of directory #{path}
 			div(style="float: right;")
+				a(href="/#{src}/", style="text-decoration: none;") repo:/
 				if typeof breadcrumb!=="undefined" 
-					a(href="/#{src}/") 
 					each path, name in breadcrumb
 						a(href="/#{src}/#{path}") #{name}/
 					#{path.substring(path.lastIndexOf("/") + 1)}
