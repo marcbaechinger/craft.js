@@ -36,13 +36,15 @@
 			path = path.replace(/ *\/$/, "");
 			req.data.path = path;
 			req.data.realPath = base + "/" + path;
-			try {
-				req.data.fileDescriptor = fs.statSync(base + "/" + path);
-				next();
-			} catch (e) {
-				e.statusCode = 404;
-				err.sendErrorPage(req, res, e);
-			}
+			fs.stat(base + "/" + path, function(error, stats) {
+				if (error) {
+					error.statusCode = 404;
+					err.sendErrorPage(req, res, error);
+				} else {
+					req.data.fileDescriptor = stats;
+					next();
+				}
+			});
 		};
 	};
 	exports.createBreadcrumpTokens = function (req, res, next) {
@@ -65,12 +67,19 @@
 			var sourceCode;
 			try {
 				if (req.data.fileDescriptor.isFile()) {
-					sourceCode = fs.readFileSync(req.data.realPath).toString();
-					req.data.sourceCode = sourceCode;
+					fs.readFile(req.data.realPath, function(error, data) {
+						if (error) {
+							error.statusCode = 404;
+							err.sendErrorPage(req, res, error);
+						} else {
+							req.data.sourceCode = data.toString();
+							next();
+						}
+					});
 				} else if (req.data.fileDescriptor.isDirectory()) {
 					req.data.sourceTree = fsmgmt.createSourceTree(base, req.data.path);
+					next();
 				}
-				next();
 			} catch (e) {
 			    e.statusCode = e.statusCode || 404;
 			    err.sendErrorPage(req, res, e);

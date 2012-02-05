@@ -50,18 +50,30 @@
 	exports.createSourceCodeWriter = function (base) {
 		return function(req, res, next) {
 			var buffer = new Buffer(req.data.sourceCode, "utf-8"),
-				fd;
+				dispatchError = function(e) {
+					error.logError(e);
+					error.sendErrorPage(req, res, e);
+				};
 				
-			try {
-				fd = fs.openSync(req.data.realPath, "w");
-				fs.writeSync(fd, buffer, 0, buffer.length, null);
-				next();
-			} catch (e) {
-				error.logError(e);
-				error.sendErrorPage(req, res, e);
-			} finally {
-				fs.closeSync(fd);
-			}
+			// TODO hell! cleaner, please! 
+			fs.open(req.data.realPath, "w", function(err, fd) {
+				if (err) {
+					dispatchError(err);
+				} else {
+					fs.write(fd, buffer, 0, buffer.length, null, function (err, written) {
+						fs.close(fd, function(err) {
+							if (err) {
+								dispatchError(err);
+							} else {
+								next();
+							}
+						});
+						if (err) {
+							dispatchError(err);
+						}
+					});
+				}
+			});
 		};
 	};
 	exports.sendBuildOutput = function (req, res) {
