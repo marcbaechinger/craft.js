@@ -170,7 +170,7 @@
 		var name, value, el, tagName;
 		for (name in this.$elements) {
 			el = this.$elements[name];
-			if (this.$elements.hasOwnProperty(name) && el[0].getAttribute("data-model-val")) {				
+			if (el.length && this.$elements.hasOwnProperty(name) && el[0].getAttribute("data-model-val")) {				
 				value = data[name] || "";
 				tagName = el[0].tagName;				
 				if (util.isArray(value.data)) {
