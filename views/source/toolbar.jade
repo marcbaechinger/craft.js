@@ -10,7 +10,7 @@ div.directory-item
 	label(for="plain", style="float: right") text/javascript
 		input(id="plain", type="checkbox", style="float: left;")
 	
-	if displayMode === "build"
+	if displayMode === "src"
 		label(for="expand")  expand
 			if typeof expanded !== "undefined" && expanded
 				input(id="expand", type="checkbox", checked="checked")

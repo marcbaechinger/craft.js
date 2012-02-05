@@ -463,5 +463,6 @@ ul#markers li a {
   -ms-transform: rotate(-45deg);
 }
 .ribbon a {
+  color: yellow;
   text-decoration: none;
 }
