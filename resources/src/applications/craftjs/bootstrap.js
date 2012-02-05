@@ -1,9 +1,10 @@
-/*global $: false, document: true, model: false, controller: false,
+/*global $: false, document: true, localStorage: false, model: false, controller: false,
 	data: false, craftjs: false, Mustache: false */
 //= require "renderer, ../../controller/model-aware-controller"
 $(function () {
 	var bag, projectModel, lintOptions, lintModel, pageController, buildModel, buildToolbarController, 
 		projectPanelController, lintOptionPanelController,
+		ALL_BUILD_FLAGS = ["plain", "mangle", "expand", "squeeze", "beautify", "minimize", "lint"],
 		LINT_OPTIONS = {
 			// Settings
 			"passfail" : false, // Stop on first error.
@@ -43,7 +44,7 @@ $(function () {
 			"evil" : false, // Tolerate use of `eval`.
 			"expr" : false, // Tolerate `ExpressionStatement` as Programs.
 			"forin" : false, // Tolerate `for in` loops without `hasOwnPrototype`.
-			"immed" : true, // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
+			"immed" : true, // Require immediate invocations to be wrapped in parens e.g. `( function (){}() );`
 			"latedef" : true, // Prohipit variable use before definition.
 			"loopfunc" : false, // Allow functions to be defined within loops.
 			"noarg" : true, // Prohibit use of `arguments.caller` and `arguments.callee`.
@@ -109,7 +110,7 @@ $(function () {
 			"evil" : "Tolerate use of `eval`",
 			"expr" : "Tolerate `ExpressionStatement` as Programs",
 			"forin" : "Tolerate `for in` loops without `hasOwnPrototype`",
-			"immed" : "Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`",
+			"immed" : "Require immediate invocations to be wrapped in parens e.g. `( function (){}() );`",
 			"latedef" : "Prohipit variable use before definition",
 			"loopfunc" : "Allow functions to be defined within loops",
 			"noarg" : "Prohibit use of `arguments.caller` and `arguments.callee`",
@@ -130,7 +131,7 @@ $(function () {
 			"sub" : "Tolerate all forms of subscript notation besides dot notation e.g. `dict['key']` instead of `dict.key`",
 			"trailing" : "Prohibit trailing whitespaces",
 			"white" : "Check against strict whitespace and indentation rules",
-			"indent" : "Specify indentation spacing",
+			"indent" : "Specify indentation spacing"
 		},
 		// FIXME test and fix usage from multiple tabs
 		getBag = function () {
@@ -180,7 +181,7 @@ $(function () {
 			return buf.join("");
 		},
 		filterBooleanLintOptions = function (options) {
-			return $.map(options, function(val, key) {
+			return $.map(options, function (val, key) {
 				var renderData;
 				if (typeof val === "boolean") {
 					renderData = {
@@ -191,8 +192,8 @@ $(function () {
 						type: typeof val
 					};
 				}
-				return renderData; 
-			});	
+				return renderData;
+			});
 		},
 		renderLintOptions = function (options, title) {
 			return craftjs.renderById("lint-options-tmpl", {
@@ -201,6 +202,18 @@ $(function () {
 				indent: options.indent,
 				title: title
 			});
+		},
+		getBuildFlags = function (flags, container) {
+			var query = "?";
+			$.each(flags, function () {
+				if (container.find("[name='" + this + "']").attr("checked")) {
+					query += this + "=true&";
+				}
+			});
+			if (container.find("[name='lint']").attr("checked")) {
+				query += lintOptionPanelController.toQueryString();	
+			}
+			return query;
 		},
 		buildProject = function (queryString, projectName, files) {
 			$.ajax("/project/build" + queryString, {
@@ -216,9 +229,9 @@ $(function () {
 				}
 			});
 		},
-		buildSingleFile = function(path, buildFlags) {
+		buildSingleFile = function (path, buildFlags) {
 			var files = {},
-				projectName = prompt("Name of this distribution");
+				projectName = prompt("Name of this release");
 		
 			if (projectName) {
 				if (/[\s]/.test(projectName)) {
@@ -268,13 +281,13 @@ $(function () {
 				slice[name] = !this.model.data[name];
 				this.model.set(slice);
 			},
-			"@edit-maxerr": function(e) {
+			"@edit-maxerr": function (e) {
 				var maxerr = prompt("max number of errors", this.model.get("maxerr"));
 				if (maxerr) {
 					this.model.set({maxerr: maxerr});
 				}
 			},
-			"@edit-indent": function(e) {
+			"@edit-indent": function (e) {
 				var indent = prompt("number of spaces", this.model.get("indent"));
 				if (indent) {
 					this.model.set({indent: indent});
@@ -343,30 +356,15 @@ $(function () {
 		events: {
 			"@build": function (e) {
 				var target = $(e.target),
-					path,
-					query = this.getBuildFlags();
+					path = target.data("path"),
+					query = getBuildFlags(ALL_BUILD_FLAGS, this.container);
 
 				if (this.$elements.release.attr("checked")) {
 					buildSingleFile(data.path, query);
-				} else {
-					if (this.$elements.lint.attr("checked")) {
-						query += lintOptionPanelController.toQueryString();	
-					}
-				
-					path = "/" + data.context + "/" + target.data("path");
-					document.location = path + query;
-				
+				} else if (path) {		
+					document.location = "/" + data.context + "/" + path  + query;
 				}
 			}
-		},
-		getBuildFlags: function () {
-			var query = "?", that = this;
-			$.each(["plain", "mangle", "expand", "squeeze", "beautify", "minimize", "lint"], function () {
-				if (that.$elements[this].attr("checked")) {
-					query += this + "=true&";
-				}
-			});
-			return query;
 		}
 	}).init();
 		
@@ -393,7 +391,7 @@ $(function () {
 					buf = [],
 					markerList = $("#markers");
 				markerList.empty();
-				$(".source pre").each(function() {
+				$(".source pre").each(function () {
 					var line = $(this),
 						txt = line.text();
 					if (txt.match(markerPattern)) {
@@ -416,7 +414,11 @@ $(function () {
 				markerList.html(buf.join(""));
 			},
 			"@build": function (e) {
-				alert("build");
+				var target = $(e.target),
+					path = target.data("path"),
+					query = getBuildFlags(ALL_BUILD_FLAGS, target.closest("li"));
+					
+				document.location = "/" + data.context + "/" + path  + query;
 			},
 			"@remove-from-project": function (e) {
 				var target = $(e.target),

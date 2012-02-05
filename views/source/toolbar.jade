@@ -11,45 +11,45 @@ div.directory-item(id="build-toolbar")
 				a(href="/#{context}/#{path}") #{name}/
 			
 	label(for="plain", title="serve resulting file as text/javascript", style="float: right") plaintext
-		input(id="plain", type="checkbox", style="float: left;")
+		input(id="plain", name="plain", type="checkbox", style="float: left;")
 	
 	if displayMode === "src"
 		label(for="release", title="create a persistent release for the current file", style="float: right") release
-			input(id="release", type="checkbox", style="float: left;")
+			input(id="release", name="release", type="checkbox", style="float: left;")
 	
 	if displayMode === "src"
 		label(for="expand", title="resolves and expands dependencies declared in the script file")  expand
 			if typeof expanded !== "undefined" && expanded
-				input(id="expand", type="checkbox", checked="checked")
+				input(id="expand", name="expand", type="checkbox", checked="checked")
 			else 
-				input(id="expand", type="checkbox")
+				input(id="expand", name="expand", type="checkbox")
 	
 	label(for="mangle", title="obfuscate variable names to save characters")  mangle
 		if mangled
-			input(id="mangle", type="checkbox", checked="checked")
+			input(id="mangle", name="mangle", type="checkbox", checked="checked")
 		else 
-			input(id="mangle", type="checkbox")
+			input(id="mangle", name="mangle", type="checkbox")
 
 	label(for="squeeze", title="additional squeezing option (see uglify-js docs)")  squeeze
 		if squeezed
-			input(id="squeeze", type="checkbox", checked="checked")
+			input(id="squeeze", name="squeeze", type="checkbox", checked="checked")
 		else
-			input(id="squeeze", type="checkbox")
+			input(id="squeeze", name="squeeze", type="checkbox")
 		
 	label(for="minimize", title="render AST in mimimized form")  minimize
 		if minimized
-			input(id="minimize", type="checkbox", checked="checked")
+			input(id="minimize", name="minimize", type="checkbox", checked="checked")
 		else
-			input(id="minimize", type="checkbox")
+			input(id="minimize", name="minimize", type="checkbox")
 
 	label(for="beautify", title="render AST in pretty-printed form")  beautify
 		if beautified
-			input(id="beautify", type="checkbox", checked="checked")
+			input(id="beautify", name="beautify", type="checkbox", checked="checked")
 		else
-			input(id="beautify", type="checkbox")
+			input(id="beautify", name="beautify", type="checkbox")
 
 	label(for="lint", title="apply JSHint validation") lint
 		if linted
-			input(id="lint", type="checkbox", checked="checked")
+			input(id="lint", name="lint", type="checkbox", checked="checked")
 		else 
-			input(id="lint", type="checkbox")
+			input(id="lint", name="lint", type="checkbox")

@@ -13,20 +13,20 @@ ul.directory
 		else
 			li.directory-item
 				a.file(href="/#{context}/#{file.path}") #{file.name}
-				label(for="plaintext-#{idx}") text/plain
-					input.plain(id="plaintext-#{idx}", type="checkbox")
+				label(for="plain-#{idx}") plaintext
+					input.plain(id="plain-#{idx}", name="plain", type="checkbox")
 				if displayMode === "src"
 					label(for="expand-#{idx}") expand
-						input.expand(id="expand-#{idx}", type="checkbox")
+						input.expand(id="expand-#{idx}", name="expand", type="checkbox")
 				label(for="mangle-#{idx}")  mangle
-					input.mangle(id="mangle-#{idx}", type="checkbox")
+					input.mangle(id="mangle-#{idx}", name="mangle", type="checkbox")
 				label(for="squeeze-#{idx}")  squeeze
-					input.squeeze(id="squeeze-#{idx}", type="checkbox")
+					input.squeeze(id="squeeze-#{idx}", name="squeeze", type="checkbox")
 				label(for="minimize-#{idx}")  minimize
-					input.minimize(id="minimize-#{idx}", type="checkbox")
+					input.minimize(id="minimize-#{idx}", name="minimize", type="checkbox")
 				label(for="beautify-#{idx}")  beautify
-					input.beautify(id="beautify-#{idx}", type="checkbox")
+					input.beautify(id="beautify-#{idx}", name="beautify", type="checkbox")
 				label(for="lint-#{idx}") lint
-					input.lint(id="lint-#{idx}", type="checkbox", checked="checked")
+					input.lint(id="lint-#{idx}", name="lint", type="checkbox", checked="checked")
 				button.transform(data-action="build", data-path="#{file.path}") show
 					
