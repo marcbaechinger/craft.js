@@ -1,13 +1,13 @@
-div.directory-item
+div.directory-item(id="build-toolbar")
 	button.transform(data-path="#{path}", data-action="build") show
 	
 	div(style="float: right; margin-left: 42px;")
+		a(href="/#{context}/", style="text-decoration: none;") repo:/
 		if typeof breadcrumb!=="undefined"
 			each path, name in breadcrumb
 				a(href="/#{context}/#{path}") #{name}/
-			#{path.substring(path.lastIndexOf("/") + 1)}
 			
-	label(for="plain", style="float: right") text/javascript
+	label(for="plain", style="float: right") plaintext
 		input(id="plain", type="checkbox", style="float: left;")
 	
 	if displayMode === "src"
