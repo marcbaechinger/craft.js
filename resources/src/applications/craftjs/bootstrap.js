@@ -2,7 +2,8 @@
 	data: false, craftjs: false, Mustache: false */
 //= require "renderer, ../../controller/model-aware-controller"
 $(function () {
-	var bag, bagModel, lintOptions, lintModel, pageController, projectPanelController, lintOptionPanelController,
+	var bag, projectModel, lintOptions, lintModel, pageController, buildModel, buildToolbarController, 
+		projectPanelController, lintOptionPanelController,
 		LINT_OPTIONS = {
 			// Settings
 			"passfail" : false, // Stop on first error.
@@ -200,13 +201,40 @@ $(function () {
 				indent: options.indent,
 				title: title
 			});
+		},
+		buildProject = function (queryString, projectName, files) {
+			$.ajax("/project/build" + queryString, {
+				type: "POST",
+				data: JSON.stringify({
+					projectName: projectName,
+					files: files
+				}),
+				dataType: "json",
+				contentType: "application/json",
+				success: function (jsonData) {
+					document.location = "/" + data.dist + "/" + jsonData.path;
+				}
+			});
+		},
+		buildSingleFile = function(path, buildFlags) {
+			var files = {},
+				projectName = prompt("Name of this distribution");
+		
+			if (projectName) {
+				if (/[\s]/.test(projectName)) {
+					alert("no spaces or tabs allowed");
+					return;
+				}
+				files[path] = {};
+				buildProject(buildFlags, projectName, files);
+			}
 		};
 
 	if (!localStorage.projectName) {
 		localStorage.projectName = "default";
 	}
 
-	bagModel = new model.Model({
+	projectModel = new model.Model({
 		data: getBag()
 	}).bind("change", saveBag)
 		.bind("remove", saveBag);
@@ -214,6 +242,19 @@ $(function () {
 	lintModel = new model.Model({
 		data: getLintOptions()
 	}).bind("change", saveLintOptions);
+	
+	buildModel = new model.Model({
+		data: {
+			expand: false,
+			mangel: false,
+			squeeze: false,
+			minimize: false,
+			beautify: false,
+			lint: true,
+			plain: false,
+			release: false
+		}
+	});
 
 	lintOptionPanelController = new controller.ModelAwareController({
 		model: lintModel,
@@ -256,23 +297,11 @@ $(function () {
 	}).init();
 
 	projectPanelController = new controller.ModelAwareController({
-		model: bagModel,
+		model: projectModel,
 		containerSelector: "#project-files",
 		events: {
 			"@build-project": function () {
-				console.log("===>", data);
-				$.ajax("/project/build" + this.getBuildFlags(), {
-					type: "POST",
-					data: JSON.stringify({
-						projectName: localStorage.projectName,
-						files: bagModel.data
-					}),
-					dataType: "json",
-					contentType: "application/json",
-					success: function (data) {
-						document.location = "/dist/" + data.path;
-					}
-				});
+				buildProject(this.getBuildFlags(), localStorage.projectName, projectModel.data);
 			}
 		},
 		// TODO render by template
@@ -297,11 +326,11 @@ $(function () {
 		}
 	}).init();
 
-	pageController = new controller.ModelAwareController({
-		path: data.path,
-		model: bagModel,
+	buildToolbarController = new controller.ModelAwareController({
+		containerSelector: "#build-toolbar",
+		scann: true,
+		model: buildModel,
 		elementSelectors: {
-			buttons: ".bag-button",
 			plain: "#plain",
 			mangle: "#mangle",
 			expand: "#expand",
@@ -309,6 +338,43 @@ $(function () {
 			beautify: "#beautify",
 			minimize: "#minimize",
 			lint: "#lint",
+			release: "#release"
+		},
+		events: {
+			"@build": function (e) {
+				var target = $(e.target),
+					path,
+					query = this.getBuildFlags();
+
+				if (this.$elements.release.attr("checked")) {
+					buildSingleFile(data.path, query);
+				} else {
+					if (this.$elements.lint.attr("checked")) {
+						query += lintOptionPanelController.toQueryString();	
+					}
+				
+					path = "/" + data.context + "/" + target.data("path");
+					document.location = path + query;
+				
+				}
+			}
+		},
+		getBuildFlags: function () {
+			var query = "?", that = this;
+			$.each(["plain", "mangle", "expand", "squeeze", "beautify", "minimize", "lint"], function () {
+				if (that.$elements[this].attr("checked")) {
+					query += this + "=true&";
+				}
+			});
+			return query;
+		}
+	}).init();
+		
+	pageController = new controller.ModelAwareController({
+		path: data.path,
+		model: projectModel,
+		elementSelectors: {
+			buttons: ".bag-button",
 			projectLabel: ".project-name"
 		},
 		events: {
@@ -321,6 +387,7 @@ $(function () {
 					this.model.set(slice);
 				}
 			},
+			// TODO [sprint-1] to complex => refactor
 			"@toggle-source-markers": function () {
 				var markerPattern = /^[ \d]*:.*\/\/.*(FIXME|TODO)/,
 					buf = [],
@@ -348,6 +415,9 @@ $(function () {
 				$(".marker-button").remove();
 				markerList.html(buf.join(""));
 			},
+			"@build": function (e) {
+				alert("build");
+			},
 			"@remove-from-project": function (e) {
 				var target = $(e.target),
 					path = target.data("path"),
@@ -363,21 +433,6 @@ $(function () {
 					this.render();
 				}
 				e.stopPropagation();
-			},
-			"@build": function (e) {
-				var target = $(e.target),
-					path,
-					query = this.getBuildFlags(target.parent());
-
-				query += lintOptionPanelController.toQueryString();
-				
-				path = target.data("path");
-				if (path) {
-					path = "/" + data.context + "/" + path;
-				} else {
-					path = document.location.pathname;
-				}
-				document.location = path + query;
 			},
 			"click .collapse": function (e) {
 				var target = $(e.target),
@@ -397,15 +452,6 @@ $(function () {
 				this.$elements.buttons.removeClass("contained").text("add to project");
 			}
 			this.$elements.projectLabel.text(localStorage.projectName);
-		},
-		getBuildFlags: function (container) {
-			var query = "?", that = this;
-			$.each(["plain", "mangle", "expand", "squeeze", "beautify", "minimize", "lint"], function () {
-				if (that.$elements[this].attr("checked") || container.find("." + this).attr("checked")) {
-					query += this + "=true&";
-				}
-			});
-			return query;
 		}
 	}).init();
 });
