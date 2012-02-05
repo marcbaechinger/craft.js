@@ -121,6 +121,9 @@ h2 {
   cursor: pointer;
   padding: 4px 8px;
 }
+h2 a {
+  color: #F3D354;
+}
 h3 {
   box-shadow: inset -1px -18px 2px #555555;
 }
@@ -463,6 +466,6 @@ ul#markers li a {
   -ms-transform: rotate(-45deg);
 }
 .ribbon a {
-  color: yellow;
+  color: #F3D354;
   text-decoration: none;
 }
