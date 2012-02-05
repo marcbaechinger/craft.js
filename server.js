@@ -43,6 +43,13 @@
 		res.render('index', { title: 'craft.js', src: conf.context.src });
 	});
 	
+	app.delete("/project/build/*",
+		build.setupRenderData,
+		build.createFileInfoFactory(distDirectory),
+		project.createUnlinker(distDirectory),
+		project.sendDeletionConfirmation
+	);
+		
 	app.post("/project/build",
 		build.setupRenderData,
 		project.createBuildInfoFactory(distDirectory),

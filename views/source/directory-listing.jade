@@ -15,6 +15,7 @@ ul.directory
 				a.file(href="/#{context}/#{file.path}") #{file.name}
 				label(for="plain-#{idx}") plaintext
 					input.plain(id="plain-#{idx}", name="plain", type="checkbox")
+					span(style="padding-left: 24px;") |
 				if displayMode === "src"
 					label(for="expand-#{idx}") expand
 						input.expand(id="expand-#{idx}", name="expand", type="checkbox")
@@ -28,5 +29,7 @@ ul.directory
 					input.beautify(id="beautify-#{idx}", name="beautify", type="checkbox")
 				label(for="lint-#{idx}") lint
 					input.lint(id="lint-#{idx}", name="lint", type="checkbox", checked="checked")
-				button.transform(data-action="build", data-path="#{file.path}") show
+				button(data-action="build", data-path="#{file.path}", style="margin-left: 12px;") transform
+				if displayMode === "dist"
+					button.transform(data-action="delete-release", data-path="#{file.path}") delete
 					

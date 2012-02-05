@@ -47,6 +47,26 @@
 		req.data.dependencies = translateDependencies(req.data.realPathDependencies);
 		next();
 	};
+	
+	exports.createUnlinker = function (base) {
+		return function(req, res, next) {
+			console.log("delete release", req.data.realPath);
+			if (req.data.realPath.indexOf(base) !== 0) {
+				console.error("access denied while deletion", req.data.realPath, base);
+				req.data.status = "access-denied";
+				next();
+			} else {
+				fs.unlink(req.data.realPath, function(e) {
+					if (e) {
+						req.data.status = "access-denied";
+					} else {
+						req.data.status = "OK";
+					}
+					next();
+				});
+			}
+		};
+	};
 	exports.createSourceCodeWriter = function (base) {
 		return function(req, res, next) {
 			var buffer = new Buffer(req.data.sourceCode, "utf-8"),
@@ -83,6 +103,12 @@
 			dependencies: req.data.dependencies,
 			path: req.data.path
 		}));
-		//res.render('project-build', {title: "Build project"});
+	};
+	exports.sendDeletionConfirmation = function(req, res) {
+		res.send(JSON.stringify({ 
+			"@action": "delete-release",
+			path: req.data.path,
+			status: req.data.status 
+		}));
 	};
 }());

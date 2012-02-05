@@ -12,10 +12,11 @@ block content
 	if typeof sourceCode!=="undefined"
 		include source/toolbar
 
-	if typeof sourceTree!=="undefined"	
+	if typeof sourceTree!=="undefined"
 		h2.collapse.directory Content of directory #{path}
 			div(style="float: right;")
-				a(href="/#{src}/", style="text-decoration: none;") repo:/
+				if displayMode === "src"
+					a(href="/#{src}/", style="text-decoration: none;") repo:/
 				if typeof breadcrumb!=="undefined" 
 					each path, name in breadcrumb
 						a(href="/#{src}/#{path}") #{name}/

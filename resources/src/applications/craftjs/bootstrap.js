@@ -229,6 +229,19 @@ $(function () {
 				}
 			});
 		},
+		deleteRelease = function (path, callback) {
+			$.ajax("/project/build" + path, {
+				type: "DELETE",
+				dataType: "json",
+				contentType: "application/json",
+				success: function (jsonData) {
+					console.log("successfully deleted", jsonData);
+					if (callback && jsonData.status === "OK") {
+						callback();	
+					}
+				}
+			});
+		},
 		buildSingleFile = function (path, buildFlags) {
 			var files = {},
 				projectName = prompt("Name of this release");
@@ -383,6 +396,16 @@ $(function () {
 					this.model.delete(slice);
 				} else {
 					this.model.set(slice);
+				}
+			},
+			"@delete-release": function(e) {
+				var target = $(e.target),
+					path = target.data("path");
+				console.log("delete", path);
+				if (path) {
+					deleteRelease(path, function() {
+						target.closest("li").remove();
+					});
 				}
 			},
 			// TODO [sprint-1] to complex => refactor
