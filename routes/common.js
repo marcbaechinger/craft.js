@@ -2,6 +2,11 @@
 (function () {
 	"use strict";
 	
+	exports.setupRenderData = function(req, res, next) {
+		req.data = {};
+		next();
+	};
+	
 	exports.sendErrorPage = function (req, res, err) {
 		res.statusCode = err.statusCode || 500;
 		res.render('error', {

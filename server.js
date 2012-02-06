@@ -9,10 +9,11 @@
 		express = require('express'),
 		build = require('./routes/build.js'),
 		project = require('./routes/project.js'),
+		common = require('./routes/common.js'),
+		jobs = require('./routes/jobs.js'),
 		util = require('./app/util'),
 		app = module.exports = express.createServer(),
-		
-		
+
 		distDirectory = conf.path.dist,
 		srcDirectory = conf.path.src;
 
@@ -30,7 +31,7 @@
 
 	util.mkdir(conf.path.src);
 	util.mkdir(conf.path.dist);
-	
+
 	app.configure('development', function () {
 		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	});
@@ -42,69 +43,82 @@
 	app.get('/', function (req, res) {
 		res.render('index', { title: 'craft.js', src: conf.context.src });
 	});
-	
+
 	app.delete("/project/build/*",
-		build.setupRenderData,
-		build.createFileInfoFactory(distDirectory),
-		project.createUnlinker(distDirectory),
-		project.sendDeletionConfirmation
-	);
-		
+			common.setupRenderData,
+			build.createFileInfoFactory(distDirectory),
+			project.createUnlinker(distDirectory),
+			project.sendDeletionConfirmation
+		);
+
 	app.post("/project/build",
-		build.setupRenderData,
-		project.createBuildInfoFactory(distDirectory),
-		project.resolve,
-		build.expand,
-		build.mangle,
-		build.squeeze,
-		build.astToSourceCode,
-		project.createSourceCodeWriter(distDirectory),
-		project.sendBuildOutput
-	);
-	
+			common.setupRenderData,
+			project.createBuildInfoFactory(distDirectory),
+			project.resolve,
+			build.expand,
+			build.mangle,
+			build.squeeze,
+			build.astToSourceCode,
+			project.createSourceCodeWriter(distDirectory),
+			project.sendBuildOutput
+		);
+
+	app.put("/jobs",
+			common.setupRenderData,
+			project.createBuildInfoFactory(distDirectory),
+			jobs.storeJob(distDirectory + "/jobs"),
+			project.renderBuildInfo
+		);
+
+	app.get("/jobs",
+			common.setupRenderData,
+			project.createBuildInfoFactory(distDirectory),
+			project.renderBuildInfo
+		);
+
 	app.get("/" + conf.context.src + "/*",
-		build.setupRenderData,
-		build.createFileInfoFactory(srcDirectory),
-		build.createBreadcrumpTokens,
-		build.getFileContent(srcDirectory),
-		build.resolve,
-		build.expand,
-		build.mangle,
-		build.squeeze,
-		build.astToSourceCode,
-		build.extractLintOptions,
-		build.lint,
-		build.fileViewer("src")
-	);
-	
+			common.setupRenderData,
+			build.createFileInfoFactory(srcDirectory),
+			build.createBreadcrumpTokens,
+			build.getFileContent(srcDirectory),
+			build.resolve,
+			build.expand,
+			build.mangle,
+			build.squeeze,
+			build.astToSourceCode,
+			build.extractLintOptions,
+			build.lint,
+			build.fileViewer("src")
+		);
+
 	// preserve legacy url published on bit.ly
 	app.get("/build/*",
-		build.setupRenderData,
-		build.createFileInfoFactory(srcDirectory),
-		build.createBreadcrumpTokens,
-		build.getFileContent(srcDirectory),
-		build.resolve,
-		build.expand,
-		build.mangle,
-		build.squeeze,
-		build.astToSourceCode,
-		build.extractLintOptions,
-		build.lint,
-		build.fileViewer("src")
-	);
-	
+			common.setupRenderData,
+			build.createFileInfoFactory(srcDirectory),
+			build.createBreadcrumpTokens,
+			build.getFileContent(srcDirectory),
+			build.resolve,
+			build.expand,
+			build.mangle,
+			build.squeeze,
+			build.astToSourceCode,
+			build.extractLintOptions,
+			build.lint,
+			build.fileViewer("src")
+		);
+
 	app.get("/" + conf.context.dist + "/*",
-		build.setupRenderData,
-		build.createFileInfoFactory(distDirectory),
-		build.createBreadcrumpTokens,
-		build.getFileContent(distDirectory),
-		build.mangle,
-		build.squeeze,
-		build.astToSourceCode,
-		build.extractLintOptions,
-		build.lint,
-		build.fileViewer("dist")
-	);
+			common.setupRenderData,
+			build.createFileInfoFactory(distDirectory),
+			build.createBreadcrumpTokens,
+			build.getFileContent(distDirectory),
+			build.mangle,
+			build.squeeze,
+			build.astToSourceCode,
+			build.extractLintOptions,
+			build.lint,
+			build.fileViewer("dist")
+		);
 
 	app.listen(conf.server.port);
 	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

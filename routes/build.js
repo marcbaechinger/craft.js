@@ -3,7 +3,7 @@
 	"use strict";
 
 	var fs = require("fs"),
-		err = require("./error.js"),
+		common = require("./common.js"),
 		concat = require("../app/dependency.js"),
 		appConfig = require("../app-config.js"),
 		uglify = require("../app/uglify.js"),
@@ -26,10 +26,6 @@
 			});
 		};
 	
-	exports.setupRenderData = function(req, res, next) {
-		req.data = {};
-		next();
-	};
 	exports.createFileInfoFactory = function(base) {
 		return function (req, res, next) {
 			var path = req.params[0].replace(/^\/*/, "");
@@ -39,7 +35,7 @@
 			fs.stat(base + "/" + path, function(error, stats) {
 				if (error) {
 					error.statusCode = 404;
-					err.sendErrorPage(req, res, error);
+					common.sendErrorPage(req, res, error);
 				} else {
 					req.data.fileDescriptor = stats;
 					next();
@@ -70,7 +66,7 @@
 					fs.readFile(req.data.realPath, function(error, data) {
 						if (error) {
 							error.statusCode = 404;
-							err.sendErrorPage(req, res, error);
+							common.sendErrorPage(req, res, error);
 						} else {
 							req.data.sourceCode = data.toString();
 							next();
@@ -82,7 +78,7 @@
 				}
 			} catch (e) {
 			    e.statusCode = e.statusCode || 404;
-			    err.sendErrorPage(req, res, e);
+			    common.sendErrorPage(req, res, e);
 			}
 			
 		};
@@ -93,7 +89,7 @@
 				req.data.realPathDependencies = concatenator.resolve(req.data.realPath);
 				req.data.dependencies = translateDependencies(req.data.realPathDependencies);
 			} catch (e) {
-				err.sendErrorPage(req, res, {
+				common.sendErrorPage(req, res, {
 					type: "resolve-failed",
 					path: req.data.realPath,
 					statusCode: 400,
@@ -170,7 +166,6 @@
 				options[name.replace(/^lint-/, "")] = val;
 			}
 		}
-		console.log("lint options from query", options);
 		req.data.lintOptions = options;
 		next();
 	};

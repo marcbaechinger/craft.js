@@ -2,7 +2,7 @@
 	"use strict";
 	
 	var concat = require("../app/dependency.js"),
-		error = require("./error.js"),
+		common = require("./common.js"),
 		appConfig = require("../app-config.js"),
 		fs = require("fs"),
 		basePath = appConfig.path.src,
@@ -32,10 +32,24 @@
 			req.data.build = true;
 			req.data.path = req.body.projectName + "_" + getTimeStamp() + ".js";
 			req.data.realPath = base + "/" + req.data.path;
+			req.build = {
+				files: req.body.files,
+				name: req.body.projectName,
+				expand: req.query.expand === "true",
+				lint: req.query.lint === "true",
+				transformation: {
+					mangle: req.query.mangle === "true",
+					squeeze: req.query.squeeze === "true",
+					minimize: req.query.minimize === "true",
+					beautify: req.query.beautify === "true"
+				}
+			};
+			
 			req.query.expand = "true";
 			next();
 		};
 	};
+	
 	exports.resolve = function(req, res, next) {
 		var files = req.body.files,
 			file, deps = [];
@@ -72,11 +86,11 @@
 		return function(req, res, next) {
 			var buffer = new Buffer(req.data.sourceCode, "utf-8"),
 				dispatchError = function(e) {
-					error.logError(e);
-					error.sendErrorPage(req, res, e);
+					common.logError(e);
+					common.sendErrorPage(req, res, e);
 				};
 				
-			// TODO hell! cleaner, please! 
+			// TODO use write file instead
 			fs.open(req.data.realPath, "w", function(err, fd) {
 				if (err) {
 					dispatchError(err);
@@ -104,6 +118,10 @@
 			dependencies: req.data.dependencies,
 			path: req.data.path
 		}));
+	};
+	
+	exports.renderBuildInfo = function (req, res) {
+		res.send(JSON.stringify(req.build));
 	};
 	exports.sendDeletionConfirmation = function(req, res) {
 		res.send(JSON.stringify({ 
