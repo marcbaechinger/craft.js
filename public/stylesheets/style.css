@@ -80,28 +80,28 @@ li.directory-item button.transform {
   position: relative;
   padding-top: 18px;
 }
-ul.dependencies {
+.dependencies {
   padding-left: 16px;
   list-style: none;
   padding: 0px;
 }
-ul.dependencies li {
+.dependencies li {
   height: 22px;
   margin-bottom: 2px;
   padding: 4px 16px;
 }
-ul.dependencies li a {
+.dependencies li a {
   background-color: #dedede;
   border-radius: 5px;
   padding: 2px 6px 4px 6px;
 }
-ul.dependencies .dep {
+.dependencies .dep {
   background-color: #e3e3e3;
   border-radius: 3px;
   padding: 4px 6px;
   cursor: pointer;
 }
-ul.dependencies a:hover {
+.dependencies a:hover {
   background-color: #999;
   color: #fff;
 }
@@ -132,7 +132,7 @@ h3 a {
   font-weight: 300;
   margin-left: 12px;
 }
-code.evidence pre {
+.evidence pre {
   display: block;
   border-radius: 5px;
   padding: 8px;
@@ -336,7 +336,7 @@ a.file {
   background-color: #006400;
   color: #eee;
 }
-div.source {
+.source {
   display: block;
   border-radius: 5px;
   padding: 8px;
@@ -345,13 +345,13 @@ div.source {
   padding-top: 18px;
   background-color: #fff;
 }
-div.source pre:nth-child(even) {
+.source pre:nth-child(even) {
   background-color: white;
 }
-div.source pre:hover {
+.source pre:hover {
   background-color: #999;
 }
-div.source pre {
+.source pre {
   border-bottom: 1px solid #ddd;
   font-family: Courier;
   font-size: 14px;
@@ -361,26 +361,26 @@ div.source pre {
   padding-left: 16px;
   background-color: #ededed;
 }
-div.source pre.error {
+.source pre.error {
   background-color: #990009;
   color: #ffff00;
 }
-div.source pre.marker {
+.source pre.marker {
   background-color: #FFD800;
 }
-div.source .reason {
+.source .reason {
   display: block;
   color: yellow;
   white-space: normal;
 }
-div.options-panel {
+.options-panel {
   float: left;
   width: 280px;
 }
-div.status-panel {
+.status-panel {
   margin-left: 300px;
 }
-div.options {
+.options {
   display: block;
   border-radius: 5px;
   padding: 8px;
@@ -389,19 +389,19 @@ div.options {
   padding-top: 18px;
   width: 240px;
 }
-div.options div.option {
+.options div.option {
   display: block;
   width: 99%;
   padding: 4px 0px 4px 12px;
 }
-div.options div.option .key {
+.options div.option .key {
   width: 120px;
   float: left;
 }
-div.options div.option .val {
+.options div.option .val {
   float: left;
 }
-div.options div.option:nth-child(odd) {
+.options div.option:nth-child(odd) {
   background-color: #ededed;
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #ccc;
@@ -418,18 +418,18 @@ div.options div.option:nth-child(odd) {
   border-radius: 5px;
   padding: 8px;
 }
-ul#markers {
+#markers {
   padding-left: 16px;
   list-style: none;
   padding: 0px;
   margin-left: 12px;
 }
-ul#markers li {
+#markers li {
   height: 22px;
   margin-bottom: 2px;
   padding: 4px 16px;
 }
-ul#markers li a {
+#markers li a {
   background-color: #dedede;
   border-radius: 5px;
   padding: 2px 6px 4px 6px;
