@@ -327,19 +327,38 @@ $(function () {
 		containerSelector: "#project-files",
 		events: {
 			"@build-project": function () {
-				buildProject(this.getBuildFlags(), localStorage.projectName, projectModel.data);
+				if (!this.isEmpty()) {
+					buildProject(this.getBuildFlags(), localStorage.projectName, projectModel.data);
+				}
 			}
 		},
 		// TODO render by template
 		render: function () {
-			var buf = ["<div class='build-flags'>Build flags: "];
+			var buf = ["<div class='build-flags'>Build flags: "],
+				path, 
+				buildButtons;
+			
 			buf.push($.map(["mangle", "squeeze", "minimize", "beautify"], renderCheckBox).join(""));
-			buf.push("<button class='build' data-action='build-project'>build</button></div><ul>");
+			buf.push("<button class='build' data-action='build-project'");
+			if (this.isEmpty()) {
+				buf.push(" disabled='disabled'");
+			}
+			buf.push(">build</button></div><ul>");
 			$.each(this.model.data, function (key) {
 				buf.push(renderProjectItem(key));
 			});
 			buf.push("</ul>");
-			this.container.html(buf.join(""));
+			
+			this.container.html(buf.join(""));		
+		},
+		isEmpty: function () {
+			var path;
+			for (path in this.model.data) {
+				if (this.model.data.hasOwnProperty(path)) {
+					return false;
+				}
+			}
+			return true;
 		},
 		getBuildFlags: function () {
 			var q = "?", that = this;

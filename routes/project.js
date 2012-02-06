@@ -39,12 +39,13 @@
 	exports.resolve = function(req, res, next) {
 		var files = req.body.files,
 			file, deps = [];
-		
-		for (file in files) {
-			deps.push(concat.resolve(basePath + "/" + file));
+		if (files) {
+			for (file in files) {
+				deps.push(concat.resolve(basePath + "/" + file));
+			}
+			req.data.realPathDependencies = concat.joinDependencies.apply(undefined, deps);
+			req.data.dependencies = translateDependencies(req.data.realPathDependencies);
 		}
-		req.data.realPathDependencies = concat.joinDependencies.apply(undefined, deps);
-		req.data.dependencies = translateDependencies(req.data.realPathDependencies);
 		next();
 	};
 	
