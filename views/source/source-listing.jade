@@ -1,6 +1,16 @@
+if context === "repo"
+	h2.collapse Annotated source code of #{path} #{context}
+		.size #{sourceCode.length} characters / #{lines.length} lines
+else if context === "dist"
+	h2.collapse Released file: #{path}
+		.size #{sourceCode.length} characters / #{lines.length} lines
+else if context === "jobs"
+	h2.collapse Build definition of #{path}
+
 .source-panel
-	.marker-button(data-action="toggle-source-markers") FIXME/TODO
-	ul#markers
+	if displayMode === "js"
+		.marker-button(data-action="toggle-source-markers") FIXME/TODO
+		ul#markers
 	.source
 		each line, i in lines 
 			if typeof report === "undefined" || typeof report.errors==='undefined' || typeof report.errorLines[i+1] === 'undefined'

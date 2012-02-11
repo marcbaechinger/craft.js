@@ -1,0 +1,17 @@
+include mixins
+if displayMode === "js"
+	mixin breadcrumb
+if displayMode === "dist"
+	h2.collapse.directory Released files
+if context === "jobs"
+	h2.collapse.directory Stored jobs
+
+ul.directory
+	each file,idx in sourceTree.children
+		if file.children
+			mixin directory(file)
+		else if displayMode === "job"
+			mixin jobfile(file, idx)
+		else
+			mixin jsfile(file, idx)
+			

@@ -6,6 +6,19 @@ html
 		
 	body
 		header: a(href="/") craft.js
+		#project-tools.clearfix
+			label.lint-button.collapse lint opts
+			#lint-options
+			label.project-button.collapse current job: 
+				span.project-name(data-action="edit-project-name") default
+			#project-files
+			nav(class="#{displayMode}")
+				label.nav-button(data-action="nav", data-path="/repo/") repo
+				label.nav-button(data-action="nav", data-path="/jobs/") jobs
+				label.nav-button(data-action="nav", data-path="/dist/") releases
+			if typeof fileDescriptor!=="undefined" && fileDescriptor.isFile() && context === config.context.src
+				label.bag-button(data-action="toggle-file-to-job")
+		
 		block content
 			
 		.ribbon &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fork me at <a href="https://github.com/marcbaechinger/craft.js">github</a>
@@ -17,7 +30,7 @@ html
 				[
 				a(href="#", data-action="remove-from-project", data-path="{{path}}")-
 				]
-				a(href="/#{src}/{{path}}")
+				a(href="/repo/{{path}}")
 					{{path}}
 				br
 		script(type="template/mustache", id="lint-options-tmpl")
@@ -35,10 +48,11 @@ html
 				span.marker {{marker}}
 		if typeof path !== "undefined"
 			script
-				var data = {
-					path: "#{path}",
-					displayMode: "#{displayMode}",
-					src: "#{src}",
-					dist: "#{dist}",
-					context: "#{context}"
-				};
+				craftjs.data = {
+						path: "#{path}",
+						displayMode: "#{displayMode}",
+						src: "#{config.context.src}",
+						dist: "#{config.context.dist}",
+						jobs: "#{config.context.jobs}",
+						context: "#{context}"
+					};

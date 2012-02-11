@@ -97,6 +97,9 @@ a {
 
 h2.directory {
 	margin-top: 50px;
+	a {
+		text-decoration: none;
+	}
 }
 ul.directory {
 	padding-left: 0px;
@@ -130,23 +133,39 @@ ul.directory {
 		inset -1px -18px 2px #bbb;
 	margin-bottom: 12px;
 	list-style: none;
+	padding-top: 6px;
+	padding-bottom: 2px;
+	height: 20px;
 	label {
 		margin-left: 22px;
-	}
-	.children {
 	}
 	a {
 		color: #20539D;
 	}
+	button {
+		margin-top: 0px;
+		float: right;
+	}
+	.transform {
+		margin-left: 20px;
+	}
+	.job-build {
+		float: right;
+		button {
+			margin-left: 183px;
+		}
+	}
 }
-li.directory-item button.transform {
-	margin-left: 20px;
-	float: right;
-}
+
 .page {
 	.shadow-panel();
 }
 
+.breadcrumb {
+	position: absolute;
+	right: 74px;
+	top: 76px;
+}
 .dependencies {
 	.button-list();
 	.dep {
@@ -338,8 +357,36 @@ a.file {
 	color: #fff;
 	width: 280px;
 	text-align: left;
+	margin-left: 8px !important;
 }
 
+nav {
+	float: right;
+	margin-left: 68px;
+	.nav-button {
+		.button(#4183C4);
+		color: #fff;
+		width: 60px;
+		margin-left: 8px;
+	}
+	&.src .nav-button:first-child {
+		background-color: rgb(12, 43, 120);
+	}
+	&.dist .nav-button:last-child {
+		background-color: rgb(12, 43, 120);
+	}
+	&.jobs {
+		.nav-button {
+			background-color: rgb(12, 43, 120);
+		}
+		.nav-button:first-child {
+			background-color: #4183C4;
+		}
+		.nav-button:last-child {
+			background-color: #4183C4;
+		}
+	}
+}
 .marker-button {
 	.button(#20539D);
 	color: #fff;

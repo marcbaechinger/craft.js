@@ -1,0 +1,43 @@
+mixin jsfile(file, idx)
+	li.directory-item
+		a.file(href="/#{context}/#{file.path}") #{file.name}
+		label(for="plain-#{idx}") plaintext
+			input.plain(id="plain-#{idx}", name="plain", type="checkbox")
+			span(style="padding-left: 24px;") |
+		if context === "repo"
+			label(for="expand-#{idx}") expand
+				input.expand(id="expand-#{idx}", name="expand", type="checkbox")
+		label(for="mangle-#{idx}")  mangle
+			input.mangle(id="mangle-#{idx}", name="mangle", type="checkbox")
+		label(for="squeeze-#{idx}")  squeeze
+			input.squeeze(id="squeeze-#{idx}", name="squeeze", type="checkbox")
+		label(for="minimize-#{idx}")  minimize
+			input.minimize(id="minimize-#{idx}", name="minimize", type="checkbox")
+		label(for="beautify-#{idx}")  beautify
+			input.beautify(id="beautify-#{idx}", name="beautify", type="checkbox")
+		span(style="padding-left: 24px;") |
+		label(for="lint-#{idx}") lint
+			input.lint(id="lint-#{idx}", name="lint", type="checkbox", checked="checked")
+		button(data-action="build", data-path="#{file.path}", style="margin-left: 12px;") transform
+		if context === "dist"
+			button.transform(data-action="delete-file", data-path="#{file.path}") delete
+		
+mixin jobfile(file, idx)
+	li.directory-item.job
+		a.file(href="/#{context}/#{file.name}") #{file.name}
+		button(data-action="build-job", data-path="#{file.path}", style="margin-left: 12px;") build
+		button(data-action="delete-file", data-path="#{file.path}") delete
+
+mixin directory(file)
+	li.directory-item
+		a.file(href="/#{context}/#{file.path}")=file.name
+		label.children
+			
+mixin breadcrumb
+	h2.collapse.directory Content of 
+		a(href="/#{context}/", style="text-decoration: none;") #{context}:
+		span &nbsp;/&nbsp;
+		if typeof breadcrumb!=="undefined"
+			each path, name in breadcrumb
+				a(href="/#{context}/#{path}")!= name
+				span &nbsp;/&nbsp;
