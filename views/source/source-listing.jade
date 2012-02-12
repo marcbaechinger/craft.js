@@ -1,10 +1,10 @@
-if context === "repo"
+if context === config.context.src
 	h2.collapse Annotated source code of #{path} #{context}
 		.size #{sourceCode.length} characters / #{lines.length} lines
-else if context === "dist"
+else if context === config.context.dist
 	h2.collapse Released file: #{path}
 		.size #{sourceCode.length} characters / #{lines.length} lines
-else if context === "jobs"
+else if context === config.context.jobs
 	h2.collapse Build definition of #{path}
 
 .source-panel

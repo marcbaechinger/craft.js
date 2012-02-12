@@ -1,16 +1,16 @@
 include mixins
-if displayMode === "js"
+if context === config.context.src
 	mixin breadcrumb
-if displayMode === "dist"
+if context === config.context.dist
 	h2.collapse.directory Released files
-if context === "jobs"
+if context === config.context.jobs
 	h2.collapse.directory Stored jobs
 
 ul.directory
 	each file,idx in sourceTree.children
 		if file.children
 			mixin directory(file)
-		else if displayMode === "job"
+		else if context === config.context.jobs
 			mixin jobfile(file, idx)
 		else
 			mixin jsfile(file, idx)

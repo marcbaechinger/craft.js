@@ -4,7 +4,7 @@ mixin jsfile(file, idx)
 		label(for="plain-#{idx}") plaintext
 			input.plain(id="plain-#{idx}", name="plain", type="checkbox")
 			span(style="padding-left: 24px;") |
-		if context === "repo"
+		if context === config.context.src
 			label(for="expand-#{idx}") expand
 				input.expand(id="expand-#{idx}", name="expand", type="checkbox")
 		label(for="mangle-#{idx}")  mangle
@@ -19,7 +19,7 @@ mixin jsfile(file, idx)
 		label(for="lint-#{idx}") lint
 			input.lint(id="lint-#{idx}", name="lint", type="checkbox", checked="checked")
 		button(data-action="build", data-path="#{file.path}", style="margin-left: 12px;") transform
-		if context === "dist"
+		if context === config.context.dist
 			button.transform(data-action="delete-file", data-path="#{file.path}") delete
 		
 mixin jobfile(file, idx)
