@@ -3,7 +3,6 @@
 	"use strict";
 	var fs = require("fs"),
 		jsFileMatcher = /\.(js|cjs)$/,
-		lessFileMatcher = /\.(less|css)$/,
 		createSourceTree = function (basePath, path) {
 			var fsNode = {
 					path: path,
@@ -14,30 +13,29 @@
 				tree = fs.readdirSync(basePath + "/" + path);
 
 			tree.forEach(function (filename) {
-				var dirPath = path + "/" + filename,
-					dirStat = fs.statSync(basePath + "/" + dirPath);
+				var childPath = path + "/" + filename,
+					childRealPath = basePath + "/" + childPath,
+					childStat = fs.statSync(childRealPath),
+					childNode = {
+						path: childPath,
+						realPath: childRealPath,
+						name: filename,
+						size: childStat.size,
+						atime: childStat.atime,
+						mtime: childStat.mtime,
+						ctime: childStat.ctime
+					};
 				
-				if (dirPath.indexOf("/") === 0) {
-					dirPath = dirPath.substring(1);
+				if (childPath.indexOf("/") === 0) {
+					childNode.path = childPath.substring(1);
 				}
 				
-				if (dirStat.isDirectory()) {
-					//fsNode.children.push(createSourceTree(basePath, dirPath));
-					fsNode.children.push({
-							path: dirPath,
-							realPath: basePath + "/" + dirPath,
-							name: dirPath.substring(dirPath.lastIndexOf("/") + 1),
-							type: "directory",
-							children: []
-						});
+				if (childStat.isDirectory()) {
+					childNode.type = "directory";
+					fsNode.children.push(childNode);
 				} else if (filename.match(jsFileMatcher)) {
-					fsNode.children.push({
-						path: path + "/" + filename.toString(),
-						name: filename.toString(),
-						type: "js",
-						lintable: filename.match(jsFileMatcher),
-						lessable: filename.match(lessFileMatcher)
-					});
+					childNode.type = "js";
+					fsNode.children.push(childNode);
 				}
 			});
 			return fsNode;

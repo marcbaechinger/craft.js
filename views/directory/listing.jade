@@ -8,7 +8,7 @@ if context === config.context.jobs
 
 ul.directory
 	each file,idx in sourceTree.children
-		if file.children
+		if file.type === "directory"
 			mixin directory(file)
 		else if context === config.context.jobs
 			mixin jobfile(file, idx)

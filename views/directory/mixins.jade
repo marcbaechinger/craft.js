@@ -1,6 +1,6 @@
 mixin jsfile(file, idx)
 	li.directory-item
-		a.file(href="/#{context}/#{file.path}") #{file.name}
+		a.file(href="/#{context}/#{file.path}", title="#{file.size} bytes - #{file.mtime}") #{file.name}
 		label(for="plain-#{idx}") plaintext
 			input.plain(id="plain-#{idx}", name="plain", type="checkbox")
 			span(style="padding-left: 24px;") |
@@ -31,7 +31,6 @@ mixin jobfile(file, idx)
 mixin directory(file)
 	li.directory-item
 		a.file(href="/#{context}/#{file.path}")=file.name
-		label.children
 			
 mixin breadcrumb
 	h2.collapse.directory Content of 

@@ -56,7 +56,7 @@
 	};
 
 	exports.craftjs.services.deleteFile = function (path, callback) {
-		$.ajax("/" + craftjs.data.context + path, {
+		$.ajax("/" + craftjs.data.context + "/" + path, {
 			type: "DELETE",
 			dataType: "json",
 			contentType: "application/json",

@@ -60,7 +60,7 @@
 		return function (req, res, next) {
 			req.data.job = req.body;
 			if (req.body.jobfile) {
-				fs.readFile(appConfig.path.jobs + req.body.jobfile, function (error, data) {
+				fs.readFile(appConfig.path.jobs + "/" + req.body.jobfile, function (error, data) {
 					if (error) {
 						error.statusCode = 404;
 						common.sendErrorPage(req, res, error, true);
