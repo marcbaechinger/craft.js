@@ -30,9 +30,6 @@
 		app.use(express.static(appConfig.path.docroot));
 	});
 
-	util.mkdir(appConfig.path.src);
-	util.mkdir(appConfig.path.dist);
-
 	app.configure('development', function () {
 		app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	});
@@ -40,6 +37,9 @@
 		app.use(express.errorHandler());
 	});
 
+	util.mkdir(appConfig.path.src);
+	util.mkdir(appConfig.path.dist);
+	
 	// Routes
 	app.get('/', function (req, res) {
 		res.render('index', { title: 'craft.js', src: appConfig.context.src });
@@ -73,7 +73,13 @@
 			build.lint,
 			common.fileViewer
 		);
-
+		
+	app.delete("/" + appConfig.context.dist + "/*",
+			common.createInputNormalizer("dist", appConfig.context.dist, distDirectory),
+			common.createFileDescriptor,
+			common.deleteFile,
+			common.sendDeletionConfirmation
+		);
 	
 	app.get("/" + appConfig.context.jobs + "/*",
 			common.createInputNormalizer("job", appConfig.context.jobs, jobsDirectory),
@@ -94,19 +100,10 @@
 			common.deleteFile,
 			common.sendDeletionConfirmation
 		);
-	
-	app.delete("/" + appConfig.context.dist + "/*",
-			common.createInputNormalizer("dist", appConfig.context.dist, distDirectory),
-			common.createFileDescriptor,
-			common.deleteFile,
-			common.sendDeletionConfirmation
-		);
 		
-	// TODO rename path to 'release' 
 	app.post("/release",
 		common.createInputNormalizer("dist", appConfig.context.dist, distDirectory),
 		jobs.createJobInfoFactory(distDirectory),
-		
 		jobs.resolve,
 		build.expand,
 		build.mangle,
@@ -115,19 +112,6 @@
 		jobs.writeSourceCode,
 		release.sendReleaseOutput
 	);
-/*	app.post("/" + appConfig.context.jobs,
-			jobs.createJobInfoFactory(distDirectory),
-			common.normalizeUserInput,
-			jobs.resolve,
-			build.expand,
-			build.mangle,
-			build.squeeze,
-			build.astToSourceCode,
-			jobs.createSourceCodeWriter(distDirectory),
-			jobs.sendBuildOutput
-		);
-
-*/		
 	app.listen(appConfig.server.port);
 	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 }());

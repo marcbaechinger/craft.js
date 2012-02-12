@@ -87,6 +87,10 @@ ul.directory {
 .directory-item .job-build button {
   margin-left: 183px;
 }
+#build-toolbar .transform {
+  float: left;
+  margin-left: 0px;
+}
 .page {
   display: block;
   border-radius: 5px;

@@ -55,6 +55,7 @@
 		};
 	};
 	
+	
 	exports.createJobInfoFactory = function (base) {
 		return function (req, res, next) {
 			req.data.job = req.body;
@@ -69,7 +70,7 @@
 							req.query.expand = "true";
 							
 							req.data.path = req.data.job.name + "_" + getTimeStamp() + ".js";
-							req.data.realPath = base + "/" + req.data.path;
+							req.data.realPath = req.data.base + "/" + req.data.path;
 							req.data.fileName = req.data.path.substring(req.data.path.lastIndexOf("/") + 1);
 							req.data.job.expand = true;
 							next();
@@ -81,7 +82,7 @@
 				});
 			} else {
 				req.data.path = req.data.job.name + "_" + getTimeStamp() + ".js";
-				req.data.realPath = base + "/" + req.data.path;
+				req.data.realPath = req.data.base + "/" + req.data.path;
 				req.data.fileName = req.data.path.substring(req.data.path.lastIndexOf("/") + 1);
 				req.data.job.expand = true;
 				next();
