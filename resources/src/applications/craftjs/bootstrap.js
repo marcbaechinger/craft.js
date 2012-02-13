@@ -1,11 +1,9 @@
-/*global $: false, document: true, localStorage: false, model: false, controller: false,
-	data: false, craftjs: false, Mustache: false, LINT_OPTIONS: false, LINT_DESC: false,
-	alert: false, console: false*/
+/*jslint browser:true */
+/*global $: false, craftjs: false, model: false, LINT_OPTIONS: false, LINT_DESC: false */
 //= require "../../controller/model-aware-controller"
 //= require "constants, services, renderer"
-//= require "controller/page-controller, controller/toolbar-controller, controller/lint-controller, controller/jobpanel-controller"
-
-
+//= require "controller/page-controller, controller/toolbar-controller"
+//= require "controller/lint-controller, controller/jobpanel-controller"
 $(function () {
 	var bag, projectModel, lintOptions, lintModel, pageController, buildToolbarController,
 		projectPanelController, lintOptionPanelController,
@@ -53,7 +51,6 @@ $(function () {
 	if (!localStorage.projectName) {
 		localStorage.projectName = "default";
 	}
-
 	projectModel = new model.Model({
 		data: getBag()
 	}).bind("change", saveBag)
