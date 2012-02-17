@@ -72,24 +72,6 @@
 	display: block;
 }
 
-/* -- */
-header {
-	background-color: #ededed;
-	border-bottom: 1px solid #ccc;
-	color: #fff;
-	font-size: 32px;
-	text-shadow: 1px 1px 2px #333;
-	font-family: "Arial Black";
-	font-weight: 700;
-	padding-left: 160px;
-	margin-left: -60px;
-	margin-right: -58px;
-	margin-top: -14px;
-	a {
-		color: #fefefe;
-		text-decoration: none;
-	}
-}
 
 a {
 	color: #20539D;
@@ -156,22 +138,11 @@ ul.directory {
 		}
 	}
 }
-#build-toolbar {
-	.transform {
-		float: left;
-		margin-left: 0px;
-	}
-}
 
 .page {
 	.shadow-panel();
 }
 
-.breadcrumb {
-	position: absolute;
-	right: 74px;
-	top: 76px;
-}
 .dependencies {
 	.button-list();
 	.dep {
@@ -190,7 +161,7 @@ body > div.directory-item {
 }
 
 body {
-  padding: 6px 50px 12px 50px;
+  padding: 42px 50px 12px 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -297,62 +268,6 @@ a.file {
 	display: inline-block;
 }
 
-#markers .fixme,
-#markers .todo {
-	background-color: #FFD800;
-	border-radius: 4px;
-	box-shadow: 2px 2px 6px #777;
-	display: absolute;
-	margin-top: 2px;
-	margin-left: 22px;
-	margin-right: 12px;
-	padding: 2px 8px;
-	text-decoration: none;
-	color: #000 !important;
-}
-#markers .todo {
-	background-color: #20539D;
-	color: #fff !important;
-}
-
-
-#lint-options {
-	.popup();
-	margin-right: 24px;
-}
-#project-files {
-	.popup();
-	min-height: 120px;
-	width: 636px;
-	right: 24px;
-	ul {
-		list-style: none;
-		padding-left: 8px;
-		font-size: 14px;
-	}
-	label {
-		margin-right: 12px;
-	}
-	ul {
-		margin-left: 12px;
-		margin-top: 8px;
-	}
-	.build {
-		float: right;
-		display: inline-block;
-		margin-top: -2px;
-	}
-}
-
-#project-tools {
-	float: right;
-	margin-top: -28px;
-	
-	> label {
-		margin-left: 24px;
-		margin-bottom: 12px;
-	}
-}
 .lint-button {
 	.button(#20539D);
 	color: #fff;
@@ -406,6 +321,7 @@ nav {
 .source {
 	.shadow-panel();
 	background-color: #fff;
+	margin-bottom: 480px;
 	pre:nth-child(even) {
 		background-color: white;
 	}
@@ -501,6 +417,7 @@ nav {
 
 .ribbon {
 	position: fixed;
+	z-index: 20;
 	left: -90px;
 	top: 60px;
 	font-size: 16px;
@@ -517,5 +434,128 @@ nav {
 	a {
 		color: #F3D354;
 		text-decoration: none;
+	}
+}
+
+body {
+  padding: 42px 50px 12px 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+/* -- */
+header {
+	background-color: #999;
+	border-bottom: 1px solid #ccc;
+	box-shadow: 3px 2px 6px #333;
+	color: #fff;
+	font-size: 24px;
+	text-shadow: 1px 1px 2px #333;
+	font-family: "Arial Black";
+	font-weight: 700;
+	height: 36px;
+	padding-left: 160px;
+	position: fixed;
+	opacity: 0.6;
+	margin-left: -60px;
+	margin-right: -58px;
+	margin-top: -50px;
+	width: 100%;
+	z-index: 10;
+	a {
+		color: #fefefe;
+		text-decoration: none;
+	}
+}
+
+
+.breadcrumb {
+	border-radius: 6px;
+	padding: 6px 12px 6px 12px;
+	position: absolute;
+	right: 56px;
+	top: 74px;
+}
+
+#project-tools {
+	position: fixed;
+	z-index: 20;
+	right: 8px;
+	top: 8px;
+	float: right;
+	
+	> label {
+		margin-left: 24px;
+		margin-bottom: 12px;
+	}
+}
+
+#markers .fixme,
+#markers .todo {
+	background-color: #FFD800;
+	border-radius: 4px;
+	box-shadow: 2px 2px 6px #777;
+	display: absolute;
+	margin-top: 2px;
+	margin-left: 22px;
+	margin-right: 12px;
+	padding: 2px 8px;
+	text-decoration: none;
+	color: #000 !important;
+}
+#markers .todo {
+	background-color: #20539D;
+	color: #fff !important;
+}
+
+
+#lint-options {
+position: fixed;
+	.popup();
+	margin-right: 24px;
+}
+#project-files {
+	.popup();
+	min-height: 120px;
+	width: 636px;
+	right: 24px;
+	ul {
+		list-style: none;
+		padding-left: 8px;
+		font-size: 14px;
+	}
+	label {
+		margin-right: 12px;
+	}
+	ul {
+		margin-left: 12px;
+		margin-top: 8px;
+	}
+	.build {
+		float: right;
+		display: inline-block;
+		margin-top: -2px;
+	}
+}
+
+#search-bar {
+	float: right;
+	input {
+		border-radius: 8px;
+		border-color: #999;
+		font-size: 16px;
+		padding: 0px 6px;
+		width: 320px;
+	}
+}
+#result-info {
+	background-color: #d3d3d3;
+	border-radius: 6px;
+	padding: 4px 8px 3px 8px;
+	margin-right: 12px; 
+	width: 320px;
+}
+#build-toolbar {
+	.transform {
+		float: left;
+		margin-left: 0px;
 	}
 }

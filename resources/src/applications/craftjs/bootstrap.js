@@ -3,10 +3,10 @@
 //= require "../../controller/model-aware-controller"
 //= require "constants, services, renderer"
 //= require "controller/page-controller, controller/toolbar-controller"
-//= require "controller/lint-controller, controller/jobpanel-controller"
+//= require "controller/lint-controller, controller/jobpanel-controller, controller/search-controller"
 $(function () {
 	var bag, projectModel, lintOptions, lintModel, pageController, buildToolbarController,
-		projectPanelController, lintOptionPanelController,
+		projectPanelController, lintOptionPanelController, searchController,
 		// FIXME test and fix usage from multiple tabs
 		// TODO rename to readLocalJob 
 		getBag = function () {
@@ -77,4 +77,5 @@ $(function () {
 
 	projectPanelController = new craftjs.JobPanelController("#project-files", projectModel).init();
 	pageController = new craftjs.PageController(projectModel, getBuildFlags).init();
+	searchController = new craftjs.SearchController("search-script", "source", "result-info");
 });

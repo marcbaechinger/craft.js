@@ -1,11 +1,10 @@
-//built by craft.js -- Sun Feb 12 2012 20:19:49 GMT+0100 (CET)
 
-// /Users/marcbaechinger/test/craft.js/resources/src/controller/init-module.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/controller/init-module.js
 /* @author marcbaechinger */
 var controller = controller || { version: "0.0.1" }; 
 
 
-// /Users/marcbaechinger/test/craft.js/resources/src/controller/controller.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/controller/controller.js
 //= require "init-module"
 /*global $: false, controller: false, localStorage: false */
 (function (module, $) {
@@ -148,11 +147,11 @@ var controller = controller || { version: "0.0.1" };
 }(controller, $));
 
 
-// /Users/marcbaechinger/test/craft.js/resources/src/model/init-module.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/model/init-module.js
 /* @author marcbaechinger */
 var model = model || { version: "1.0" }; 
 
-// /Users/marcbaechinger/test/craft.js/resources/src/model/observable.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/model/observable.js
 //= require "init-module"
 /*global model: false */
 (function (global) {
@@ -209,7 +208,7 @@ var model = model || { version: "1.0" };
 	};
 	global.Observable = Observable;
 }(model));
-// /Users/marcbaechinger/test/craft.js/resources/src/model/collection.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/model/collection.js
 //= require "init-module"
 //= require "observable"
 /*global model: false */
@@ -445,7 +444,7 @@ var model = model || { version: "1.0" };
 }(model));
 
 
-// /Users/marcbaechinger/test/craft.js/resources/src/controller/model-aware-controller.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/controller/model-aware-controller.js
 //= require "init-module"
 //= require "controller"
 //= require "../model/collection"
@@ -654,7 +653,7 @@ var model = model || { version: "1.0" };
 	 **/
 	module.ModelAwareController = ModelAwareController;
 }(controller, $));
-// /Users/marcbaechinger/test/craft.js/resources/src/applications/craftjs/constants.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/applications/craftjs/constants.js
 (function (exports) {
 	
 	exports.craftjs = exports.craftjs || {};
@@ -788,7 +787,7 @@ var model = model || { version: "1.0" };
 		"indent" : "Specify indentation spacing"
 	};
 }(this));
-// /Users/marcbaechinger/test/craft.js/resources/src/applications/craftjs/services.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/applications/craftjs/services.js
 /*global jQuery: false, alert: false, document: false, craftjs: false*/
 (function (exports, $) {
 	
@@ -847,7 +846,7 @@ var model = model || { version: "1.0" };
 	};
 
 	exports.craftjs.services.deleteFile = function (path, callback) {
-		$.ajax("/" + craftjs.data.context + path, {
+		$.ajax("/" + craftjs.data.context + "/" + path, {
 			type: "DELETE",
 			dataType: "json",
 			contentType: "application/json",
@@ -860,7 +859,7 @@ var model = model || { version: "1.0" };
 	};
 	
 }(this, jQuery));
-// /Users/marcbaechinger/test/craft.js/resources/src/applications/craftjs/lib/mustache.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/applications/craftjs/lib/mustache.js
 /*!
  * mustache.js - Logic-less {{mustache}} templates with JavaScript
  * http://github.com/janl/mustache.js
@@ -1398,7 +1397,7 @@ var Mustache = (typeof module !== "undefined" && module.exports) || {};
 
 })(Mustache);
 
-// /Users/marcbaechinger/test/craft.js/resources/src/applications/craftjs/renderer.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/applications/craftjs/renderer.js
 /*global global: false, Mustache: false */
 //= require "lib/mustache"
 (function (exports) {
@@ -1415,7 +1414,7 @@ var Mustache = (typeof module !== "undefined" && module.exports) || {};
 	};
 	
 }(typeof global === "undefined" ? this : global));
-// /Users/marcbaechinger/test/craft.js/resources/src/applications/craftjs/controller/page-controller.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/applications/craftjs/controller/page-controller.js
 /*global controller: false, craftjs: false, jQuery: false, ALL_BUILD_FLAGS: false, document: false, console: true, prompt: false, localStorage */
 //= require "../../../controller/model-aware-controller"
 //= require "../constants"
@@ -1547,7 +1546,7 @@ var Mustache = (typeof module !== "undefined" && module.exports) || {};
 		};
 	exports.craftjs.PageController = PageController;
 }(this, jQuery));
-// /Users/marcbaechinger/test/craft.js/resources/src/applications/craftjs/controller/toolbar-controller.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/applications/craftjs/controller/toolbar-controller.js
 /*global controller: false, document: false, ALL_BUILD_FLAGS: false, craftjs: false,
 	jQuery: false, alert: false, prompt: false*/
 //= require "../../../controller/model-aware-controller"
@@ -1622,7 +1621,7 @@ var Mustache = (typeof module !== "undefined" && module.exports) || {};
 
 	exports.craftjs.ToolbarController = ToolbarController;
 }(this, jQuery));
-// /Users/marcbaechinger/test/craft.js/resources/src/applications/craftjs/controller/lint-controller.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/applications/craftjs/controller/lint-controller.js
 /*global jQuery: false, controller: false, prompt: false, craftjs: false, LINT_DESC: false */
 //= require "../../../controller/model-aware-controller"
 //= require "../constants"
@@ -1693,7 +1692,7 @@ var Mustache = (typeof module !== "undefined" && module.exports) || {};
 		};
 	exports.craftjs.LintController = LintController;
 }(this, jQuery));
-// /Users/marcbaechinger/test/craft.js/resources/src/applications/craftjs/controller/jobpanel-controller.js
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/applications/craftjs/controller/jobpanel-controller.js
 /*global jQuery: false, controller: false, localStorage: false, craftjs: false*/
 //= require "../../../controller/model-aware-controller"
 (function (exports, $) {
@@ -1775,18 +1774,76 @@ var Mustache = (typeof module !== "undefined" && module.exports) || {};
 		};
 	exports.craftjs.JobPanelController = JobPanelController;
 }(this, jQuery));
-// /Users/marcbaechinger/test/craft.js/resources/src/applications/craftjs/bootstrap.js
-/*global $: false, document: true, localStorage: false, model: false, controller: false,
-	data: false, craftjs: false, Mustache: false, LINT_OPTIONS: false, LINT_DESC: false,
-	alert: false, console: false*/
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/applications/craftjs/controller/search-controller.js
+/*global jQuery: false */
+(function (exports, $) {
+	var SearchController = function (inputId, scriptContainerId, resultContainerId) {
+		var input = $("#" + inputId),
+			block = "block",
+			hide = "none",
+			scriptContainer = $("#" + scriptContainerId),
+			resultContainer = $("#" + resultContainerId),
+			lineElements = scriptContainer.find(".line"),
+			lines = lineElements.map(function () {
+				return this.style;
+			}),
+			textLines = lineElements.map(function () {
+				return $(this).text().replace(/^\d*:\t/, "");
+			}),
+			showAllLines = function () {
+				$.each(lines, function (idx) {
+					lines[idx].display = "block";
+				});
+			},
+			displayResultInfo = function (matchCount, searchExpr) {
+				if (matchCount < 1) {
+					resultContainer.html("no matches found for <code>/" + searchExpr + "/</code>");
+					showAllLines();
+				} else {
+					resultContainer.html(matchCount + " matches found for <code>/" + searchExpr + "/</code>");
+				}
+			};
+
+		lineElements = undefined;
+		input.bind("change", function () {
+			var matchCount = 0,
+				textExpr = input.val(),
+				expr;
+				
+			try {
+				expr = new RegExp(textExpr, "ig");
+				if (textExpr) {
+					textLines.each(function (idx) {
+						if (this.match(expr)) {
+							lines[idx].display = block;
+							matchCount += 1;
+						} else {
+							lines[idx].display = hide;
+						}
+					});
+					displayResultInfo(matchCount, textExpr);
+				} else {
+					resultContainer.text("grep source code =>");
+					showAllLines();
+				}
+			} catch (e) {
+				alert("RegExp error: '" + e.message + "'");
+			}
+		});
+	};
+	
+	exports.craftjs.SearchController = SearchController;
+}(this, jQuery));
+// /Users/marcbaechinger/projects/node/craft-js/resources/src/applications/craftjs/bootstrap.js
+/*jslint browser:true */
+/*global $: false, craftjs: false, model: false, LINT_OPTIONS: false, LINT_DESC: false */
 //= require "../../controller/model-aware-controller"
 //= require "constants, services, renderer"
-//= require "controller/page-controller, controller/toolbar-controller, controller/lint-controller, controller/jobpanel-controller"
-
-
+//= require "controller/page-controller, controller/toolbar-controller"
+//= require "controller/lint-controller, controller/jobpanel-controller, controller/search-controller"
 $(function () {
 	var bag, projectModel, lintOptions, lintModel, pageController, buildToolbarController,
-		projectPanelController, lintOptionPanelController,
+		projectPanelController, lintOptionPanelController, searchController,
 		// FIXME test and fix usage from multiple tabs
 		// TODO rename to readLocalJob 
 		getBag = function () {
@@ -1831,7 +1888,6 @@ $(function () {
 	if (!localStorage.projectName) {
 		localStorage.projectName = "default";
 	}
-
 	projectModel = new model.Model({
 		data: getBag()
 	}).bind("change", saveBag)
@@ -1858,4 +1914,5 @@ $(function () {
 
 	projectPanelController = new craftjs.JobPanelController("#project-files", projectModel).init();
 	pageController = new craftjs.PageController(projectModel, getBuildFlags).init();
+	searchController = new craftjs.SearchController("search-script", "source", "result-info");
 });
