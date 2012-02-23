@@ -90,6 +90,9 @@
 							}
 						});
 					},
+					"@show-html": function (e) {
+						alert("sda");
+					},
 					"@remove-from-project": function (e) {
 						var target = $(e.target),
 							path = target.data("path"),

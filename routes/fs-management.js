@@ -2,7 +2,9 @@
 (function () {
 	"use strict";
 	var fs = require("fs"),
-		jsFileMatcher = /\.(js|cjs)$/,
+		validFileMatcher = /\.(js|cjs|html)$/,
+		htmlFileMatcher = /\.(html)$/,
+		qunitFileMatcher = /\.(qunit)$/,
 		createSourceTree = function (basePath, path) {
 			var fsNode = {
 					path: path,
@@ -33,7 +35,13 @@
 				if (childStat.isDirectory()) {
 					childNode.type = "directory";
 					fsNode.children.push(childNode);
-				} else if (filename.match(jsFileMatcher)) {
+				} else if (filename.match(htmlFileMatcher)) {
+					childNode.type = "html";
+					fsNode.children.push(childNode);
+				} else if (filename.match(qunitFileMatcher)) {
+					childNode.type = "qunit";
+					fsNode.children.push(childNode);
+				} else if (filename.match(validFileMatcher)) {
 					childNode.type = "js";
 					fsNode.children.push(childNode);
 				}

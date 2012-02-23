@@ -1,3 +1,5 @@
+@import "/public/stylesheets/layout";
+
 @code-color: #ededed;
 @error-bg-color: #990009;
 @error-font-color: yellow;
@@ -12,20 +14,6 @@
 	box-shadow: 3px 3px 12px #333;
 	position: relative;
 	padding-top: 18px;
-}
-
-.button(@bg-color: #cecece, @bg-color-on: darkgreen) {
-	background-color: @bg-color;
-	border-radius: 4px;
-	cursor: pointer;
-	display: inline-block;
-	font-size: 14px;
-	padding: 3px 12px;
-	text-align: center; 
-	&.contained {
-		background-color: @bg-color-on;
-		color: #eee;
-	}
 }
 
 .popup() {
@@ -58,19 +46,6 @@
 	}
 }
 
-/**********    cleafix ***************/
-.clearfix:after {
-	content: ".";
-	display: block;
-	clear: both;
-	visibility: hidden;
-	line-height: 0;
-	height: 0;
-}
- 
-.clearfix {
-	display: block;
-}
 
 
 a {
@@ -106,13 +81,7 @@ ul.directory {
 	}
 }
 .directory-item {
-	background-color: #dedede;
-	border-radius: 5px;
-	padding: 4px 12px 2px 12px;
-	border: solid 1px #ccc;
-	border: 1px solid #999;
-	box-shadow: 2px 2px 4px #999,
-		inset -1px -18px 2px #bbb;
+	.bar();
 	margin-bottom: 12px;
 	list-style: none;
 	padding-top: 6px;
@@ -160,10 +129,6 @@ body > div.directory-item {
 	margin-top: 52px;
 }
 
-body {
-  padding: 42px 50px 12px 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
 
 
 /****** headers   ********/
@@ -281,43 +246,13 @@ a.file {
 	margin-left: 8px !important;
 }
 
-nav {
-	float: right;
-	margin-left: 68px;
-	.nav-button {
-		.button(#4183C4);
-		color: #fff;
-		width: 60px;
-		margin-left: 8px;
-	}
-	&.src .nav-button:first-child {
-		background-color: rgb(12, 43, 120);
-	}
-	&.dist .nav-button:last-child {
-		background-color: rgb(12, 43, 120);
-	}
-	&.jobs {
-		.nav-button {
-			background-color: rgb(12, 43, 120);
-		}
-		.nav-button:first-child {
-			background-color: #4183C4;
-		}
-		.nav-button:last-child {
-			background-color: #4183C4;
-		}
-	}
-}
+
 .marker-button {
 	.button(#20539D);
 	color: #fff;
 	margin-left: 24px;
 }
-.bag-button {
-	.button();
-	width: 180px;
-	margin-right: 4px;
-}
+
 .source {
 	.shadow-panel();
 	background-color: #fff;
@@ -329,7 +264,6 @@ nav {
 		background-color: #999;
 	}
 	pre {
-		
 		border-bottom: 1px solid #ddd;
 		font-family: Courier;
 		font-size: 14px;
@@ -358,7 +292,6 @@ nav {
 	float: left;
 	width: 280px;
 }
-
 
 .status-panel {
 	margin-left: 300px;
@@ -409,6 +342,7 @@ nav {
 	.panel;
 }
 
+
 .no-checks {
 	background-color: #CDBE0E;
 	text-align: center;
@@ -442,29 +376,6 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 /* -- */
-header {
-	background-color: #999;
-	border-bottom: 1px solid #ccc;
-	box-shadow: 3px 2px 6px #333;
-	color: #fff;
-	font-size: 24px;
-	text-shadow: 1px 1px 2px #333;
-	font-family: "Arial Black";
-	font-weight: 700;
-	height: 36px;
-	padding-left: 160px;
-	position: fixed;
-	opacity: 0.6;
-	margin-left: -60px;
-	margin-right: -58px;
-	margin-top: -50px;
-	width: 100%;
-	z-index: 10;
-	a {
-		color: #fefefe;
-		text-decoration: none;
-	}
-}
 
 
 .breadcrumb {
@@ -473,6 +384,10 @@ header {
 	position: absolute;
 	right: 56px;
 	top: 74px;
+}
+.html .breadcrumb,
+.qunit .breadcrumb {
+	top: 52px;
 }
 
 #project-tools {

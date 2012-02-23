@@ -133,6 +133,30 @@
 	};
 	
 	
+	exports.htmlInterceptor = function (req, res, next) {
+		if (req.data.fileName.match(/.html$/) && req.query.viewer !== "true") {
+			req.data.html = true;
+			exports.fileViewer(req, res);
+		} else if (req.data.fileName.match(/.html$/)) {
+			req.data.displayMode = "html";
+			next();
+		} else {
+			next();
+		}
+	};
+	
+	exports.qunitInterceptor = function (req, res, next) {
+		if (req.data.fileName.match(/.qunit$/) && req.query.viewer !== "true") {
+			req.data.qunit = true;
+			exports.fileViewer(req, res);
+		} else if (req.data.fileName.match(/.qunit$/)) {
+			req.data.displayMode = "qunit";
+			next();
+		} else {
+			next();
+		}
+	};
+	
 	exports.getFileContent = function (req, res, next) {
 		var sourceCode;
 		try {
@@ -195,6 +219,13 @@
 		if (req.query.plain) {
 			res.header("Content-Type", "text/javascript");
 			res.render('source/plain', req.data);
+		} else if (req.data.html) {
+			res.header("Content-Type", "text/html");
+			req.data.displayMode = "html";
+			res.render('source/html', req.data);
+		} else if (req.data.qunit) {	
+			req.data.displayMode = "qunit";
+			res.render('qunit/qunit', req.data);
 		} else {
 			req.data.lines = req.data.sourceCode.split("\n");
 			res.render('source-viewer', req.data);

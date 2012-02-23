@@ -1,4 +1,14 @@
-if context === config.context.src
+if fileName.match(/.html$/)
+	h2.collapse HTML file in #{path}
+		a.size(href="/#{context}/#{path}") raw
+		.size #{sourceCode.length} characters / #{lines.length} lines&nbsp;&nbsp;&nbsp;
+else if fileName.match(/.qunit$/)
+	h2.collapse qUnit test in #{path} (using qunit template of craft.js)
+		a.size(href="/#{context}/#{path}") run test
+else if context === config.context.src
+	h2.collapse Annotated source code of #{path}
+		.size #{sourceCode.length} characters / #{lines.length} lines
+else if context === config.context.src
 	h2.collapse Annotated source code of #{path}
 		.size #{sourceCode.length} characters / #{lines.length} lines
 else if context === config.context.dist

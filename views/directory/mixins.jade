@@ -22,6 +22,18 @@ mixin jsfile(file, idx)
 		if context === config.context.dist
 			button.transform(data-action="delete-file", data-path="#{file.path}") delete
 		
+mixin htmlfile(file, idx)
+	li.directory-item
+		a.file(href="/#{context}/#{file.path}?viewer=true", title="#{file.size} bytes - #{file.mtime}") #{file.name}
+		a(href="/#{context}/#{file.path}")
+			button.transform show
+
+mixin qunitfile(file, idx)
+	li.directory-item
+		a.file(href="/#{context}/#{file.path}?viewer=true", title="#{file.size} bytes - #{file.mtime}") #{file.name}
+		a(href="/#{context}/#{file.path}")
+			button.transform test
+
 mixin jobfile(file, idx)
 	li.directory-item.job
 		a.file(href="/#{context}/#{file.name}") #{file.name}

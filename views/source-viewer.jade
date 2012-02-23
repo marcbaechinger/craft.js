@@ -1,17 +1,17 @@
 extends layout
 
 block content
+	if context === config.context.src
+		div.breadcrumb
+			a(href="/#{context}/", style="text-decoration: none;", title="jump to the root of the source repository") #{context}:/
+			each path, name in breadcrumb
+				a(href="/#{context}/#{path}") #{name}
+				span /
+			span #{fileName}
 	if displayMode === "js"
-		if context === config.context.src
-			div.breadcrumb
-				a(href="/#{context}/", style="text-decoration: none;", title="jump to the root of the source repository") #{context}:/
-				each path, name in breadcrumb
-					a(href="/#{context}/#{path}") #{name}
-					span /
-				span #{fileName}
 		include source/toolbar
 
-	if typeof dependencies !== "undefined"
+	if displayMode === "js" && typeof dependencies !== "undefined"
 		h2.collapse Dependencies of #{path}
 		ul.dependencies
 			each dep in dependencies

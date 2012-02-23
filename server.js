@@ -39,6 +39,7 @@
 
 	util.mkdir(appConfig.path.src);
 	util.mkdir(appConfig.path.dist);
+	util.mkdir(appConfig.path.jobs);
 	
 	// Routes
 	app.get('/', function (req, res) {
@@ -51,6 +52,8 @@
 			common.createBreadcrumpTokens,
 			common.directoryInterceptor,
 			common.getFileContent,
+			common.htmlInterceptor,
+			common.qunitInterceptor,
 			build.resolve,
 			build.expand,
 			build.mangle,

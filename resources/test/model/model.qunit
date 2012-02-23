@@ -1,0 +1,94 @@
+<script type="text/javascript" src="/repo/src/model/collection.js?plain=true&amp;expand=true"> </script>
+<script type="text/javascript">
+var main = function() {    
+    module("model basics");
+    test("create a model", function(){
+    	var user = new model.Model({
+				data: {id: 1}
+			});
+		
+		equal(typeof user.bind , "function", "function bind inherited from Observable");
+		equal(typeof user.unbind , "function", "function unbind inherited from Observable");
+		equal(typeof user.emit, "function", "function emit inherited from Observable");
+		
+		equal(user.data.id, 1, "initial data set");	
+		equal(user.id, 1, "data id propagated to model");
+	});
+	
+	test("test model getter", function(){
+    	var data = {id: 1, name: "Marc"},
+			user = new model.Model({
+				data: data
+			});
+			
+		equal(user.get("id"), 1, "get id by getter");	
+		equal(user.get("name"), "Marc", "get name by getter");
+		equal(user.get(), data, "get full data by getter");
+	});
+	
+    test("test model setter", function(){
+    	var user = new model.Model({
+				data: {id: 1}
+			});
+			
+		equal(user.data.id, 1, "initial data set");
+		equal(user.id, 1, "initial data set");
+		user.set({
+			id: 2,
+			name: "Marc"
+		});
+		equal(user.data.name, "Marc", "added property by update");
+		equal(user.data.id, 1, "updated id not allowed");
+		equal(user.id, 1, "updated id not allowed");
+	});
+	
+	
+    test("test deleting properties from a model", function(){
+    	var user = new model.Model({
+				data: {id: 1, name: "Marc"}
+			});
+			
+		equal(user.data.id, 1, "initial data set");
+		
+		user.delete({name: "", id: ""});
+		equal(typeof user.data.name, "undefined", "name has been deleted");	
+		equal(user.data.id, 1, "id can't be deleted");
+	});
+	
+	module("change listener");
+	
+    test("test update listener (set)", function(){
+    	var listenerCalled = false,
+			updateData = {name: "Hans"},
+			user = new model.Model({
+				data: {id: 1, name: "Marc"}
+			});
+		
+		user.bind("change", function(model) {
+			listenerCalled = true;
+			equal(model.data, user.data, "updated date meets expectations");
+		});
+		user.set(updateData);
+		ok(listenerCalled, "set listener has been called");
+	});
+	
+    test("test delete listener (set)", function(){
+    	var listenerCalled = false,
+			deleteData = {id: 1, name: ""},
+			assertData = {id: 1},
+			user = new model.Model({
+				data: {id: 1, name: "Marc"}
+			});
+		
+		user.bind("remove", function(model) {
+			listenerCalled = true;
+			deepEqual(model.data, assertData, "data passed to delete listener matches expectations");
+		});
+		user.delete(deleteData);
+		ok(listenerCalled, "delete listener has been called");
+	});
+	
+};
+</script>
+<div id="a-qunit-fixture">
+</div>

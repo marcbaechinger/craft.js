@@ -1,0 +1,113 @@
+.bar() {
+	background-color: #dedede;
+	border-radius: 5px;
+	padding: 4px 12px 2px 12px;
+	border: solid 1px #ccc;
+	border: 1px solid #999;
+	box-shadow: 2px 2px 4px #999,
+		inset -1px -18px 2px #bbb;
+}
+
+.button(@bg-color: #cecece, @bg-color-on: darkgreen) {
+	background-color: @bg-color;
+	
+	border-radius: 4px;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	padding: 3px 12px;
+	text-align: center; 
+	&.contained {
+		background-color: @bg-color-on;
+		color: #eee;
+	}
+}
+
+body {
+  padding: 42px 50px 12px 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+
+nav {
+
+	float: right;
+	margin-left: 48px;
+	margin-right: 52px;
+	.nav-button {
+		.button(#4183C4);
+		
+		background: #7db9e8; /* Old browsers */
+		background: -moz-linear-gradient(top, #7db9e8 0%, #2989d8 50%, #1e5799 100%); /* FF3.6+ */
+		background: -webkit-linear-gradient(top, #7db9e8 0%,#2989d8 50%,#1e5799 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, #7db9e8 0%,#2989d8 50%,#1e5799 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, #7db9e8 0%,#2989d8 50%,#1e5799 100%); /* IE10+ */
+		background: linear-gradient(top, #7db9e8 0%,#2989d8 50%,#1e5799 100%); /* W3C */
+		color: #fff;
+		width: 60px;
+		margin-left: 8px;
+	}
+}
+
+.repo-context nav .src,
+.dist-context nav .dist,
+.jobs-context nav .jobs {
+	background-color: darken(#4183C4, 20%);
+	box-shadow: 1px 1px 4px #555;
+	
+	background: #216ca5; /* Old browsers */
+	background: -moz-linear-gradient(top, #216ca5 0%, #2178b2 8%, #7db9e8 100%); /* FF3.6+ */
+	background: -webkit-linear-gradient(top, #216ca5 0%,#2178b2 8%,#7db9e8 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #216ca5 0%,#2178b2 8%,#7db9e8 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #216ca5 0%,#2178b2 8%,#7db9e8 100%); /* IE10+ */
+	background: linear-gradient(top, #216ca5 0%,#2178b2 8%,#7db9e8 100%); /* W3C */
+}
+
+header {
+	background-color: #999;
+	border-bottom: 1px solid #ccc;
+	box-shadow: 3px 2px 6px #333;
+	color: #fff;
+	font-size: 24px;
+	text-shadow: 1px 1px 2px #333;
+	font-family: "Arial Black";
+	font-weight: 700;
+	height: 36px;
+	padding-left: 160px;
+	position: fixed;
+	opacity: 0.6;
+	margin-left: -60px;
+	margin-right: -58px;
+	margin-top: -50px;
+	width: 100%;
+	z-index: 10;
+	a {
+		color: #fefefe;
+		text-decoration: none;
+	}
+}
+
+.bag-button {
+	.button();
+	width: 180px;
+	margin-right: 4px;
+	display: none;
+}
+
+.js .bag-button {
+	display: inline-block;
+}
+
+/**********    cleafix ***************/
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: block;
+}

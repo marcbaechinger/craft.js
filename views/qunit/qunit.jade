@@ -1,0 +1,24 @@
+!!!5
+mixin breadcrumb
+	a(href="/#{context}/", style="text-decoration: none;", title="jump to the root of the source repository") #{context}:/
+	each path, name in breadcrumb
+		a(href="/#{context}/#{path}") #{name}
+		span /
+	a(href="/#{context}/#{path}?viewer=true") #{fileName}
+
+head
+	title Qunit
+	link(rel="stylesheet", href="/stylesheets/qunit.css", type="text/css", media="screen")
+	script(type="text/javascript", src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
+	script(type="text/javascript", src="http://code.jquery.com/qunit/git/qunit.js")
+body.repo(onload="main();")
+	include ../navigation
+	div.breadcrumb
+		mixin breadcrumb
+	h1(id="qunit-header")
+		mixin breadcrumb
+	h2#qunit-banner
+	#qunit-testrunner-toolbar
+	h2#qunit-userAgent
+	ol#qunit-tests
+	!{sourceCode}
