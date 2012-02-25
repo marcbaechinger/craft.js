@@ -7,8 +7,9 @@ block content
 		else if error.statusCode === 404
 			|We're sorry! The requested file could not be found.
 	
-	.panel 
-		.error-message
-			#{error.message}
+	.panel
+		if typeof error.message !== "undefined"
+			.error-message
+				#{error.message}
 		
 		pre #{errorString}

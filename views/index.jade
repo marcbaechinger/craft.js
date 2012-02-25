@@ -10,7 +10,16 @@ html
 		block content
 			
 		.page
-			div: a(href="/repo/src/applications/craftjs") Browse repository
+			div
+				a(href="/repo/src/applications/craftjs") Browse repository
+				&nbsp;&nbsp;&nbsp;Sample:
+				a(href="/repo/src/applications/craftjs/bootstrap.js") View JavaScript file
+				&nbsp;&nbsp;&nbsp;Sample:
+				a(href="/repo/test/model/model.qunit?viewer=true") QUnit test
+				&nbsp;
+				span (
+				a(href="/repo/test/model/model.qunit") run
+				span )
 			<br/>
 			.text-box craft.js aims to help developers to manage their JavaScript assets by providing a (currently web based) facility for browsing, managing, building and distributing JavaScript assets.
 				h2 Browse
@@ -20,13 +29,15 @@ html
 				h2 Minimize
 				p Minimize your code for delivery on productive websites (uses <a href="https://github.com/mishoo/UglifyJS">uglify-js</a>)
 				h2 Beautify
-				p Remove comments and reformat your JavaScript to a consistent code style (uses <a href="https://github.com/mishoo/UglifyJS">uglify-js</a>).				
+				p Remove comments and reformat your JavaScript to a consistent code style (uses <a href="https://github.com/mishoo/UglifyJS">uglify-js</a>).
 				h2 Serve
 				p Serve your JavaScript with craft.js. Simply request the file with the query params of your choice to fetch a file into your HTML5 application: 
 				<pre>&lt;script href="http://marc.no.de/repo/src/applications/craftjs/
 				bootstrap.js?plain=true&mangle=true&expand=true&squeeze=true&minimize=true"&gt; &lt;/script&gt;</pre>
 				h2 Lint
 				p Check your JavaScript code for code smells. Uses <a href="https://github.com/jshint/jshint/">JSHint</a> to provide insight about how you can improve your code in terms of stability and maintainability.
+				h2 Test with qUnit integrated in craft.js
+				p Test your code by adding unit tests as HTML file or by using the craft.js quint template which provides the boilerplate of a qUnit test for you.
 			
 			p Follow <a href="http://twitter.com/#!marcbaechinger">marcbaechinger</a> on twitter.
 			
