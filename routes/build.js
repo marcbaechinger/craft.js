@@ -2,13 +2,11 @@
 (function () {
 	"use strict";
 
-	var fs = require("fs"),
-		common = require("./common.js"),
+	var common = require("./common.js"),
 		concat = require("../app/dependency.js"),
 		appConfig = require("../app-config.js"),
 		uglify = require("../app/uglify.js"),
 		jshint = require('../app/jshint.js'),
-		fsmgmt = require('./fs-management.js'),
 		basePath = appConfig.path.src,
 		concatenator = new concat.Concatenator({
 			basePath: basePath
@@ -26,7 +24,7 @@
 				return dep.replace(basePath, "");
 			});
 		};
-	
+
 	exports.resolve = function (req, res, next) {
 		try {
 			req.data.realPathDependencies = concatenator.resolve(req.data.realPath);
@@ -46,13 +44,13 @@
 		if (req.data.job.expand === true) {
 			sourceCode = concatenator.concatenateFiles(req.data.realPathDependencies);
 			req.data.sourceCode = sourceCode;
-		} 
+		}
 		next();
 	};
 	exports.mangle = function (req, res, next) {
 		if (req.data.job.transformation.mangle === true) {
 			req.data.ast = uglify.mangle(getAst(req), {});
-		} 
+		}
 		next();
 	};
 	exports.squeeze = function (req, res, next) {
@@ -64,37 +62,43 @@
 	exports.astToSourceCode = function (req, res, next) {
 		var options = {}, sourceCode;
 		if (req.data.job.transformation.mangle ||
-			req.data.job.transformation.squeeze ||
-			req.data.job.transformation.beautify ||
-			req.data.job.transformation.minimize ) {
-				
+				req.data.job.transformation.squeeze ||
+				req.data.job.transformation.beautify ||
+				req.data.job.transformation.minimize) {
+
+			req.data.job.transformation.minimize = true;
+			
 			if (req.data.job.transformation.beautify === true) {
 				options.beautify = true;
+				req.data.job.transformation.minimize = false;
 			}
 			sourceCode = uglify.generate(getAst(req), options);
 			req.data.sourceCode = sourceCode;
 		}
-		 
+
 		next();
 	};
 	exports.extractLintOptions = function (req, res, next) {
-		var options = req.data.job.validate.options, 
-			name, val;
+		var options = req.data.job.validate.options,
+			name,
+			val;
 		for (name in req.query) {
-			if (name.match(/^lint-/)) {
-				val = req.query[name];
-				if (val === "false") {
-					val = false;
-				} else if (val === "true") {
-					val = true;
-				} else {
-					try { 
-						val = parseInt(val, 10); 
-					} catch (e) { 
-						/* ignored */
+			if (req.query.hasOwnProperty(name)) {
+				if (name.match(/^lint-/)) {
+					val = req.query[name];
+					if (val === "false") {
+						val = false;
+					} else if (val === "true") {
+						val = true;
+					} else {
+						try {
+							val = parseInt(val, 10);
+						} catch (e) {
+							/* ignored */
+						}
 					}
+					options[name.replace(/^lint-/, "")] = val;
 				}
-				options[name.replace(/^lint-/, "")] = val;
 			}
 		}
 		next();
@@ -105,5 +109,5 @@
 		}
 		next();
 	};
-	
+
 }());
