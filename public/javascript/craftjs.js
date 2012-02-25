@@ -1,3 +1,4 @@
+//built by craft.js -- Sat Feb 25 2012 01:29:49 GMT+0100 (CET)
 
 // /Users/marcbaechinger/projects/node/craft-js/resources/src/controller/init-module.js
 /* @author marcbaechinger */
@@ -1506,6 +1507,9 @@ var Mustache = (typeof module !== "undefined" && module.exports) || {};
 								document.location = "/" + craftjs.data.dist + "/" + res.path;
 							}
 						});
+					},
+					"@show-html": function (e) {
+						alert("sda");
 					},
 					"@remove-from-project": function (e) {
 						var target = $(e.target),
