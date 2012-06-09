@@ -13,7 +13,6 @@
 		}),
 		getAst = function (req) {
 			var data = req.data;
-			console.log("getAst", data.sourceCode);
 			if (!data.ast) {
 				data.ast = uglify.parseCode(data.sourceCode, false);
 			}
