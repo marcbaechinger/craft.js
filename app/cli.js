@@ -3,7 +3,6 @@
 var concat = require("./dependency.js"),
 	uglify = require("./uglify.js"),
 	flags,
-	libraryCLIArgumentPosition,
 	findFlags = function () {
 		var flags = {};
 		process.argv.forEach(function (val, index) {
