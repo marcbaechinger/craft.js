@@ -146,11 +146,11 @@
 	exports.Concatenator = function (spec) {
 		var basePath = spec.basePath || __dirname,
 			checkAccess = function (path) {
-				console.log("basepath", basePath);
+				console.log("repo", basePath);
 				console.log("path", path);
 				if (path.indexOf(basePath) !== 0) {
-					console.error("error: access denied for ", path);
-					console.error("error: access denied for ", path);
+					console.error("error: access denied for ", path, "repo:", basePath);
+					console.error("error: access denied for ", path, "repo:", basePath);
 					throw {
 						type: "illegal-access",
 						msg: "access to " + path + " is restricted. No Access.",
