@@ -1,0 +1,4 @@
+<script type="text/javascript" src="mock.js?plain=true"> </script>
+<script type="text/javascript" src="test-mock.js?plain=true"> </script>
+<div id="a-qunit-fixture">
+</div>

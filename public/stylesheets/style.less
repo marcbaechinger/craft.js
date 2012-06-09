@@ -1,4 +1,5 @@
 @import "/public/stylesheets/layout";
+@import "/public/stylesheets/source-viewer";
 
 @code-color: #ededed;
 @error-bg-color: #990009;
@@ -108,37 +109,24 @@ ul.directory {
 	}
 }
 
+
 .page {
 	.shadow-panel();
 }
 
-.dependencies {
-	.button-list();
-	.dep {
-		background-color: #e3e3e3;
-		border-radius: 3px;
-		padding: 4px 6px;
-		cursor: pointer;
-	}
-	a:hover {
-		background-color: #999;
-		color: #fff;
-	}
-}
 body > div.directory-item {	
 	margin-top: 52px;
 }
 
 
-
 /****** headers   ********/
 h2 {
-	margin-top: 28px;
 	background-color: #3d3d3d;
 	border-radius: 6px;
 	color: white;
 	cursor: pointer;
 	padding: 4px 8px;
+	margin-top: 28px;
 	a {
 		color: #F3D354;
 	}
@@ -473,4 +461,32 @@ position: fixed;
 		float: left;
 		margin-left: 0px;
 	}
+}
+
+// TODO move to source-viewer.less
+.testcase {
+	display: none;
+}
+.editor-container {
+	display: none;
+	background-color: #ed3d3d;
+	border-radius: 5px;
+	padding: 8px;
+	box-shadow: 6px 6px 18px #333;
+	position: absolute;
+	left: 44px;
+	top: 156px;
+	right: 44px;
+	height: 346px;
+	opacity: 0.9;
+	h2 {
+		margin: 0px 0px 4px 0px;
+	}
+}
+.editor {
+	font-size: 16px;
+	position: absolute;
+	right: 4px;
+	left: 4px;
+	min-height: 300px; 
 }

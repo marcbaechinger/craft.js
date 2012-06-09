@@ -117,6 +117,40 @@ header a {
 .clearfix {
   display: block;
 }
+.dependencies {
+  padding-left: 16px;
+  list-style: none;
+  padding: 0px;
+}
+.dependencies li {
+  height: 22px;
+  margin-bottom: 2px;
+  padding: 4px 16px;
+}
+.dependencies li a {
+  background-color: #dedede;
+  border-radius: 5px;
+  padding: 2px 6px 4px 6px;
+}
+.dependencies .dep, .dependencies span {
+  background-color: #dedede;
+  border-radius: 3px;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+.dependencies span {
+  background-color: #165CAA;
+  color: #fff;
+  padding: 4px 12px;
+}
+.dependencies a:hover {
+  background-color: #999;
+  color: #fff;
+}
+.dependencies span:hover {
+  background-color: #1F2F5B;
+  color: #fff;
+}
 a {
   color: #20539D;
 }
@@ -184,42 +218,17 @@ ul.directory {
   position: relative;
   padding-top: 18px;
 }
-.dependencies {
-  padding-left: 16px;
-  list-style: none;
-  padding: 0px;
-}
-.dependencies li {
-  height: 22px;
-  margin-bottom: 2px;
-  padding: 4px 16px;
-}
-.dependencies li a {
-  background-color: #dedede;
-  border-radius: 5px;
-  padding: 2px 6px 4px 6px;
-}
-.dependencies .dep {
-  background-color: #e3e3e3;
-  border-radius: 3px;
-  padding: 4px 6px;
-  cursor: pointer;
-}
-.dependencies a:hover {
-  background-color: #999;
-  color: #fff;
-}
 body > div.directory-item {
   margin-top: 52px;
 }
 /****** headers   ********/
 h2 {
-  margin-top: 28px;
   background-color: #3d3d3d;
   border-radius: 6px;
   color: white;
   cursor: pointer;
   padding: 4px 8px;
+  margin-top: 28px;
 }
 h2 a {
   color: #F3D354;
@@ -596,4 +605,30 @@ body {
 #build-toolbar .transform {
   float: left;
   margin-left: 0px;
+}
+.testcase {
+  display: none;
+}
+.editor-container {
+  display: none;
+  background-color: #ed3d3d;
+  border-radius: 5px;
+  padding: 8px;
+  box-shadow: 6px 6px 18px #333;
+  position: absolute;
+  left: 44px;
+  top: 156px;
+  right: 44px;
+  height: 346px;
+  opacity: 0.9;
+}
+.editor-container h2 {
+  margin: 0px 0px 4px 0px;
+}
+.editor {
+  font-size: 16px;
+  position: absolute;
+  right: 4px;
+  left: 4px;
+  min-height: 300px;
 }

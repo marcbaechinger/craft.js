@@ -15,8 +15,11 @@ block content
 		h2.collapse Dependencies of #{path}
 		ul.dependencies
 			each dep in dependencies
-				li: a(href="/#{config.context.src}#{dep}") #{dep}
-					
+				li
+					span.testcase(data-path="/#{config.context.src}#{dep}", data-action="create-test") create test
+					&nbsp;
+					a(href="/#{config.context.src}#{dep}") #{dep}
+
 	if typeof report !== "undefined"
 		h2.collapse JSHint report
 		div.clearfix
@@ -27,3 +30,5 @@ block content
 
 	if typeof lines !== "undefined"
 		include source/source-listing
+	if displayMode === "js"
+		include source/code-editor
