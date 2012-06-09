@@ -91,7 +91,10 @@
 						});
 					},
 					"@show-html": function (e) {
-						alert("sda");
+						alert("action page-controller@show-html not implemented yet");
+					},
+					"@create-test": function(e) {
+						
 					},
 					"@remove-from-project": function (e) {
 						var target = $(e.target),
