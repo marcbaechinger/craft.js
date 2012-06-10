@@ -12,7 +12,7 @@ ul.directory
 			mixin directory(file)
 		else if context === config.context.jobs
 			mixin jobfile(file, idx)
-		else if file.type === "html"
+		else if file.type === "html" || file.type === "css"
 			mixin htmlfile(file, idx)
 		else if file.type === "qunit"
 			mixin qunitfile(file, idx)

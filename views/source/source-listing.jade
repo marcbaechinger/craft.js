@@ -1,5 +1,5 @@
-if fileName.match(/.html$/)
-	h2.collapse HTML file in #{path}
+if fileName.match(/.(html|css)$/)
+	h2.collapse File at #{path}
 		a.size(href="/#{context}/#{path}") raw
 		.size #{sourceCode.length} characters / #{lines.length} lines&nbsp;&nbsp;&nbsp;
 else if fileName.match(/.qunit$/)

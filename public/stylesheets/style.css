@@ -507,7 +507,7 @@ body {
   right: 56px;
   top: 74px;
 }
-.html .breadcrumb, .qunit .breadcrumb {
+.html .breadcrumb, .css .breadcrumb, .qunit .breadcrumb {
   top: 52px;
 }
 #project-tools {

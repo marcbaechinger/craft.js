@@ -6,6 +6,10 @@
 	var fs = require("fs"),
 		appConfig = require("../app-config.js"),
 		fsmgmt = require("./fs-management.js"),
+		plainFileContentTypes = {
+			"html": "text/html",
+			"css": "text/css"
+		},
 		evaluateBooleanProperty = function (primary, secondary, name) {
 			var trueOrFalse = false;
 			if (typeof primary[name] !== "undefined") {
@@ -133,12 +137,15 @@
 	};
 	
 	
-	exports.htmlInterceptor = function (req, res, next) {
-		if (req.data.fileName.match(/.html$/) && req.query.viewer !== "true") {
-			req.data.html = true;
+	exports.plainFileInterceptor = function (req, res, next) {
+		var postfix = req.data.fileName.substring(req.data.fileName.lastIndexOf(".") + 1);
+		console.log("postfix", postfix);
+		if (plainFileContentTypes[postfix] && req.query.viewer !== "true") {
+			req.data.plain = true;
+			req.data.postfix = postfix;
 			exports.fileViewer(req, res);
-		} else if (req.data.fileName.match(/.html$/)) {
-			req.data.displayMode = "html";
+		} else if (plainFileContentTypes[postfix]) {
+			req.data.displayMode = postfix;
 			next();
 		} else {
 			next();
@@ -219,9 +226,9 @@
 		if (req.query.plain) {
 			res.header("Content-Type", "text/javascript");
 			res.render('source/plain', req.data);
-		} else if (req.data.html) {
-			res.header("Content-Type", "text/html");
-			req.data.displayMode = "html";
+		} else if (req.data.plain) {
+			res.header("Content-Type", plainFileContentTypes[req.data.postfix]);
+			req.data.displayMode = "plain";
 			res.render('source/html', req.data);
 		} else if (req.data.qunit) {	
 			req.data.displayMode = "qunit";

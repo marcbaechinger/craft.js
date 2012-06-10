@@ -2,7 +2,14 @@
 (function () {
 	"use strict";
 	var fs = require("fs"),
-		validFileMatcher = /\.(js|cjs|html)$/,
+		validFilePostfixes = {
+			js: "js",
+			cjs: "cjs",
+			qunit: "qunit",
+			html: "html",
+			css: "css"
+		},
+		validFileMatcher = /\.(js|cjs|html|css)$/,
 		htmlFileMatcher = /\.(html)$/,
 		qunitFileMatcher = /\.(qunit)$/,
 		createSourceTree = function (basePath, path) {
@@ -15,7 +22,8 @@
 				tree = fs.readdirSync(basePath + "/" + path);
 
 			tree.forEach(function (filename) {
-				var childPath = path + "/" + filename,
+				var postfix = filename.substring(filename.lastIndexOf(".") + 1),
+					childPath = path + "/" + filename,
 					childRealPath = basePath + "/" + childPath,
 					childStat = fs.statSync(childRealPath),
 					childNode = {
@@ -35,14 +43,8 @@
 				if (childStat.isDirectory()) {
 					childNode.type = "directory";
 					fsNode.children.push(childNode);
-				} else if (filename.match(htmlFileMatcher)) {
-					childNode.type = "html";
-					fsNode.children.push(childNode);
-				} else if (filename.match(qunitFileMatcher)) {
-					childNode.type = "qunit";
-					fsNode.children.push(childNode);
-				} else if (filename.match(validFileMatcher)) {
-					childNode.type = "js";
+				} else if (validFilePostfixes[postfix]) {
+					childNode.type = postfix;
 					fsNode.children.push(childNode);
 				}
 			});

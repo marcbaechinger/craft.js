@@ -52,7 +52,7 @@
 			common.createBreadcrumpTokens,
 			common.directoryInterceptor,
 			common.getFileContent,
-			common.htmlInterceptor,
+			common.plainFileInterceptor,
 			common.qunitInterceptor,
 			build.resolve,
 			build.expand,
