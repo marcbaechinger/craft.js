@@ -1,0 +1,19 @@
+{	
+	"server": {
+		"port": 3000
+	},
+	"context": {
+		"src": "repo",
+		"dist": "dist",
+		"jobs": "jobs",
+		"default": "repo"
+	},
+	"path": {
+		"base": "",
+		"src": "resources",
+		"dist": "dist",
+		"jobs": "jobs",
+		"views": "views",
+		"docroot": "public"
+	}
+}
