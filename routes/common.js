@@ -10,6 +10,13 @@
 			"html": "text/html",
 			"css": "text/css"
 		},
+		templatedFileTemplates = {
+			"qunit": "qunit/qunit",
+			"app": "app/app",
+		},
+		getPostfix = function (fileName) {
+			return fileName.substring(fileName.lastIndexOf(".") + 1);
+		},
 		evaluateBooleanProperty = function (primary, secondary, name) {
 			var trueOrFalse = false;
 			if (typeof primary[name] !== "undefined") {
@@ -138,11 +145,10 @@
 	
 	
 	exports.plainFileInterceptor = function (req, res, next) {
-		var postfix = req.data.fileName.substring(req.data.fileName.lastIndexOf(".") + 1);
-		console.log("postfix", postfix);
+		var postfix = getPostfix(req.data.fileName);
+		req.data.postfix = postfix;
 		if (plainFileContentTypes[postfix] && req.query.viewer !== "true") {
 			req.data.plain = true;
-			req.data.postfix = postfix;
 			exports.fileViewer(req, res);
 		} else if (plainFileContentTypes[postfix]) {
 			req.data.displayMode = postfix;
@@ -153,11 +159,13 @@
 	};
 	
 	exports.qunitInterceptor = function (req, res, next) {
-		if (req.data.fileName.match(/.qunit$/) && req.query.viewer !== "true") {
-			req.data.qunit = true;
+		var postfix = getPostfix(req.data.fileName);
+		req.data.postfix = postfix;
+		if (templatedFileTemplates[postfix] && req.query.viewer !== "true") {
+			req.data.templated = true;
 			exports.fileViewer(req, res);
-		} else if (req.data.fileName.match(/.qunit$/)) {
-			req.data.displayMode = "qunit";
+		} else if (templatedFileTemplates[postfix]) {
+			req.data.displayMode = "templated";
 			next();
 		} else {
 			next();
@@ -230,9 +238,9 @@
 			res.header("Content-Type", plainFileContentTypes[req.data.postfix]);
 			req.data.displayMode = "plain";
 			res.render('source/html', req.data);
-		} else if (req.data.qunit) {	
-			req.data.displayMode = "qunit";
-			res.render('qunit/qunit', req.data);
+		} else if (req.data.templated) {	
+			req.data.displayMode = "templated";
+			res.render(templatedFileTemplates[req.data.postfix], req.data);
 		} else {
 			req.data.lines = req.data.sourceCode.split("\n");
 			res.render('source-viewer', req.data);
@@ -248,11 +256,10 @@
 		if (isJSON === true) {
 			res.send(JSON.stringify(err));	
 		} else {
-			res.render('error', {
-				displayMode: "error",
-				error: err,
-				errorString: JSON.stringify(err, null, 4)
-			});	
+			req.data.displayMode = "error";
+			req.data.error = err;
+			req.data.errorString = JSON.stringify(err, null, 4);
+			res.render('error', req.data);	
 		}
 	};
 }());

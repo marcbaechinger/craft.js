@@ -7,11 +7,9 @@
 			cjs: "cjs",
 			qunit: "qunit",
 			html: "html",
-			css: "css"
+			css: "css",
+			app: "app"
 		},
-		validFileMatcher = /\.(js|cjs|html|css)$/,
-		htmlFileMatcher = /\.(html)$/,
-		qunitFileMatcher = /\.(qunit)$/,
 		createSourceTree = function (basePath, path) {
 			var fsNode = {
 					path: path,

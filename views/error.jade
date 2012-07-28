@@ -6,7 +6,9 @@ block content
 			|Uncaught error
 		else if error.statusCode === 404
 			|We're sorry! The requested file could not be found.
-	
+		else if error.statusCode === 400
+			|We're sorry! The requested file could not be found.
+		
 	.panel
 		if typeof error.message !== "undefined"
 			.error-message

@@ -1,21 +1,21 @@
-if fileName.match(/.(html|css)$/)
-	h2.collapse File at #{path}
+if fileName.match(/.(html)$/)
+	h2.top.collapse File at #{path}
 		a.size(href="/#{context}/#{path}") raw
 		.size #{sourceCode.length} characters / #{lines.length} lines&nbsp;&nbsp;&nbsp;
-else if fileName.match(/.qunit$/)
-	h2.collapse qUnit test in #{path} (using qunit template of craft.js)
-		a.size(href="/#{context}/#{path}") run test
+else if displayMode.match(/templated$/)
+	h2.top.collapse Templated file in #{path}
+		a.size(href="/#{context}/#{path}") run
+else if displayMode.match(/css$/)
+	h2.top.collapse CSS file in #{path}
+		a.size(href="/#{context}/#{path}") text/css
 else if context === config.context.src
-	h2.collapse Annotated source code of #{path}
-		.size #{sourceCode.length} characters / #{lines.length} lines
-else if context === config.context.src
-	h2.collapse Annotated source code of #{path}
+	h2.top.collapse Annotated source code of #{path}
 		.size #{sourceCode.length} characters / #{lines.length} lines
 else if context === config.context.dist
-	h2.collapse Released file: #{path}
+	h2.top.collapse Released file: #{path}
 		.size #{sourceCode.length} characters / #{lines.length} lines
 else if context === config.context.jobs
-	h2.collapse Build definition of #{path}
+	h2.top.collapse Build definition of #{path}
 
 .source-panel
 	if displayMode === "js"
