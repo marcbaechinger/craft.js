@@ -7,19 +7,19 @@
 		ABSOLUTE_PATH_PATTERN = /^\//,
 		DEFAULTS = {
 			postFix: ".js",
-			fileProvider: function (filename) {
+			fileProvider: function (filename, basePath) {
 				return {
-					dependencies: exports.readDependencies(filename)
+					dependencies: exports.readDependencies(filename, basePath)
 				};
 			}
 		},
-		createPath = function (path, dep) {
+		createPath = function (path, dep, basePath) {
 			var baseDir;
 			baseDir = path.substring(0, path.lastIndexOf("/"));
 			dep = dep.replace(/^[ \t]+|[ \t]+$/g, "");
 			if (dep.match(ABSOLUTE_PATH_PATTERN)) {
 				if (ALLOW_ABSOULTE_DEPENDENCIES === true) {
-					return dep;
+					return basePath + dep + DEFAULTS.postFix;
 				} else {
 					throw { 
 						type: "illegal-access",
@@ -33,7 +33,7 @@
 			}
 			return baseDir + "/" + dep + DEFAULTS.postFix;
 		},
-		parseRequireLine = function (path, line) {
+		parseRequireLine = function (path, line, basePath) {
 			// format to parse: //= require "dep1, dep2"
 			var offset = line.indexOf("\""),
 				deps = [],
@@ -46,15 +46,15 @@
 				line = line.substring(offset + 1, lastPos);
 				if (line.indexOf(",") > -1) {
 					deps = line.split(",").map(function (item) {
-						return createPath(path, item);
+						return createPath(path, item, basePath);
 					});
 				} else {
-					deps.push(createPath(path, line));
+					deps.push(createPath(path, line, basePath));
 				}
 			}
 			return deps;
 		},
-		readDependencies = function (path) {	
+		readDependencies = function (path, basePath) {	
 			var content = fs.readFileSync(path).toString(),
 				lines = content.split("\n"),
 				dependencies = [],
@@ -62,13 +62,13 @@
 			lines.forEach(function (item) {
 				if (item.indexOf("//= require") === 0) {
 					currentLine = item;
-					dependencies = dependencies.concat(parseRequireLine(path, item));
+					dependencies = dependencies.concat(parseRequireLine(path, item, basePath));
 				}
 			});
 			return dependencies;
 		},
-		getFile = function (filename) {
-			return exports.activeFileProvider(filename);
+		getFile = function (filename, basePath) {
+			return exports.activeFileProvider(filename, basePath);
 		},
 		getPosition = function (filelist, filename) {
 			var i;
@@ -79,9 +79,9 @@
 			}
 			return -1;
 		},
-		resolve = function (filename, bag, filelist) {
+		resolve = function (filename, bag, filelist, basePath) {
 			var i, pos = -1,
-				file = getFile(filename);
+				file = getFile(filename, basePath);
 
 			bag = bag || {};
 			filelist = filelist || [];
@@ -101,7 +101,7 @@
 
 			if (file.dependencies) {
 				for (i = 0; i < file.dependencies.length; i += 1) {
-					resolve(file.dependencies[i], bag, filelist);
+					resolve(file.dependencies[i], bag, filelist, basePath);
 				}
 			}
 			// add after last dependency
@@ -159,7 +159,8 @@
 
 		this.resolve = function (path) {
 			checkAccess(path);
-			return resolve(path);
+			
+			return resolve(path, undefined, undefined, basePath);
 		};
 		this.expand = function (path) {
 			return this.concatenateFiles(this.resolve(path));

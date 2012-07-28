@@ -1,17 +1,7 @@
 extends layout
 
 block content
-	h1
-		if typeof error.statusCode === "undefined"
-			|Uncaught error
-		else if error.statusCode === 404
-			|We're sorry! The requested file could not be found.
-		else if error.statusCode === 400
-			|We're sorry! The requested file could not be found.
-		
+	h1 #{error.message}
+	
 	.panel
-		if typeof error.message !== "undefined"
-			.error-message
-				#{error.message}
-
 		pre #{errorString}

@@ -24,6 +24,8 @@
 			});
 		};
 
+	concat.allowAbsoluteDependencies(true);
+	
 	exports.resolve = function (req, res, next) {
 		try {
 			req.data.realPathDependencies = concatenator.resolve(req.data.realPath);
@@ -36,6 +38,7 @@
 				statusCode: 400,
 				error: e
 			});
+			throw e;
 		}
 	};
 	exports.expand = function (req, res, next) {
