@@ -18,37 +18,39 @@ mixin jsfile(file, idx)
 		span(style="padding-left: 24px;") |
 		label(for="lint-#{idx}") lint
 			input.lint(id="lint-#{idx}", name="lint", type="checkbox", checked="checked")
-		button(data-action="build", data-path="#{file.path}", style="margin-left: 12px;") transform
+		button.btn.btn-mini.btn-primary(data-action="build", data-path="#{file.path}", style="margin-left: 12px;") transform
 		if context === config.context.dist
-			button.transform(data-action="delete-file", data-path="#{file.path}") delete
+			button.btn.btn-mini.btn-primary.transform(data-action="delete-file", data-path="#{file.path}") delete
 		
 mixin htmlfile(file, idx)
 	li.directory-item
 		a.file(href="/#{context}/#{file.path}?viewer=true", title="#{file.size} bytes - #{file.mtime}") #{file.name}
 		a(href="/#{context}/#{file.path}")
-			button.transform show
+			button.btn.btn-mini.btn-primary.transform show
 
 mixin qunitfile(file, idx)
 	li.directory-item
 		a.file(href="/#{context}/#{file.path}?viewer=true", title="#{file.size} bytes - #{file.mtime}") #{file.name}
 		a(href="/#{context}/#{file.path}")
-			button.transform test
+			button.btn.btn-mini.btn-primary.transform test
 
 mixin jobfile(file, idx)
 	li.directory-item.job
 		a.file(href="/#{context}/#{file.name}") #{file.name}
-		button(data-action="build-job", data-path="#{file.path}", style="margin-left: 12px;") build
-		button(data-action="delete-file", data-path="#{file.path}") delete
+		button.btn.btn-mini.btn-primary(data-action="build-job", data-path="#{file.path}", style="margin-left: 12px;") build
+		button.btn.btn-mini.btn-primary(data-action="delete-file", data-path="#{file.path}") delete
 
 mixin directory(file)
 	li.directory-item
 		a.file(href="/#{context}/#{file.path}")=file.name
 			
 mixin breadcrumb
-	h2.collapse.directory Content of 
-		a(href="/#{context}/", style="text-decoration: none;") #{context}:
-		span &nbsp;/&nbsp;
+	ul.breadcrumb.navbar-fixed-top(style="margin-top: -34px;", class="")
+		li
+			a(href="/#{context}/", style="text-decoration: none;") #{context}:
+			span.divider /
 		if typeof breadcrumb!=="undefined"
 			each path, name in breadcrumb
-				a(href="/#{context}/#{path}")!= name
-				span &nbsp;/&nbsp;
+				li
+					a(href="/#{context}/#{path}")!= name
+					span.divider /

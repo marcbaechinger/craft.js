@@ -2,33 +2,35 @@ extends layout
 
 block content
 	if context === config.context.src
-		div.breadcrumb
-			a(href="/#{context}/", style="text-decoration: none;", title="jump to the root of the source repository") #{context}:/
+		ul.breadcrumb.navbar-fixed-top(style="margin-top: -34px;", class="")
+			li
+				a(href="/#{context}/", style="text-decoration: none;") #{context}:
+				span.divider /
 			each path, name in breadcrumb
-				a(href="/#{context}/#{path}") #{name}
-				span /
-			span #{fileName}
+				li
+					a(href="/#{context}/#{path}") #{name}
+					span.divider /
+			li
+				span #{fileName}
 	if displayMode === "js"
 		include source/toolbar
-
-	if displayMode === "js" && typeof dependencies !== "undefined"
-		h2.collapse Dependencies of #{path}
-		ul.dependencies
+	if typeof dependencies !== "undefined"
+		ul#deps-panel.dependencies
 			each dep in dependencies
 				li
 					span.testcase(data-path="/#{config.context.src}#{dep}", data-action="create-test") create test
 					&nbsp;
 					a(href="/#{config.context.src}#{dep}") #{dep}
-
+	if displayMode === "js" && typeof dependencies !== "undefined"
+		#dependencies.collapser(data-dependent="#deps-panel", data-slide="true") Referenced dependencies
+		
 	if typeof report !== "undefined"
-		h2.collapse JSHint report
-		div.clearfix
-			.options-panel
-				include lint/lint-options
-			.status-panel
-				include lint/lint-report
+		#js-lint-report
+			div.clearfix
+				.options-panel(style="display: none")
+					include lint/lint-options
+				.status-panel
+					include lint/lint-report
 
 	if typeof lines !== "undefined"
 		include source/source-listing
-	if displayMode === "js"
-		include source/code-editor

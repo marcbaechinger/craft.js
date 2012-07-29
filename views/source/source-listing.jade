@@ -1,33 +1,43 @@
 if fileName.match(/.(html)$/)
-	h2.top.collapse File at #{path}
-		a.size(href="/#{context}/#{path}") raw
-		.size #{sourceCode.length} characters / #{lines.length} lines&nbsp;&nbsp;&nbsp;
+	a.size(href="/#{context}/#{path}") raw
+	.size.top #{sourceCode.length} characters / #{lines.length} lines&nbsp;&nbsp;&nbsp;
 else if displayMode.match(/templated$/)
-	h2.top.collapse Templated file in #{path}
 		a.size(href="/#{context}/#{path}") run
 else if displayMode.match(/css$/)
-	h2.top.collapse CSS file in #{path}
-		a.size(href="/#{context}/#{path}") text/css
-else if context === config.context.src
-	h2.top.collapse Annotated source code of #{path}
-		.size #{sourceCode.length} characters / #{lines.length} lines
+	a.size(href="/#{context}/#{path}") text/css
 else if context === config.context.dist
-	h2.top.collapse Released file: #{path}
-		.size #{sourceCode.length} characters / #{lines.length} lines
+	ul.breadcrumb.navbar-fixed-top(style="margin-top: -34px;", class="")
+		li
+			a(href="/#{context}/", style="text-decoration: none;") #{context}:
+			span.divider /
+		li
+			span #{fileName}
 else if context === config.context.jobs
-	h2.top.collapse Build definition of #{path}
-
+	.size.top(style="text-align: right; margin-right: -28px;") #{sourceCode.length} characters / #{lines.length} lines
+	ul.breadcrumb.navbar-fixed-top(style="margin-top: -34px;", class="")
+		li
+			a(href="/#{context}/", style="text-decoration: none;") #{context}:
+			span.divider /
+		li
+			span #{fileName}
+			
 .source-panel
 	if displayMode === "js"
-		#search-bar
-			span#result-info grep source code =>
-			input#search-script(placeholder="enter regExp to grep: ^\\svar")
-		.marker-button(data-action="toggle-source-markers") FIXME/TODO
+		button.btn.btn-inverse.btn-mini.bag-button(data-action="toggle-file-to-job")
+	#search-bar
+		span#result-info grep source code =>
+		input#search-script(placeholder="enter regExp to grep: ^\\svar")
+	if displayMode === "js"
+		a.btn-mini.btn-inverse.marker-button.btn(data-action="toggle-source-markers") FIXMEs/TODOs
+		.size #{sourceCode.length} characters / #{lines.length} lines&nbsp;&nbsp;&nbsp;
 		ul#markers
+	
 	#source.source
 		each line, i in lines 
 			if typeof report === "undefined" || typeof report.errors==='undefined' || typeof report.errorLines[i+1] === 'undefined'
-				pre.line(id="line-#{i+1}") #{i+1}:\t#{line}
+				pre.line(data-id="line-#{i+1}") #{i+1}:\t#{line}
+					span.jump-link(id="line-#{i+1}")
 			else
-				pre.error(id="line-#{i+1}") #{i+1}:\t#{line}
+				pre.error #{i+1}:\t#{line}
+					span.jump-link(id="line-#{i+1}")
 					.reason #{report.errorLines[i+1]}

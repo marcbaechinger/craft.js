@@ -1,10 +1,25 @@
-header: a(href="/")
-#project-tools.clearfix
-	label.lint-button.collapse lint opts
-	#lint-options
-	label.project-button.collapse current job: 
-		span.project-name(data-action="edit-project-name") default
-	#project-files
-	include navigation
-	if typeof fileDescriptor!=="undefined" && fileDescriptor.isFile() && context === config.context.src
-		label.bag-button(data-action="toggle-file-to-job")
+header(class="navbar navbar-fixed-top")
+	div(class="navbar-inner")
+		a(href="#!/view/dashboard", data-view="dashboard", class="brand change-view") craft.js
+		ul(class="nav")
+			li(class="divider-vertical")
+			li
+				a(href="/#{config.context.src}/") Repository
+			li(class="divider-vertical")
+			li
+				a(href="/#{config.context.dist}/") Releases
+			li(class="divider-vertical")
+			li
+				a(href="/#{config.context.jobs}/") Jobs
+			li(class="divider-vertical")
+		ul(class="nav pull-right")
+			li(class="divider-vertical")
+			li
+				a(href="#!/view/lint-options", class="collapser", data-slide="true", data-dependent="#lint-options", data-view="repository") lint options
+			li(class="divider-vertical")
+			li
+				a(href="#!/view/favorites", class="change-view collapser", data-dependent="#project-files") Favorites
+			li(class="divider-vertical")
+
+#lint-options
+#project-files

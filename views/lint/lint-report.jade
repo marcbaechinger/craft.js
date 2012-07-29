@@ -1,15 +1,14 @@
 if typeof report !== "undefined"
 	if report.status === "error"
-		.errors.collapse #{report.statusMessage}
+		.errors.collapser #{report.statusMessage} (click to show detailed report)
 		ol
 			each error in report.errors
 				if error
 					li 
-						a(href="#line-#{error.line}") #{path}:#{error.line}:#{error.character}
-						.reason #{error.reason}
-						code.evidence
+						span.collapser.label.label-info(data-dependent="##{error.line}-#{error.character}") show delinquent
+						a.label.label-warning(href="#line-#{error.line}") #{path}:#{error.line}:#{error.character}
+						span.reason #{error.reason}
+						div.evidence(id="#{error.line}-#{error.character}")
 							pre #{error.evidence}
 	else if report.status === "ok"
 		.no-errors #{report.statusMessage}
-else
-	.no-checks No checks

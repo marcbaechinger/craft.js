@@ -1,7 +1,7 @@
 /*jslint node: true */
 (function () {	
-	var fs = require("fs"),
-		config = JSON.parse(fs.readFileSync('app-config.json'));
+	var config = JSON.parse(require("fs").readFileSync('app-config.json')),
+		repositoryPath;
 	
 	exports.server = {
 		port: config.server.port
@@ -12,9 +12,14 @@
 		jobs: config.context.jobs,
 		default: config.context.default
 	};
+	
+	if (!config.path.src.match(/^\//)) {
+		repositoryPath = __dirname + "/" + config.path.src;
+	}
+	
 	exports.path = {
 		base: __dirname,
-		src: __dirname + "/" + config.path.src,
+		src: repositoryPath,
 		dist: __dirname + "/" + config.path.dist,
 		jobs: __dirname + "/" + config.path.jobs,
 		views: __dirname + "/" + config.path.views,

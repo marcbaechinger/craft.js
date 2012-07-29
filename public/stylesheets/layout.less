@@ -18,13 +18,12 @@
 	padding: 3px 12px;
 	text-align: center; 
 	&.contained {
-		background-color: @bg-color-on;
 		color: #eee;
 	}
 }
 
 body {
-  padding: 42px 50px 12px 50px;
+  padding: 42px 0px 12px 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -63,39 +62,13 @@ nav {
 	background: linear-gradient(top, #216ca5 0%,#2178b2 8%,#7db9e8 100%); /* W3C */
 }
 
-header {
-	background-color: #999;
-	border-bottom: 1px solid #ccc;
-	box-shadow: 3px 2px 6px #333;
-	color: #fff;
-	font-size: 24px;
-	text-shadow: 1px 1px 2px #333;
-	font-family: "Arial Black";
-	font-weight: 700;
-	height: 36px;
-	padding-left: 160px;
-	position: fixed;
-	opacity: 0.6;
-	margin-left: -60px;
-	margin-right: -58px;
-	margin-top: -50px;
-	width: 100%;
-	z-index: 10;
-	a {
-		color: #fefefe;
-		text-decoration: none;
+.container-fluid {
+	margin-top: 32px;
+	padding-left: 0px;
+	padding-right: 0px;
+	.navbar .navbar-inner .brand {
+ 		margin-left: 0px;
 	}
-}
-
-.bag-button {
-	.button();
-	width: 180px;
-	margin-right: 4px;
-	display: none;
-}
-
-.js .bag-button {
-	display: inline-block;
 }
 
 /**********    cleafix ***************/

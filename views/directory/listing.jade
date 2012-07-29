@@ -1,10 +1,5 @@
 include mixins
-if context === config.context.src
-	mixin breadcrumb
-if context === config.context.dist
-	h2.collapse.directory Released files
-if context === config.context.jobs
-	h2.collapse.directory Stored jobs
+mixin breadcrumb
 
 ul.directory
 	each file,idx in sourceTree.children

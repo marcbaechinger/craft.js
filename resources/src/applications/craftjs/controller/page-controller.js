@@ -56,16 +56,17 @@
 
 									convert = convert.replace(/FIXME/, "");
 									convert = convert.replace(/TODO/, "");
-									buf.push("<li><a href='#" + line.attr("id") + "' class='" +
+									buf.push("<li><a href='#" + line.data("id") + "' class='" +
 										(fixme ? "fixme" : "todo") + "'>" +
 										(fixme ? "FIXME" : "TODO") + "</a> line " + convert + "</li>");
 								}
 							}
 						});
 						if (buf.length < 1) {
-							buf.push("<li><a>no markers found</a></li>");
+							$(".marker-button").text("no TODOs/FIXMEs found");
+						} else {	
+							$(".marker-button").remove();
 						}
-						$(".marker-button").remove();
 						markerList.html(buf.join(""));
 					},
 					"@build": function (e) {
@@ -112,22 +113,29 @@
 						}
 						e.stopPropagation();
 					},
-					"click .collapse": function (e) {
+					"click .collapser": function (e) {
 						var target = $(e.target),
-							dependent = target.data("dependent");
-
-						if (dependent) {
-							$(dependent).toggle();
-						} else if (target.hasClass("collapse")) {
-							target.next().toggle();
+							referenceElement,
+							dependent = target.data("dependent"),
+							slide = target.data("slide");
+						
+						if (dependent) {	
+							referenceElement = $(dependent);
+						} else if (target.hasClass("collapser")) {
+							referenceElement = target.next();
+						}
+						if (referenceElement && slide) {
+							referenceElement.slideToggle();
+						} else if (referenceElement) {
+							referenceElement.toggle();
 						}
 					}
 				},
 				render: function () {
 					if (this.model.data[this.path]) {
-						this.$elements.buttons.addClass("contained").text("remove from project");
+						this.$elements.buttons.addClass("contained").text("remove from Favorites");
 					} else {
-						this.$elements.buttons.removeClass("contained").text("add to project");
+						this.$elements.buttons.removeClass("contained").text("add to Favorites");
 					}
 					this.$elements.projectLabel.text(localStorage.projectName);
 				}

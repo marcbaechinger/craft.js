@@ -1,15 +1,17 @@
 div.directory-item(id="build-toolbar")
-	button.transform(data-path="#{path}", data-action="build") transform
+	button.btn.btn-mini.btn-primary.transform(data-path="#{path}", data-action="build") transform
 		
-	label(for="plain", title="serve resulting file as text/javascript", style="float: right") plaintext
-		input(id="plain", name="plain", type="checkbox", style="float: left;")
+	label(for="plain", title="serve resulting file as text/javascript") plaintext
+		input(id="plain", name="plain", type="checkbox")
 	
 	if context === "repo"
-		label(for="release", title="create a persistent release for the current file", style="float: right") release
-			input(id="release", name="release", type="checkbox", style="float: left;")
+		label(for="release", title="create a persistent release for the current file") release
+			input(id="release", name="release", type="checkbox")
+			
+	<span class="pipe">|<span>
 	
 	if context === "repo"
-		label(for="expand", title="resolves and expands dependencies declared in the script file")  expand
+		label(for="expand", title="resolves and expands dependencies declared in the script file", style="margin-left: 10px;")  expand
 			if job.expand
 				input(id="expand", name="expand", type="checkbox", checked="checked")
 			else 

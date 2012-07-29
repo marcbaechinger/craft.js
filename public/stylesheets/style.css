@@ -1,5 +1,5 @@
 body {
-  padding: 42px 50px 12px 50px;
+  padding: 42px 0px 12px 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 nav {
@@ -38,7 +38,6 @@ nav .nav-button {
   margin-left: 8px;
 }
 nav .nav-button.contained {
-  background-color: #006400;
   color: #eee;
 }
 .repo-context nav .src, .dist-context nav .dist, .jobs-context nav .jobs {
@@ -63,47 +62,13 @@ nav .nav-button.contained {
   /* W3C */
 
 }
-header {
-  background-color: #999;
-  border-bottom: 1px solid #ccc;
-  box-shadow: 3px 2px 6px #333;
-  color: #fff;
-  font-size: 24px;
-  text-shadow: 1px 1px 2px #333;
-  font-family: "Arial Black";
-  font-weight: 700;
-  height: 36px;
-  padding-left: 160px;
-  position: fixed;
-  opacity: 0.6;
-  margin-left: -60px;
-  margin-right: -58px;
-  margin-top: -50px;
-  width: 100%;
-  z-index: 10;
+.container-fluid {
+  margin-top: 32px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
-header a {
-  color: #fefefe;
-  text-decoration: none;
-}
-.bag-button {
-  background-color: #cecece;
-  border-radius: 4px;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 14px;
-  padding: 3px 12px;
-  text-align: center;
-  width: 180px;
-  margin-right: 4px;
-  display: none;
-}
-.bag-button.contained {
-  background-color: #006400;
-  color: #eee;
-}
-.js .bag-button {
-  display: inline-block;
+.container-fluid .navbar .navbar-inner .brand {
+  margin-left: 0px;
 }
 /**********    cleafix ***************/
 .clearfix:after {
@@ -118,23 +83,13 @@ header a {
   display: block;
 }
 .dependencies {
-  padding-left: 16px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
   list-style: none;
-  padding: 0px;
-}
-.dependencies li {
-  height: 22px;
-  margin-bottom: 2px;
-  padding: 4px 16px;
-}
-.dependencies li a {
-  background-color: #dedede;
-  border-radius: 5px;
-  padding: 2px 6px 4px 6px;
+  background-color: red;
 }
 .dependencies .dep, .dependencies span {
-  background-color: #dedede;
-  border-radius: 3px;
   padding: 4px 6px;
   cursor: pointer;
 }
@@ -178,21 +133,21 @@ ul.directory {
   display: inline-block;
   width: 40px;
 }
+.directory {
+  background-color: #F1DCA3;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: -20px;
+}
 .directory-item {
-  background-color: #dedede;
-  border-radius: 5px;
-  padding: 4px 12px 2px 12px;
-  border: solid 1px #ccc;
-  border: 1px solid #999;
-  box-shadow: 2px 2px 4px #999999, inset -1px -18px 2px #bbbbbb;
-  margin-bottom: 12px;
+  border-bottom: solid 1px #999;
   list-style: none;
-  padding-top: 6px;
-  padding-bottom: 2px;
+  padding: 4px 18px;
   height: 20px;
 }
 .directory-item label {
   margin-left: 22px;
+  display: inline-block;
 }
 .directory-item a {
   color: #20539D;
@@ -224,7 +179,6 @@ body > div.directory-item {
 /****** headers   ********/
 h2 {
   background-color: #3d3d3d;
-  border-radius: 6px;
   color: white;
   cursor: pointer;
   padding: 4px 8px;
@@ -241,16 +195,6 @@ h3 a {
   font-weight: 300;
   margin-left: 12px;
 }
-.evidence pre {
-  display: block;
-  border-radius: 5px;
-  padding: 8px;
-  background-color: #ededed;
-}
-div.reason {
-  margin-top: 4px;
-  color: red;
-}
 div.text-box {
   display: block;
   border-radius: 5px;
@@ -263,10 +207,35 @@ div.page {
   top: 32px;
 }
 .size {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 300;
   float: right;
   margin-top: 4px;
+}
+.size.top {
+  position: fixed;
+  top: 46px;
+  right: 60px;
+  z-index: 23;
+}
+a.size {
+  position: fixed;
+  top: 46px;
+  right: 32px;
+  z-index: 23;
+}
+.bag-button {
+  display: none;
+}
+.js .bag-button {
+  display: inline-block;
+  float: right;
+  margin-left: 20px;
+  margin-right: 28px;
+  margin-top: 2px;
+}
+.dist-context .bag-button {
+  display: none;
 }
 label.project {
   background-color: #C94F1A;
@@ -325,7 +294,6 @@ a.file {
   color: #fff;
 }
 .lint-button.contained {
-  background-color: #006400;
   color: #eee;
 }
 .project-button {
@@ -342,33 +310,27 @@ a.file {
   margin-left: 8px !important;
 }
 .project-button.contained {
-  background-color: #006400;
   color: #eee;
 }
-.marker-button {
-  background-color: #20539d;
-  border-radius: 4px;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 14px;
-  padding: 3px 12px;
-  text-align: center;
+.js-button-bar {
+  margin-left: 26px;
+  margin-top: 2px;
+}
+.js-button-bar .btn {
+  margin-right: 8px;
+}
+.source-panel {
+  padding-top: 6px;
+  border-top: 1px solid #ccc;
+  background-color: #1F5A9C;
   color: #fff;
-  margin-left: 24px;
 }
-.marker-button.contained {
-  background-color: #006400;
-  color: #eee;
+.job .source-panel, .css .source-panel, .html .source-panel {
+  padding-top: 0px;
+  border-top: none;
 }
 .source {
-  display: block;
-  border-radius: 5px;
-  padding: 8px;
-  box-shadow: 3px 3px 12px #333;
-  position: relative;
-  padding-top: 18px;
   background-color: #fff;
-  margin-bottom: 480px;
 }
 .source pre:nth-child(even) {
   background-color: white;
@@ -378,6 +340,7 @@ a.file {
 }
 .source pre {
   border-bottom: 1px solid #ddd;
+  border-radius: 0px;
   font-family: Courier;
   font-size: 14px;
   margin: 0;
@@ -402,8 +365,41 @@ a.file {
   float: left;
   width: 280px;
 }
-.status-panel {
-  margin-left: 300px;
+.status-panel li .evidence pre {
+  margin-left: -25px;
+  border-left: none;
+  border-right: none;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+.status-panel a:visited {
+  color: #fff;
+}
+.status-panel ol {
+  display: none;
+  margin-bottom: 24px;
+}
+.status-panel ol li {
+  margin-left: 20px;
+  margin-bottom: 6px;
+}
+.status-panel ol li .label {
+  margin-left: 6px;
+  margin-right: 6px;
+  cursor: pointer;
+}
+.status-panel .evidence {
+  display: none;
+}
+.status-panel .evidence pre {
+  background-color: #ededed;
+  border-radius: 0px;
+  margin: 0;
+}
+.status-panel .reason {
+  color: red;
+  margin-left: 12px;
+  margin-top: 4px;
 }
 .options {
   display: block;
@@ -435,19 +431,15 @@ a.file {
   box-shadow: 1px 1px 2px #ccc;
   margin: 2px 0px;
 }
-.no-errors {
-  background-color: darkgreen;
-  color: white;
-  text-align: center;
-  display: block;
-  border-radius: 5px;
-  padding: 8px;
+.marker-button {
+  margin-top: 2px;
+  margin-left: 22px;
 }
 #markers {
   padding-left: 16px;
   list-style: none;
   padding: 0px;
-  margin-left: 12px;
+  margin-left: -16px;
 }
 #markers li {
   height: 22px;
@@ -459,13 +451,20 @@ a.file {
   border-radius: 5px;
   padding: 2px 6px 4px 6px;
 }
+.no-errors {
+  background-color: darkgreen;
+  color: white;
+  text-align: center;
+  padding: 8px;
+  margin-bottom: 12px;
+}
 .errors {
   background-color: #990009;
   color: #ffff00;
+  cursor: pointer;
   text-align: center;
-  display: block;
-  border-radius: 5px;
   padding: 8px;
+  margin-bottom: 12px;
 }
 .no-checks {
   background-color: #CDBE0E;
@@ -475,10 +474,11 @@ a.file {
   padding: 8px;
 }
 .ribbon {
+  display: none;
   position: fixed;
-  z-index: 20;
+  z-index: 8;
   left: -90px;
-  top: 60px;
+  top: 140px;
   font-size: 16px;
   width: 300px;
   box-shadow: 3px 3px 9px #333;
@@ -496,16 +496,16 @@ a.file {
   text-decoration: none;
 }
 body {
-  padding: 42px 50px 12px 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 42px 0px 12px 0px;
+  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 /* -- */
-.breadcrumb {
-  border-radius: 6px;
-  padding: 6px 12px 6px 12px;
-  position: absolute;
-  right: 56px;
+.container-fluid .breadcrumb {
+  z-index: 9;
+  position: fixed;
   top: 74px;
+  border-radius: 0;
+  padding-left: 19px;
 }
 h2.top {
   margin-top: 50px;
@@ -536,6 +536,8 @@ h2.top {
 #markers .todo {
   background-color: #20539D;
   color: #fff !important;
+  border: solid 1px #fff;
+  box-shadow: none;
 }
 #lint-options {
   position: fixed;
@@ -551,6 +553,11 @@ h2.top {
   position: absolute;
   z-index: 100;
   margin-right: 24px;
+  width: 920px;
+  right: 98px;
+  top: 40px;
+  z-index: 22;
+  padding-bottom: 8px;
 }
 #project-files {
   background-color: #efefef;
@@ -564,9 +571,12 @@ h2.top {
   display: none;
   position: absolute;
   z-index: 100;
+  z-index: 22;
   min-height: 120px;
   width: 636px;
   right: 24px;
+  position: absolute;
+  top: 40px;
 }
 #project-files ul {
   list-style: none;
@@ -575,6 +585,7 @@ h2.top {
 }
 #project-files label {
   margin-right: 12px;
+  display: inline-block;
 }
 #project-files ul {
   margin-left: 12px;
@@ -585,26 +596,89 @@ h2.top {
   display: inline-block;
   margin-top: -2px;
 }
+.navbar-fixed-top {
+  z-index: 9;
+}
 #search-bar {
+  color: #333;
   float: right;
+  margin-top: 2px;
 }
 #search-bar input {
   border-radius: 8px;
   border-color: #999;
-  font-size: 16px;
+  font-size: 12px;
   padding: 0px 6px;
   width: 320px;
 }
+.jobs-context #search-bar, .dist-context #search-bar {
+  margin-right: 26px;
+}
 #result-info {
-  background-color: #d3d3d3;
   border-radius: 6px;
   padding: 4px 8px 3px 8px;
   margin-right: 12px;
-  width: 320px;
+  display: inline-block;
+  font-size: 12px;
+}
+#result-info code {
+  padding: 0 4px;
+}
+.js #result-info {
+  color: #fff;
+  display: inline;
+}
+.css #result-info, .html #result-info, .job #result-info {
+  color: #333;
+}
+#build-toolbar {
+  position: fixed;
+  right: 0px;
+  top: 44px;
+  z-index: 20;
+  border: none;
+}
+#build-toolbar label {
+  display: inline-block;
+}
+#build-toolbar label input {
+  margin-left: 6px;
+  margin-top: 0px;
+  display: inline-block;
 }
 #build-toolbar .transform {
-  float: left;
-  margin-left: 0px;
+  float: right;
+  margin-left: 24px;
+  margin-top: -2px;
+  margin-right: 10px;
+  width: 83px;
+}
+#dependencies {
+  background-color: #F7F7F7;
+  border: solid 1px #cecece;
+  border-top: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-bottom: 24px;
+  margin-top: -1px;
+  display: inline-block;
+  padding: 4px 8px;
+}
+#deps-panel {
+  background-color: #F7F7F7;
+  border: solid 1px #cecece;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  width: 34%;
+  display: none;
+  margin-top: -20px;
+  margin-left: 10px;
+  padding: 26px 12px 12px 12px;
+}
+span.pipe {
+  margin-left: 18px;
 }
 .testcase {
   display: none;
@@ -631,4 +705,12 @@ h2.top {
   right: 4px;
   left: 4px;
   min-height: 300px;
+}
+.jump-link {
+  border-top: 78px solid transparent;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  width: 0;
+  height: 0;
 }
