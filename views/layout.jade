@@ -9,6 +9,7 @@ html
 		link(rel="stylesheet", href="/stylesheets/bootstrap.css")
 		link(rel="stylesheet", href="/stylesheets/bootstrap-responsive.css")
 		link(rel='stylesheet', href='/stylesheets/style.css')
+		link(rel='stylesheet', href='/stylesheets/form.css')
 		script(src="/javascript/modernizr-2.5.3.min.js")
 		
 	body(class="#{displayMode} #{context}-context")
@@ -20,7 +21,8 @@ html
 		.ribbon &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fork me at <a href="https://github.com/marcbaechinger/craft.js">github</a>
 		
 		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
-		script(src="/repo/src/applications/craftjs/bootstrap.js?expand=true&plain=true")
+		//script(src="/repo/src/applications/craftjs/bootstrap.js?expand=true&plain=true")
+		script(src="/javascript/craftjs.js")
 		script(type="template/mustache", id="project-file")
 			li
 				[
@@ -46,6 +48,15 @@ html
 			script
 				craftjs.data = {
 						path: "#{path}",
+						displayMode: "#{displayMode}",
+						src: "#{config.context.src}",
+						dist: "#{config.context.dist}",
+						jobs: "#{config.context.jobs}",
+						context: "#{context}"
+					};
+		if typeof path === "undefined"
+			script
+				craftjs.data = {
 						displayMode: "#{displayMode}",
 						src: "#{config.context.src}",
 						dist: "#{config.context.dist}",

@@ -687,6 +687,19 @@ var model = model || {
             }
         });
     };
+    exports.craftjs.services.sendConfiguration = function(configuration, callback) {
+        $.ajax("/config", {
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(configuration),
+            success: function(jsonData) {
+                if (callback && jsonData.status === "ok") {
+                    callback();
+                }
+            }
+        });
+    };
     exports.craftjs.services.deleteFile = function(path, callback) {
         $.ajax("/" + craftjs.data.context + "/" + path, {
             type: "DELETE",
@@ -1105,14 +1118,15 @@ var Mustache = typeof module !== "undefined" && module.exports || {};
                                 fixme = convert.indexOf("FIXME") > -1;
                                 convert = convert.replace(/FIXME/, "");
                                 convert = convert.replace(/TODO/, "");
-                                buf.push("<li><a href='#" + line.attr("id") + "' class='" + (fixme ? "fixme" : "todo") + "'>" + (fixme ? "FIXME" : "TODO") + "</a> line " + convert + "</li>");
+                                buf.push("<li><a href='#" + line.data("id") + "' class='" + (fixme ? "fixme" : "todo") + "'>" + (fixme ? "FIXME" : "TODO") + "</a> line " + convert + "</li>");
                             }
                         }
                     });
                     if (buf.length < 1) {
-                        buf.push("<li><a>no markers found</a></li>");
+                        $(".marker-button").text("no TODOs/FIXMEs found");
+                    } else {
+                        $(".marker-button").remove();
                     }
-                    $(".marker-button").remove();
                     markerList.html(buf.join(""));
                 },
                 "@build": function(e) {
@@ -1131,6 +1145,19 @@ var Mustache = typeof module !== "undefined" && module.exports || {};
                         }
                     });
                 },
+                "@send-configuration": function(e) {
+                    var resourcePathInput = $("#resource-path"), path = resourcePathInput.val();
+                    if (path.trim().length < 1) {
+                        $("#configuration .feedback").text("enter a path to the directory where your javascripts are").show();
+                    } else {
+                        craftjs.services.sendConfiguration({
+                            path: path
+                        }, function() {
+                            resourcePathInput.attr("disabled", "true");
+                            $("#configuration .feedback").text("resource directory points now to '" + path + "'").show();
+                        });
+                    }
+                },
                 "@show-html": function(e) {
                     alert("action page-controller@show-html not implemented yet");
                 },
@@ -1148,20 +1175,25 @@ var Mustache = typeof module !== "undefined" && module.exports || {};
                     }
                     e.stopPropagation();
                 },
-                "click .collapse": function(e) {
-                    var target = $(e.target), dependent = target.data("dependent");
+                "click .collapser": function(e) {
+                    var target = $(e.target), referenceElement, dependent = target.data("dependent"), slide = target.data("slide");
                     if (dependent) {
-                        $(dependent).toggle();
-                    } else if (target.hasClass("collapse")) {
-                        target.next().toggle();
+                        referenceElement = $(dependent);
+                    } else if (target.hasClass("collapser")) {
+                        referenceElement = target.next();
+                    }
+                    if (referenceElement && slide) {
+                        referenceElement.slideToggle();
+                    } else if (referenceElement) {
+                        referenceElement.toggle();
                     }
                 }
             },
             render: function() {
                 if (this.model.data[this.path]) {
-                    this.$elements.buttons.addClass("contained").text("remove from project");
+                    this.$elements.buttons.addClass("contained").text("remove from Favorites");
                 } else {
-                    this.$elements.buttons.removeClass("contained").text("add to project");
+                    this.$elements.buttons.removeClass("contained").text("add to Favorites");
                 }
                 this.$elements.projectLabel.text(localStorage.projectName);
             }
