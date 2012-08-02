@@ -15,6 +15,8 @@
 	
 	if (!config.path.src.match(/^\//)) {
 		repositoryPath = __dirname + "/" + config.path.src;
+	} else {
+		repositoryPath = config.path.src;
 	}
 	
 	exports.path = {
