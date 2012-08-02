@@ -4,6 +4,7 @@
 	"use strict";
 	
 	var fs = require("fs"),
+		path = require("path"),
 		appConfig = require("../app-config.js"),
 		fsmgmt = require("./fs-management.js"),
 		plainFileContentTypes = {
@@ -48,13 +49,33 @@
 			buf.push(pad(d.getHours()) + pad(d.getMinutes()) + pad(d.getSeconds()) + "_" + pad(d.getMilliseconds()));
 
 			return buf.join("-");
+		},
+		writeFile = function (filepath, content, callback, errorHandler) {
+			console.log(filepath);
+			var buffer = new Buffer(content, "utf-8");
+			fs.open(filepath, "w", function (err, fd) {
+				if (err && errorHandler) {
+					errorHandler(err);
+					return;
+				}
+				fs.write(fd, buffer, 0, buffer.length, null, function (err) {
+					fs.close(fd, function (err) {
+						if (!err && callback) { 
+							callback(); 
+						}
+					});
+					if (err) {
+						errorHandler(err);
+					}
+				});
+			});
 		};
 	
 	/**
 	 * normalizes user input which can be the extra path information,
 	 * query string or a json object send in the request body
 	 **/
-	exports.createInputNormalizer = function (displayMode, context, base) {
+	exports.createInputNormalizer = function (displayMode, context, baseProvider) {
 		return function(req, res, next) {
 			var path = req.params[0] || "",
 				file;
@@ -72,10 +93,10 @@
 				displayMode: displayMode,
 				context: context,
 				config: appConfig,
-				base: base,
+				base: baseProvider(),
 				path: path,
 				fileName: path.substring(path.lastIndexOf("/") + 1),
-				realPath: base + "/" + path,
+				realPath: baseProvider() + "/" + path,
 				sourceCode: "// no source code to view",
 				job: {
 					expand: evaluateBooleanProperty(req.query, req.body, "expand"),
@@ -257,12 +278,58 @@
 		if (isJSON === true) {
 			res.send(JSON.stringify(err));	
 		} else {
-			err.message = err.error.message;
+			if (err.error) {
+				err.message = err.error.message;
+			} else {
+				err.message = err.message;
+			}
 			req.data.displayMode = "error";
 			req.data.error = err;
 			req.data.rootCause = err.error;
 			req.data.errorString = JSON.stringify(err, null, 4);
 			res.render('error', req.data);	
 		}
+	};
+	
+	exports.updateConfiguration = function (req, res) {
+		var configFilePath = path.join(__dirname, "../app-config.json");
+		fs.readFile(configFilePath, function(error, data) {
+			var configuration;
+			if (error) {
+				error.statusCode = 404;
+				exports.sendErrorPage(req, res, error);
+			} else {
+				configuration =  JSON.parse(data);
+				configuration.path.src = req.body.path;
+				
+				writeFile(configFilePath, JSON.stringify(configuration, null, 4), function() {
+					res.send(JSON.stringify({ 
+						status: "ok",
+						configuration: configuration
+					}));
+					appConfig.path.src = configuration.path.src;		
+				},
+				function (err) {
+					error.statusCode = 403;
+					exports.sendErrorPage(req, res, error);
+				});
+			}
+		});
+	};
+	
+	exports.sendConfigPage = function (req, res) {
+		res.statusCode = 200;
+		res.header("Content-Type", "text/html");
+		res.render('config', {
+			displayMode: "config",
+			context: "config",
+			config: {
+				context: {
+					src: "repo",
+					dist: "dist",
+					jobs: "jobs"
+				}
+			}
+		});
 	};
 }());

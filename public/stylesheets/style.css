@@ -540,7 +540,7 @@ h2.top {
   box-shadow: none;
 }
 #lint-options {
-  position: fixed;
+  position: fixed !important;
   background-color: #efefef;
   border-top: solid 1px #ccc;
   border-bottom: solid 1px #333;
@@ -575,7 +575,7 @@ h2.top {
   min-height: 120px;
   width: 636px;
   right: 24px;
-  position: absolute;
+  position: fixed;
   top: 40px;
 }
 #project-files ul {

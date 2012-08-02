@@ -13,6 +13,8 @@
 				return function () {
 					funct.apply(target, arguments);
 				};
+			
+				// TODO a fixme
 			}
 		},
 		/**
@@ -78,8 +80,11 @@
 				if (typeof this.onModelAdd === "function") {
 					this.onModelAdd(model, pos);
 				} 
+				// FIXME a fixme 
 				this.container.trigger("@model-add", {model: model, pos: pos});
 			});
+			
+			// FIXME a fixme
 			// make sure to call this.onSelectionChange always in the context of this
 			this.boundOnSelection = util.bindThis(this, function (model, pos) {
 				if (typeof this.onSelectionChange === "function") {
@@ -87,8 +92,10 @@
 				} 
 				this.container.trigger("@selection", {model: model, pos: pos});
 			});
+			
+			// TODO a fixme
 			return this;
-		};
+		};	
 		
 	ModelAwareController.prototype = new controller.Controller(DEFAULT_SPEC);	
 	ModelAwareController.prototype.init = function () {	

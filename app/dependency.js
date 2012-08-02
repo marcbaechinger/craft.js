@@ -144,11 +144,11 @@
 		ALLOW_ABSOULTE_DEPENDENCIES = allow;
 	};
 	exports.Concatenator = function (spec) {
-		var basePath = spec.basePath || __dirname,
+		var basePathProvider = spec.basePathProvider || function() { return __dirname; },
 			checkAccess = function (path) {
-				if (path.indexOf(basePath) !== 0) {
-					console.error("error: access denied for ", path, "repo:", basePath);
-					console.error("error: access denied for ", path, "repo:", basePath);
+				if (path.indexOf(basePathProvider()) !== 0) {
+					console.error("error: access denied for ", path, "repo:", basePathProvider());
+					console.error("error: access denied for ", path, "repo:", basePathProvider());
 					throw {
 						type: "illegal-access",
 						msg: "access to " + path + " is restricted. No Access.",
@@ -160,7 +160,7 @@
 		this.resolve = function (path) {
 			checkAccess(path);
 			
-			return resolve(path, undefined, undefined, basePath);
+			return resolve(path, undefined, undefined, basePathProvider());
 		};
 		this.expand = function (path) {
 			return this.concatenateFiles(this.resolve(path));

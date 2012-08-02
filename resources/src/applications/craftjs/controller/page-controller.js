@@ -91,6 +91,19 @@
 							}
 						});
 					},
+					"@send-configuration": function (e) {
+						var resourcePathInput = $("#resource-path"),
+							path = resourcePathInput.val();
+							
+						if (path.trim().length < 1) {
+							$("#configuration .feedback").text("enter a path to the directory where your javascripts are").show();
+						} else {
+							craftjs.services.sendConfiguration({ path: path }, function() {
+								resourcePathInput.attr("disabled", "true");
+								$("#configuration .feedback").text("resource directory points now to '" + path + "'").show();
+							});
+						}
+					},
 					"@show-html": function (e) {
 						alert("action page-controller@show-html not implemented yet");
 					},

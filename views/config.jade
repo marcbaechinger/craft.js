@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	.container
+		.row-fluid
+			h1 Configuration
+			br
+			form#configuration.well.clearfix
+				label Path to resources (absolute path or relative from CRAFTJS_BASE). The files in thisdirectory will be browsable under '<a href="/#{config.context.src}/">Repository</a>'.
+				input#resource-path.span12(type="text", placeholder="/path/to/your/resources")
+				button.left.btn(data-action="send-configuration") Save
+				code.left.feedback(style="display: none;")
+	

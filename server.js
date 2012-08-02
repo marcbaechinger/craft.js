@@ -13,10 +13,15 @@
 		release = require('./routes/release.js'),
 		util = require('./app/util'),
 		app = module.exports = express.createServer(),
-
-		jobsDirectory = appConfig.path.jobs,
-		distDirectory = appConfig.path.dist,
-		srcDirectory = appConfig.path.src;
+		repositoryDirectoryProvider = function() { 
+			return appConfig.path.src; 
+		},
+		jobsDirectoryProvider = function() { 
+			return appConfig.path.jobs; 
+		},
+		distDirectoryProvider = function() { 
+			return appConfig.path.dist; 
+		};
 
 	// Configuration
 	app.configure(function () {
@@ -36,7 +41,7 @@
 	app.configure('production', function () {
 		app.use(express.errorHandler());
 	});
-
+	
 	util.mkdir(appConfig.path.src);
 	util.mkdir(appConfig.path.dist);
 	util.mkdir(appConfig.path.jobs);
@@ -47,7 +52,7 @@
 	});
 	
 	app.get("/" + appConfig.context.src + "/*",
-			common.createInputNormalizer("js", appConfig.context.src, srcDirectory),
+			common.createInputNormalizer("js", appConfig.context.src, repositoryDirectoryProvider),
 			common.createFileDescriptor,
 			common.createBreadcrumpTokens,
 			common.directoryInterceptor,
@@ -65,7 +70,7 @@
 		);
 
 	app.get("/" + appConfig.context.dist + "/*",
-			common.createInputNormalizer("js", appConfig.context.dist, distDirectory),
+			common.createInputNormalizer("js", appConfig.context.dist, distDirectoryProvider),
 			common.createFileDescriptor,
 			common.directoryInterceptor,
 			common.getFileContent,
@@ -78,14 +83,14 @@
 		);
 		
 	app.delete("/" + appConfig.context.dist + "/*",
-			common.createInputNormalizer("dist", appConfig.context.dist, distDirectory),
+			common.createInputNormalizer("dist", appConfig.context.dist, distDirectoryProvider),
 			common.createFileDescriptor,
 			common.deleteFile,
 			common.sendDeletionConfirmation
 		);
 	
 	app.get("/" + appConfig.context.jobs + "/*",
-			common.createInputNormalizer("job", appConfig.context.jobs, jobsDirectory),
+			common.createInputNormalizer("job", appConfig.context.jobs, jobsDirectoryProvider),
 			common.createFileDescriptor,
 			common.directoryInterceptor,
 			common.getFileContent,
@@ -93,20 +98,20 @@
 		);
 
 	app.put("/" + appConfig.context.jobs,
-			jobs.storeJob(jobsDirectory),
+			jobs.storeJob(jobsDirectoryProvider),
 			common.sendProcessingStatus
 	);
 	
 	app.delete("/" + appConfig.context.jobs + "/*",
-			common.createInputNormalizer("job", appConfig.context.jobs, jobsDirectory),
+			common.createInputNormalizer("job", appConfig.context.jobs, jobsDirectoryProvider),
 			common.createFileDescriptor,
 			common.deleteFile,
 			common.sendDeletionConfirmation
 		);
 		
 	app.post("/release",
-		common.createInputNormalizer("dist", appConfig.context.dist, distDirectory),
-		jobs.createJobInfoFactory(distDirectory),
+		common.createInputNormalizer("dist", appConfig.context.dist, distDirectoryProvider),
+		jobs.createJobInfoFactory(distDirectoryProvider),
 		jobs.resolve,
 		build.expand,
 		build.mangle,
@@ -114,6 +119,13 @@
 		build.astToSourceCode,
 		jobs.writeSourceCode,
 		release.sendReleaseOutput
+	);
+	
+	app.get("/config", 
+		common.sendConfigPage
+	);
+	app.post("/config", 
+		common.updateConfiguration
 	);
 	app.listen(appConfig.server.port);
 	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

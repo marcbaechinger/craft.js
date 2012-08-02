@@ -7,9 +7,9 @@
 		appConfig = require("../app-config.js"),
 		uglify = require("../app/uglify.js"),
 		jshint = require('../app/jshint.js'),
-		basePath = appConfig.path.src,
+		basePathProvider = function () { return appConfig.path.src; },
 		concatenator = new concat.Concatenator({
-			basePath: basePath
+			basePathProvider: basePathProvider
 		}),
 		getAst = function (req) {
 			var data = req.data;
@@ -20,7 +20,7 @@
 		},
 		translateDependencies = function (dependencies) {
 			return dependencies.map(function (dep) {
-				return dep.replace(basePath, "");
+				return dep.replace(basePathProvider(), "");
 			});
 		};
 

@@ -55,6 +55,19 @@
 		});
 	};
 
+	exports.craftjs.services.sendConfiguration = function (configuration, callback) {
+		$.ajax("/config", {
+			type: "POST",
+			dataType: "json",
+			contentType: "application/json",
+			data: JSON.stringify(configuration),
+			success: function (jsonData) {
+				if (callback && jsonData.status === "ok") {
+					callback();
+				}
+			}
+		});
+	};
 	exports.craftjs.services.deleteFile = function (path, callback) {
 		$.ajax("/" + craftjs.data.context + "/" + path, {
 			type: "DELETE",

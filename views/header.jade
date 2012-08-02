@@ -12,14 +12,15 @@ header(class="navbar navbar-fixed-top")
 			li
 				a(href="/#{config.context.jobs}/") Jobs
 			li(class="divider-vertical")
-		ul(class="nav pull-right")
-			li(class="divider-vertical")
-			li
-				a(href="#!/view/lint-options", class="collapser", data-slide="true", data-dependent="#lint-options", data-view="repository") lint options
-			li(class="divider-vertical")
-			li
-				a(href="#!/view/favorites", class="change-view collapser", data-dependent="#project-files") Favorites
-			li(class="divider-vertical")
+		if context !== "config"
+			ul(class="nav pull-right")
+				li(class="divider-vertical")
+				li
+					a(href="#!/view/lint-options", class="collapser", data-slide="true", data-dependent="#lint-options", data-view="repository") lint options
+				li(class="divider-vertical")
+				li
+					a(href="#!/view/favorites", class="change-view collapser", data-dependent="#project-files") Favorites
+				li(class="divider-vertical")
 
 #lint-options
 #project-files
