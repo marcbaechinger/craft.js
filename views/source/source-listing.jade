@@ -35,7 +35,7 @@ else if context === config.context.jobs
 	#source.source
 		each line, i in lines 
 			if typeof report === "undefined" || typeof report.errors==='undefined' || typeof report.errorLines[i+1] === 'undefined'
-				pre.line(data-id="line-#{i+1}") #{i+1}:\t#{line}
+				pre.line(data-id="line-#{i+1}") #{i+1}:	#{line}
 					span.jump-link(id="line-#{i+1}")
 			else
 				pre.error #{i+1}:\t#{line}
