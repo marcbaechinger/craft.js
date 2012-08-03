@@ -5,6 +5,7 @@
 	
 	var fs = require("fs"),
 		path = require("path"),
+		test = require("./test.js"),
 		appConfig = require("../app-config.js"),
 		fsmgmt = require("./fs-management.js"),
 		plainFileContentTypes = {
@@ -182,7 +183,9 @@
 	exports.qunitInterceptor = function (req, res, next) {
 		var postfix = getPostfix(req.data.fileName);
 		req.data.postfix = postfix;
-		if (templatedFileTemplates[postfix] && req.query.viewer !== "true") {
+		if (postfix === "qunit" && req.query.phantom === "true") {
+			test.runPhantomWithQuint(req, res, next);
+		} else if (templatedFileTemplates[postfix] && req.query.viewer !== "true") {
 			req.data.templated = true;
 			exports.fileViewer(req, res);
 		} else if (templatedFileTemplates[postfix]) {

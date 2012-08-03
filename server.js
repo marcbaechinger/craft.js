@@ -8,6 +8,7 @@
 	var appConfig = require("./app-config"),
 		express = require('express'),
 		build = require('./routes/build.js'),
+		test = require('./routes/test.js'),
 		common = require('./routes/common.js'),
 		jobs = require('./routes/jobs.js'),
 		release = require('./routes/release.js'),
