@@ -11,6 +11,8 @@ ul.directory
 			mixin htmlfile(file, idx)
 		else if file.type === "qunit"
 			mixin qunitfile(file, idx)
+		else if file.type === "json" || file.type === "suite"
+			mixin jsonfile(file, idx)
 		else
 			mixin jsfile(file, idx)
 			

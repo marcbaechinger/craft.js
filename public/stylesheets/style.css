@@ -168,13 +168,15 @@ h2.directory a {
 }
 ul.directory {
   margin-left: 0px;
-  background-color: #F1DCA3;
   padding-top: 20px;
   padding-bottom: 20px;
   margin-top: -20px;
 }
 ul.directory .btn {
   width: 72px;
+}
+ul.directory .directory-item:nth-child(even) {
+  background-color: #FEFFDB;
 }
 ul.directory .directory-item {
   border-bottom: solid 1px #999;
@@ -385,7 +387,10 @@ a.file {
 }
 .job .source-panel,
 .css .source-panel,
-.html .source-panel {
+.html .source-panel,
+.json .source-panel,
+.templated .source-panel,
+.suite .source-panel {
   padding-top: 0px;
   border-top: none;
 }
@@ -703,7 +708,10 @@ h2.top {
 }
 .css #result-info,
 .html #result-info,
-.job #result-info {
+.job #result-info,
+.templated #result-info,
+.suite #result-info,
+.json #result-info {
   color: #333;
 }
 .all-tests {

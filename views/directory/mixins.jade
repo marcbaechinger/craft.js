@@ -42,6 +42,10 @@ mixin jobfile(file, idx)
 		button.btn.btn-mini.btn-primary(data-action="build-job", data-path="#{file.path}", style="margin-left: 12px;") build
 		button.btn.btn-mini.btn-primary(data-action="delete-file", data-path="#{file.path}") delete
 
+mixin jsonfile(file, idx)
+	li.directory-item.json
+		a.file(href="/#{context}/#{file.path}?viewer=true", title="#{file.size} bytes - #{file.mtime}") #{file.name}
+		
 mixin directory(file)
 	li.directory-item
 		a.file(href="/#{context}/#{file.path}")=file.name

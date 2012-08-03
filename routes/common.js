@@ -10,7 +10,9 @@
 		fsmgmt = require("./fs-management.js"),
 		plainFileContentTypes = {
 			"html": "text/html",
-			"css": "text/css"
+			"css": "text/css",
+			"json": "application/json",
+			"suite": "application/json"
 		},
 		templatedFileTemplates = {
 			"qunit": "qunit/qunit",

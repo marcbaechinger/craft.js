@@ -8,7 +8,9 @@
 			qunit: "qunit",
 			html: "html",
 			css: "css",
-			app: "app"
+			app: "app",
+			json: "json",
+			suite: "suite",
 		},
 		createSourceTree = function (basePath, path) {
 			var fsNode = {

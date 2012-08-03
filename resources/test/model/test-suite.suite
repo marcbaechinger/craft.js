@@ -1,0 +1,7 @@
+{
+	name: "MVC model tests",
+	tests: [
+		"/test/model/model-1.qunit",
+		"/test/model/model-2.qunit",
+	]
+}
