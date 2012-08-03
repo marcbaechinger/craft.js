@@ -712,6 +712,14 @@ var model = model || {
             }
         });
     };
+    exports.craftjs.services.phantomTest = function(path, callback, errorhandler) {
+        $.ajax({
+            url: path,
+            contentType: "application/json",
+            success: callback,
+            error: errorhandler
+        });
+    };
 })(this, jQuery);
 
 var Mustache = typeof module !== "undefined" && module.exports || {};
@@ -1173,6 +1181,35 @@ var Mustache = typeof module !== "undefined" && module.exports || {};
                         localStorage.projectName = name;
                         this.render();
                     }
+                    e.stopPropagation();
+                },
+                "@show-test-report": function(e) {
+                    var target = $(e.target);
+                    target.next().toggle();
+                },
+                "@test-phantom": function(e) {
+                    var target = $(e.target).closest("a"), href = target.attr("href"), statusLabel = target.parent().find(".status-label");
+                    target.parent().find(".qunit-report").remove();
+                    $(".qunit-report").hide();
+                    if (statusLabel.length < 1) {
+                        statusLabel = $("<span data-action='show-test-report' class='status-label label label-warning'>Phantom test running...</span>");
+                        statusLabel.insertBefore(target);
+                    } else {
+                        statusLabel.text("phantomjs test running...").removeClass("label-important").removeClass("label-success").addClass("label-warning");
+                    }
+                    craftjs.services.phantomTest(href, function(testReport) {
+                        console.log(testReport);
+                        var template = $("#phantom-test-report").text();
+                        content = Mustache.render(template, testReport);
+                        if (testReport.failed > 0) {
+                            statusLabel.text("phantomjs test failed").removeClass("label-warning").addClass("label-important");
+                        } else {
+                            statusLabel.text("phantomjs test succeeded").removeClass("label-warning").addClass("label-success");
+                        }
+                        $(content).insertAfter(statusLabel);
+                    }, function(err) {
+                        alert("phantom testing of " + href + " failed: " + e.message);
+                    });
                     e.stopPropagation();
                 },
                 "click .collapser": function(e) {
