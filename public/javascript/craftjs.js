@@ -1187,6 +1187,9 @@ var Mustache = typeof module !== "undefined" && module.exports || {};
                     var target = $(e.target);
                     target.next().toggle();
                 },
+                "@test-phantom-all": function(e) {
+                    $("[data-action='test-phantom']").trigger("click");
+                },
                 "@test-phantom": function(e) {
                     var target = $(e.target).closest("a"), href = target.attr("href"), statusLabel = target.parent().find(".status-label");
                     target.parent().find(".qunit-report").remove();

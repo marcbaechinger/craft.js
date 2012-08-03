@@ -130,6 +130,9 @@
 						var target = $(e.target);
 						target.next().toggle();
 					},
+					"@test-phantom-all": function (e) {
+						$("[data-action='test-phantom']").trigger("click");
+					},
 					"@test-phantom": function (e) {
 						var target = $(e.target).closest("a"),
 							href = target.attr("href"),

@@ -1,6 +1,7 @@
 extends layout
 
 block content
+	a.btn.btn-mini.btn-primary.all-tests(data-action="test-phantom-all") run all tests
 	include directory/listing
 	script(id="phantom-test-report", type="text/template")
 		.qunit-report.clearfix
