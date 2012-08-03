@@ -38,8 +38,8 @@ var main = function() {
 			name: "Marc"
 		});
 		equal(user.data.name, "Marc", "added property by update");
-		equal(user.data.id, 1, "updated id not allowed");
-		equal(user.id, 1, "updated id not allowed");
+		equal(user.data.id, 2, "updated id not allowed");
+		equal(user.id, 2, "updated id not allowed");
 	});
 	
 	

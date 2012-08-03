@@ -32,7 +32,9 @@ mixin qunitfile(file, idx)
 	li.directory-item
 		a.file(href="/#{context}/#{file.path}?viewer=true", title="#{file.size} bytes - #{file.mtime}") #{file.name}
 		a(href="/#{context}/#{file.path}")
-			button.btn.btn-mini.btn-primary.transform test
+			button.btn.btn-mini.btn-primary.transform in-browser
+		a(href="/#{context}/#{file.path}?phantom=true")
+			button.btn.btn-mini.btn-primary(data-action="test-phantom") phantom.js
 
 mixin jobfile(file, idx)
 	li.directory-item.job

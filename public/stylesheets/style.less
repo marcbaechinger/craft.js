@@ -47,8 +47,6 @@
 	}
 }
 
-
-
 a {
 	color: #20539D;
 }
@@ -60,8 +58,50 @@ h2.directory {
 	}
 }
 ul.directory {
-	padding-left: 0px;
+	margin-left: 0px;
+	background-color: #F1DCA3;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-top: -20px;
+
+	.btn {
+		width: 72px;
+	}
+	.directory-item {
+		border-bottom: solid 1px #999;
+		list-style: none;
+		padding: 4px 18px;
+		height: 20px;
+		position: relative;
+		
+		
+		.label-success,
+		.label-important {
+			cursor: pointer;
+		}
+		label {
+			margin-left: 22px;
+			display: inline-block;
+		}
+		a {
+			color: #20539D;
+		}
+		button {
+			margin-top: 0px;
+			float: right;
+		}
+		.transform {
+			margin-left: 20px;
+		}
+		.job-build {
+			float: right;
+			button {
+				margin-left: 183px;
+			}
+		}
+	}
 }
+
 
 .lint-flags,
 .build-flags {
@@ -81,39 +121,6 @@ ul.directory {
 		}
 	}
 }
-.directory {
-	background-color: #F1DCA3;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	margin-top: -20px;
-}
-.directory-item {
-	border-bottom: solid 1px #999;
-	list-style: none;
-	padding: 4px 18px;
-	height: 20px;
-	label {
-		margin-left: 22px;
-		display: inline-block;
-	}
-	a {
-		color: #20539D;
-	}
-	button {
-		margin-top: 0px;
-		float: right;
-	}
-	.transform {
-		margin-left: 20px;
-	}
-	.job-build {
-		float: right;
-		button {
-			margin-left: 183px;
-		}
-	}
-}
-
 
 .page {
 	.shadow-panel();
@@ -447,7 +454,14 @@ body {
 	position: fixed;
 	top: 74px;
 	border-radius: 0;
+	border-bottom: 1px solid #ccc;
 	padding-left: 19px;
+	background-image: -moz-linear-gradient(center top , #CDCDBF, #E8E8E8);
+  	background-image: -ms-linear-gradient(top, #CDCDBF, #E8E8E8);
+  	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#CDCDBF), to(#E8E8E8));
+  	background-image: -webkit-linear-gradient(top, #CDCDBF, #E8E8E8);
+  	background-image: -o-linear-gradient(top, #CDCDBF, #E8E8E8);
+  	background-image: linear-gradient(top, #CDCDBF, #E8E8E8);
 }
 
 h2.top {
@@ -567,15 +581,18 @@ h2.top {
 #build-toolbar {
 	position: fixed;
 	right: 0px;
-	top: 44px;
+	top: 48px;
 	z-index: 20;
 	border: none;
 	label {
 		display: inline-block;
+		margin-left: 12px;
 		input {
-			margin-left: 6px;
+			margin-right: 4px;
 			margin-top: -0px;
 			display: inline-block;
+			float: left;
+			margin-top: 3px;
 		}
 	}
 	.transform {

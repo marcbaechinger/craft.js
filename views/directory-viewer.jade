@@ -2,3 +2,26 @@ extends layout
 
 block content
 	include directory/listing
+	script(id="phantom-test-report", type="text/template")
+		.qunit-report.clearfix
+			h1 {{title}}
+			ul.summary.clearfix
+				li: span.label.label-important Failed: {{failed}}
+				li: span.label.label-success Passed: {{passed}}
+				li: span.label.label-inverse Total: {{total}}
+			.summary Test case from 
+				span.label {{url}}
+				|&nbsp;took 
+				span.label.label-info {{timeTaken}} ms 
+				|&nbsp;at 
+				span.label.label-warning {{timestamp}}
+			
+			{{#tests}}
+			h2.name.collapser {{name}}
+			ul.asserts
+				{{#asserts}}
+				li(class="{{status}}") 
+					span.label {{msg}}
+				{{/asserts}}
+			{{/tests}}
+		

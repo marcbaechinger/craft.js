@@ -80,5 +80,13 @@
 			}
 		});
 	};
+	exports.craftjs.services.phantomTest = function (path, callback, errorhandler) {
+		$.ajax({
+			url: path,
+			contentType: "application/json",
+			success: callback,
+			error: errorhandler
+		});
+	};
 	
 }(this, jQuery));

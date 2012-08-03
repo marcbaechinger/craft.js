@@ -24,3 +24,53 @@
 	}
 }
 
+.qunit-report {
+	background-color: #fff;
+	border-radius: 6px;
+	box-shadow: 4px 4px 12px #333;
+	display: none;
+	height: 280px;
+	overflow: auto;
+	padding: 8px;
+	position: absolute;
+	margin-top: 4px;
+	width: 480px;
+	z-index: 20;
+	h1 {
+		padding: 8px;
+	}
+	h2 {
+		padding: 2px 8px;
+		font-size: 14px;
+		line-height: 22px;
+	}
+	ul.summary {
+		list-style: none;
+		margin-left: -0px;
+		margin-bottom: 18px;
+		li {
+			float: left;
+			margin-right: 6px;
+		}
+	}
+	div.summary {
+		padding: 8px;
+		background-color: #ededed;
+		line-height: 2em;
+		margin-bottom: 12px;
+	}
+	.asserts {
+		list-style: none;
+		li {
+			margin-top: 8px;
+		}
+	}
+	.pass .label {
+		background-color: darkgreen;
+	}
+	
+	.fail .label {
+		background-color: red;
+	}
+}
+
