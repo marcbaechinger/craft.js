@@ -22,7 +22,7 @@ QUnitPhantomJS.prototype.run = function() {
 
 	process.on('exit', function (code) {
 		if (that.exitCallback) {
-			console.log(buf.join(""));
+			console.log("runned phantom js test", PHANTOM_SCRIPT, that.url);
 			that.exitCallback(code, JSON.parse(buf.join("")), errBuf.length ? errBuf.join("") : undefined);
 		}
 	});
