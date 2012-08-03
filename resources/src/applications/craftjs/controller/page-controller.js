@@ -8,7 +8,8 @@
 				model: model,
 				elementSelectors: {
 					buttons: ".bag-button",
-					projectLabel: ".project-name"
+					projectLabel: ".project-name",
+					runAllTestsButton: ".all-tests"
 				},
 				events: {
 					"@nav": function (e) {
@@ -193,12 +194,18 @@
 					}
 				},
 				render: function () {
+					var that = this;
+					this.$elements.projectLabel.text(localStorage.projectName);
 					if (this.model.data[this.path]) {
 						this.$elements.buttons.addClass("contained").text("remove from Favorites");
 					} else {
 						this.$elements.buttons.removeClass("contained").text("add to Favorites");
 					}
-					this.$elements.projectLabel.text(localStorage.projectName);
+					
+					$("[data-action='test-phantom']").each(function() {
+						that.$elements.runAllTestsButton.show();
+						return false;
+					});
 				}
 			});
 		};

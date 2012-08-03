@@ -655,6 +655,9 @@ h2.top {
   margin-right: 12px;
   display: inline-block;
 }
+#project-files label input {
+  margin-left: 6px;
+}
 #project-files ul {
   margin-left: 12px;
   margin-top: 8px;
@@ -663,6 +666,7 @@ h2.top {
   float: right;
   display: inline-block;
   margin-top: -2px;
+  margin-left: 6px;
 }
 .navbar-fixed-top {
   z-index: 9;
@@ -703,9 +707,11 @@ h2.top {
   color: #333;
 }
 .all-tests {
+  display: none;
+  margin-right: 92px;
   position: absolute;
-  top: 48px;
   right: 20px;
+  top: 48px;
   z-index: 15;
 }
 #build-toolbar {
@@ -720,10 +726,9 @@ h2.top {
   margin-left: 12px;
 }
 #build-toolbar label input {
-  margin-right: 4px;
+  margin-left: 4px;
   margin-top: 0px;
   display: inline-block;
-  float: left;
   margin-top: 3px;
 }
 #build-toolbar .transform {
@@ -759,6 +764,7 @@ h2.top {
 }
 span.pipe {
   margin-left: 18px;
+  margin-right: 6px;
 }
 .testcase {
   display: none;

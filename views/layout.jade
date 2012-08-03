@@ -25,9 +25,8 @@ html
 		script(src="/javascript/craftjs.js")
 		script(type="template/mustache", id="project-file")
 			li
-				[
-				a(href="#", data-action="remove-from-project", data-path="{{path}}")-
-				]
+				a.label.label-important(href="#", data-action="remove-from-project", data-path="{{path}}")-
+				|&nbsp;
 				a(href="/repo/{{path}}")
 					{{path}}
 				br

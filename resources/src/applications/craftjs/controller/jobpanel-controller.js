@@ -2,7 +2,7 @@
 //= require "../../../controller/model-aware-controller"
 (function (exports, $) {
 	var renderCheckBox = function (name) {
-			return craftjs.render("<label>{{name}}<input type='checkbox' name='{{name}}'/></label>", {name: name});
+			return craftjs.render("<label><span class='label label-warning'>{{name}}<input type='checkbox' name='{{name}}'/></span></label>", {name: name});
 		},
 		renderProjectItem = function (path) {
 			return craftjs.renderById("project-file", {path: path});
@@ -39,14 +39,14 @@
 				},
 				// TODO render by template
 				render: function () {
-					var buf = ["<div class='build-flags'>Build flags: "];
+					var buf = ["<div class='build-flags'>"];
 
 					buf.push($.map(["mangle", "squeeze", "minimize", "beautify"], renderCheckBox).join(""));
-					buf.push("<button class='build' data-action='build-project'");
+					buf.push("<button class='btn btn-primary btn-mini build' data-action='build-project'");
 					if (this.isEmpty()) {
 						buf.push(" disabled='disabled'");
 					}
-					buf.push(">build</button><button data-action='save-job' class='build'>save</button></div><ul>");
+					buf.push(">build</button><button data-action='save-job' class='btn btn-primary btn-mini build'>save</button></div><ul>");
 					$.each(this.model.data, function (key) {
 						buf.push(renderProjectItem(key));
 					});

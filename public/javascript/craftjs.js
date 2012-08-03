@@ -1088,7 +1088,8 @@ var Mustache = typeof module !== "undefined" && module.exports || {};
             model: model,
             elementSelectors: {
                 buttons: ".bag-button",
-                projectLabel: ".project-name"
+                projectLabel: ".project-name",
+                runAllTestsButton: ".all-tests"
             },
             events: {
                 "@nav": function(e) {
@@ -1230,12 +1231,17 @@ var Mustache = typeof module !== "undefined" && module.exports || {};
                 }
             },
             render: function() {
+                var that = this;
+                this.$elements.projectLabel.text(localStorage.projectName);
                 if (this.model.data[this.path]) {
                     this.$elements.buttons.addClass("contained").text("remove from Favorites");
                 } else {
                     this.$elements.buttons.removeClass("contained").text("add to Favorites");
                 }
-                this.$elements.projectLabel.text(localStorage.projectName);
+                $("[data-action='test-phantom']").each(function() {
+                    that.$elements.runAllTestsButton.show();
+                    return false;
+                });
             }
         });
     };
@@ -1368,7 +1374,7 @@ var Mustache = typeof module !== "undefined" && module.exports || {};
 
 (function(exports, $) {
     var renderCheckBox = function(name) {
-        return craftjs.render("<label>{{name}}<input type='checkbox' name='{{name}}'/></label>", {
+        return craftjs.render("<label><span class='label label-warning'>{{name}}<input type='checkbox' name='{{name}}'/></span></label>", {
             name: name
         });
     }, renderProjectItem = function(path) {
@@ -1405,13 +1411,13 @@ var Mustache = typeof module !== "undefined" && module.exports || {};
                 }
             },
             render: function() {
-                var buf = [ "<div class='build-flags'>Build flags: " ];
+                var buf = [ "<div class='build-flags'>" ];
                 buf.push($.map([ "mangle", "squeeze", "minimize", "beautify" ], renderCheckBox).join(""));
-                buf.push("<button class='build' data-action='build-project'");
+                buf.push("<button class='btn btn-primary btn-mini build' data-action='build-project'");
                 if (this.isEmpty()) {
                     buf.push(" disabled='disabled'");
                 }
-                buf.push(">build</button><button data-action='save-job' class='build'>save</button></div><ul>");
+                buf.push(">build</button><button data-action='save-job' class='btn btn-primary btn-mini build'>save</button></div><ul>");
                 $.each(this.model.data, function(key) {
                     buf.push(renderProjectItem(key));
                 });
