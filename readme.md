@@ -1,7 +1,6 @@
 # craft.js - javascript build tool
 
 See <a href="http://ec2-23-20-159-125.compute-1.amazonaws.com/">a live demo</a>.
-![JavaScript source code viewer](/marcbaechinger/craft.js/raw/master/public/images/screenshots.jpg)
 
 craft.js helps to manage, assess, build and distribute from a common JavaScript source code base.
 
