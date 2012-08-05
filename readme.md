@@ -20,22 +20,28 @@ node server.js
 
 ## Configuration
 
-Change the `app-config.js` to adjust the `port` on which the appication should listen.
+Change the `app-config.json` to adjust the `port` on which the appication should listen.
 
 ```
-exports.server = {
-	port: 3000
-};
-exports.context = {
-	src: "repo",  // context of src directory -> localhost:3000/repo/sample.js
-	dist: "dist"  // context of distribution directory -> localhost:3000/dist/craftjs_20120204-205351_450.js
-};
-exports.path = {
-	src: __dirname + "/resources",
-	dist: __dirname + "/dist",
-	views: __dirname + "/views",
-	docroot: __dirname + '/public'
-};
+{	
+	"server": {
+		"port": 3000
+	},
+	"path": {
+		"base": "",
+		"src": "resources",
+		"dist": "dist",
+		"jobs": "jobs",
+		"views": "views",
+		"docroot": "public"
+	},
+	"context": {
+		"src": "repo",
+		"dist": "dist",
+		"jobs": "jobs",
+		"default": "repo"
+	}
+}
 ```
 
 
