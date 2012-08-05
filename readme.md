@@ -1,6 +1,6 @@
 # craft.js - javascript build tool
 
-See http://marc.no.de for a live demo.
+See <a href="http://ec2-23-20-159-125.compute-1.amazonaws.com/">a live demo</a>.
 ![JavaScript source code viewer](/marcbaechinger/craft.js/raw/master/public/images/screenshots.jpg)
 
 craft.js helps to manage, assess, build and distribute from a common JavaScript source code base.
@@ -9,7 +9,7 @@ craft.js helps to manage, assess, build and distribute from a common JavaScript 
 
 ```
  # get craft.js from github
-git clone git@github.com:marcbaechinger/craft.js.git
+git clone https://github.com/marcbaechinger/craft.js.git
 
  # install dependencies
 cd craft.js/ && npm install
