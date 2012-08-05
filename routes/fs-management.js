@@ -10,8 +10,44 @@
 			css: "css",
 			app: "app",
 			json: "json",
-			suite: "suite",
+			suite: "suite"
 		},
+		createFileDescriptor = function (basePath, path, filename) {
+			var postfix = filename.substring(filename.lastIndexOf(".") + 1),
+				childPath = path + "/" + filename,
+				childRealPath = basePath + "/" + childPath,
+				childStat = fs.statSync(childRealPath),
+				childNode = {
+					path: childPath,
+					realPath: childRealPath,
+					name: filename,
+					size: childStat.size,
+					atime: childStat.atime,
+					mtime: childStat.mtime,
+					ctime: childStat.ctime
+				};
+			
+			if (childPath.indexOf("/") === 0) {
+				childNode.path = childPath.substring(1);
+			}
+			
+			if (childStat.isDirectory()) {
+				childNode.type = "directory";
+				return childNode;
+			} else if (validFilePostfixes[postfix]) {
+				childNode.type = postfix;
+				return childNode;
+			}
+			return undefined;
+		},
+		fileDescriptorComparator = function(a, b) {
+			if (a.type === "directory" && b.type !== "directory") {
+				return -1;
+			} else 	if (a.type !== "directory" && b.type === "directory") {
+				return 1;
+			} 
+			return a.name.localeCompare(b.name);
+        },
 		createSourceTree = function (basePath, path) {
 			var fsNode = {
 					path: path,
@@ -22,32 +58,12 @@
 				tree = fs.readdirSync(basePath + "/" + path);
 
 			tree.forEach(function (filename) {
-				var postfix = filename.substring(filename.lastIndexOf(".") + 1),
-					childPath = path + "/" + filename,
-					childRealPath = basePath + "/" + childPath,
-					childStat = fs.statSync(childRealPath),
-					childNode = {
-						path: childPath,
-						realPath: childRealPath,
-						name: filename,
-						size: childStat.size,
-						atime: childStat.atime,
-						mtime: childStat.mtime,
-						ctime: childStat.ctime
-					};
-				
-				if (childPath.indexOf("/") === 0) {
-					childNode.path = childPath.substring(1);
-				}
-				
-				if (childStat.isDirectory()) {
-					childNode.type = "directory";
-					fsNode.children.push(childNode);
-				} else if (validFilePostfixes[postfix]) {
-					childNode.type = postfix;
-					fsNode.children.push(childNode);
+				var fileDescriptor = createFileDescriptor(basePath, path, filename);
+				if (fileDescriptor) {
+					fsNode.children.push(fileDescriptor);
 				}
 			});
+			fsNode.children.sort(fileDescriptorComparator);
 			return fsNode;
 		};
 	exports.createSourceTree = createSourceTree;
