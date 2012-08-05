@@ -9,7 +9,7 @@ craft.js helps to manage, assess, build and distribute from a common JavaScript 
 
 ```
  # get craft.js from github
-git clone git@github.com:marcbaechinger/craft.js.git
+git clone https://github.com/marcbaechinger/craft.js.git
 
  # install dependencies
 cd craft.js/ && npm install
