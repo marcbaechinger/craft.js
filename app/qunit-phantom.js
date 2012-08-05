@@ -1,6 +1,6 @@
 var util  = require('util'),
     spawn = require('child_process').spawn,
-	PHANTOM_SCRIPT = 'app/phantom-original.js',
+	PHANTOM_SCRIPT = "app/phantom-script.js",
 	QUnitPhantomJS = function (spec) {
 		this.exitCallback = spec.callback;
 		this.url = spec.url;

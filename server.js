@@ -49,7 +49,13 @@
 	
 	// Routes
 	app.get('/', function (req, res) {
-		res.render('index', { title: 'craft.js', src: appConfig.context.src });
+		res.render('index', { 
+			title: 'craft.js - a javascript crafting tool', 
+			src: appConfig.context.src, 
+			displayMode: "js",
+			context: "src",
+			config: { context: { src: "repo", dist: "dist", jobs: "jobs" } }
+		});
 	});
 	
 	app.get("/" + appConfig.context.src + "/*",
