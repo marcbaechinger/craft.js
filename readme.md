@@ -51,6 +51,7 @@ Declare dependencies of a script with a processing instruction at the top of a J
 
 ```
 //= require "../../model/collection, ../../model/model"
+//= require "/common/array"
 //= require "ui-helper"
 ```
 
