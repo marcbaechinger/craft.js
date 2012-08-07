@@ -3,7 +3,7 @@
 var winston = require('winston'),
 	logger  = new (winston.Logger)({
 		transports: [
-			new (winston.transports.Console)({ level: 'debug' }),
+			new (winston.transports.Console)({ level: 'info' }),
 			new (winston.transports.File)({
 				filename: 'craftjs.log',
 				maxsize: 10 * 1000 * 1000,

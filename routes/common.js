@@ -8,6 +8,7 @@
 		test = require("./test.js"),
 		appConfig = require("../app-config.js"),
 		fsmgmt = require("./fs-management.js"),
+		logger = require("../app/logger.js").logger,
 		plainFileContentTypes = {
 			"html": "text/html",
 			"css": "text/css",
@@ -89,6 +90,8 @@
 			
 			path = path.replace(/^\/*/, "");
 			path = path.replace(/ *\/$/, "");
+			
+			logger.info("serving file at: " , path);
 			
 			req.body.transformation = req.body.transformation || {};
 			
