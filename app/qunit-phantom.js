@@ -1,12 +1,14 @@
+/*global require: false, exports: false */
 var util  = require('util'),
-    spawn = require('child_process').spawn,
+	logger = require("./logger.js").logger,
+	spawn = require('child_process').spawn,
 	PHANTOM_SCRIPT = "app/phantom-script.js",
 	QUnitPhantomJS = function (spec) {
 		this.exitCallback = spec.callback;
 		this.url = spec.url;
 	};
-
-QUnitPhantomJS.prototype.run = function() {
+	
+QUnitPhantomJS.prototype.run = function () {
 	var process = spawn('phantomjs', [PHANTOM_SCRIPT, this.url]),
 		buf = [],
 		errBuf = [],
@@ -22,7 +24,7 @@ QUnitPhantomJS.prototype.run = function() {
 
 	process.on('exit', function (code) {
 		if (that.exitCallback) {
-			console.log("runned phantom js test", PHANTOM_SCRIPT, that.url);
+			logger.debug("runned phantom js test: " + PHANTOM_SCRIPT + " - " + that.url);
 			that.exitCallback(code, JSON.parse(buf.join("")), errBuf.length ? errBuf.join("") : undefined);
 		}
 	});
