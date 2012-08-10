@@ -23,24 +23,24 @@ node server.js
 Change the `app-config.json` to adjust the `port` on which the appication should listen.
 
 ```
-{	
-	"server": {
-		"port": 3000
-	},
-	"path": {
-		"base": "",
-		"src": "resources",
-		"dist": "dist",
-		"jobs": "jobs",
-		"views": "views",
-		"docroot": "public"
-	},
-	"context": {
-		"src": "repo",
-		"dist": "dist",
-		"jobs": "jobs",
-		"default": "repo"
-	}
+{
+    "server": {
+        "port": 3000
+    },
+    "path": {
+        "base": "",
+        "src": "resources/repository",
+        "dist": "resources/dist",
+        "jobs": "resources/jobs",
+        "views": "views",
+        "docroot": "public"
+    },
+    "context": {
+        "src": "repo",
+        "dist": "dist",
+        "jobs": "jobs",
+        "default": "repo"
+    }
 }
 ```
 
