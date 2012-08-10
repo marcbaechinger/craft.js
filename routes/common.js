@@ -353,6 +353,7 @@
 		res.render('config', {
 			displayMode: "config",
 			context: "config",
+			repositoryPath: appConfig.path.src,
 			config: {
 				context: {
 					src: "repo",
