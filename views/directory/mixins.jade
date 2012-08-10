@@ -54,10 +54,6 @@ mixin binaryfile(file, idx)
 	li.directory-item
 		a.file(href="/#{context}/#{file.path}", title="#{file.size} bytes - #{file.mtime}") #{file.name}
 		span.label #{file.size} bytes - #{file.mtime}
-		a(href="/#{context}/#{file.path}")
-			button.btn.btn-mini.btn-primary.transform in-browser
-		a(href="/#{context}/#{file.path}?phantom=true")
-			button.btn.btn-mini.btn-primary(data-action="test-phantom") phantom.js
 			
 mixin directory(file)
 	li.directory-item
