@@ -46,6 +46,13 @@ $(function () {
 				query += lintOptionPanelController.toQueryString();
 			}
 			return query;
+		},
+		startModules = function () {
+			if (modules) {
+				$.each(modules, function() {
+					this();
+				});
+			}
 		};
 
 	if (!localStorage.projectName) {
@@ -78,4 +85,6 @@ $(function () {
 	projectPanelController = new craftjs.JobPanelController("#project-files", projectModel).init();
 	pageController = new craftjs.PageController(projectModel, getBuildFlags).init();
 	searchController = new craftjs.SearchController("search-script", "source", "result-info");
+	
+	startModules();
 });
