@@ -16,3 +16,7 @@ testrunner/*
 node_modules
 npm-debug.log
 
+public/stylesheets/form.css
+public/stylesheets/qunit.css
+public/stylesheets/style.css
+
