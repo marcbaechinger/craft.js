@@ -3,6 +3,7 @@
 	"use strict";
 
 	var fs = require("fs"),
+		logger = require("./logger.js").logger,
 		ALLOW_ABSOULTE_DEPENDENCIES = false,
 		ABSOLUTE_PATH_PATTERN = /^\//,
 		DEFAULTS = {
@@ -147,8 +148,8 @@
 		var basePathProvider = spec.basePathProvider || function() { return __dirname; },
 			checkAccess = function (path) {
 				if (path.indexOf(basePathProvider()) !== 0) {
-					console.error("error: access denied for ", path, "repo:", basePathProvider());
-					console.error("error: access denied for ", path, "repo:", basePathProvider());
+					logger.error("error: access denied for ", path, "repo:", basePathProvider());
+					logger.error("error: access denied for ", path, "repo:", basePathProvider());
 					throw {
 						type: "illegal-access",
 						msg: "access to " + path + " is restricted. No Access.",
