@@ -13,6 +13,8 @@ ul.directory
 			mixin qunitfile(file, idx)
 		else if file.type === "json" || file.type === "suite"
 			mixin jsonfile(file, idx)
+		else if file.type === "png" || file.type === "gif" || file.type === "jpg" || file.type === "jpeg"
+			mixin binaryfile(file, idx)
 		else
 			mixin jsfile(file, idx)
 			

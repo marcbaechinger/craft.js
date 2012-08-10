@@ -15,6 +15,11 @@
 			"json": "application/json",
 			"suite": "application/json"
 		},
+		binaryFileContentTypes = {
+			"jpg": "image/jpeg",
+			"gif": "image/gif",
+			"png": "image/png"
+		},
 		templatedFileTemplates = {
 			"qunit": "qunit/qunit",
 			"app": "app/app",
@@ -82,6 +87,8 @@
 	exports.createInputNormalizer = function (displayMode, context, baseProvider) {
 		return function(req, res, next) {
 			var path = req.params[0] || "",
+				fileName = path.substring(path.lastIndexOf("/") + 1),
+				postFix = getPostfix(fileName),
 				file;
 			
 			if (!path && req.body.name) {
@@ -101,7 +108,8 @@
 				config: appConfig,
 				base: baseProvider(),
 				path: path,
-				fileName: path.substring(path.lastIndexOf("/") + 1),
+				isBinary: typeof binaryFileContentTypes[postFix] !== "undefined",
+				fileName: fileName,
 				realPath: baseProvider() + "/" + path,
 				sourceCode: "// no source code to view",
 				job: {
@@ -185,6 +193,16 @@
 		}
 	};
 	
+	exports.binaryFileInterceptor = function (req, res, next) {
+		var postfix = getPostfix(req.data.fileName);
+		if (req.data.isBinary === true) {
+			res.header("Content-Type", binaryFileContentTypes[postfix]);
+			res.send(req.data.binaryData);
+		} else {
+			next();
+		}
+	};
+	
 	exports.qunitInterceptor = function (req, res, next) {
 		var postfix = getPostfix(req.data.fileName);
 		req.data.postfix = postfix;
@@ -210,7 +228,11 @@
 						error.statusCode = 404;
 						exports.sendErrorPage(req, res, error);
 					} else {
-						req.data.sourceCode = data.toString();
+						if (req.data.isBinary === true) {
+							req.data.binaryData = data;
+						} else {
+							req.data.sourceCode = data.toString();
+						}
 						next();
 					}
 				});

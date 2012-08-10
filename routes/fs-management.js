@@ -8,9 +8,13 @@
 			qunit: "qunit",
 			html: "html",
 			css: "css",
-			app: "app",
+			txt: "txt",
 			json: "json",
-			suite: "suite"
+			suite: "suite",
+			png: "png",
+			gif: "gif",
+			jpg: "jpg",
+			jpeg: "jpeg"
 		},
 		createFileDescriptor = function (basePath, path, filename) {
 			var postfix = filename.substring(filename.lastIndexOf(".") + 1),
