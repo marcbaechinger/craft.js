@@ -33,13 +33,14 @@
 	exports.storeJob = function (directoryProvider) {
 		return function (req, res, next) {
 			var filename = req.body.name + ".cjs",
-				path = directoryProvider() + "/" + filename;
+				path;
 			
 			// TODO create generic sanitizing function for paths
 			// sanitize user input	
 			if (filename.indexOf("/") > 0) {
 				filename = filename.substring(filename.lastIndexOf("/") + 1);
 			}
+			path = directoryProvider() + "/" + filename;
 			fs.writeFile(path, 
 				JSON.stringify(req.body, null, 4), "utf8", 
 				function (err) {
