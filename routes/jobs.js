@@ -4,6 +4,7 @@
 	
 	var concat = require("../app/dependency.js"),
 		common = require("./common.js"),
+		logger = require("../app/logger.js").logger,
 		appConfig = require("../app-config.js"),
 		fs = require("fs"),
 		basePath = appConfig.path.src,
@@ -29,24 +30,26 @@
 		};
 		
 	
-	exports.storeJob = function (base) {
+	exports.storeJob = function (directoryProvider) {
 		return function (req, res, next) {
 			var filename = req.body.name + ".cjs",
-				path = base + "/" + filename;
+				path = directoryProvider() + "/" + filename;
 			
 			// TODO create generic sanitizing function for paths
 			// sanitize user input	
 			if (filename.indexOf("/") > 0) {
 				filename = filename.substring(filename.lastIndexOf("/") + 1);
 			}
-			
 			fs.writeFile(path, 
 				JSON.stringify(req.body, null, 4), "utf8", 
 				function (err) {
 					res.processingStatus = "OK";
 					if (err) {
+						logger.error("error writing job file to " + path);
 						res.processingStatus = "ERR";
 						res.processingError = err;
+					} else {
+						logger.info("job file written to " + path);
 					}
 					res.processingData = res.processingData || {};
 					res.processingData.path = filename;
