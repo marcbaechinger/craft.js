@@ -131,19 +131,7 @@
 		release.sendReleaseOutput
 	);
 	
-	app.get("/config", 
-		config.sendConfigPage
-	);
-	app.post("/config", 
-		config.updateConfiguration
-	);
-	
-	app.post("/config/githook", 
-		config.addGitHook
-	);
-	app.delete("/config/githook/:name", 
-		config.removeGitHook
-	);
+	config.init(app, "/config");
 	
 	
 	app.listen(appConfig.server.port);
