@@ -1,11 +1,13 @@
 /*jslint node: true */
 (function () {	
 	var config = JSON.parse(require("fs").readFileSync('app-config.json')),
-		repositoryPath;
+		repositoryPath,
+		gitHooks = {};
 	
 	exports.server = {
 		port: config.server.port
 	};
+	exports.useGit = config.useGit;
 	exports.context = {
 		src: config.context.src,
 		dist: config.context.dist,
@@ -19,6 +21,11 @@
 		repositoryPath = config.path.src;
 	}
 	
+	if (config.gitHooks) {
+		gitHooks = config.gitHooks;
+	}
+	
+	exports.gitHooks = gitHooks;
 	exports.path = {
 		base: __dirname,
 		src: repositoryPath,

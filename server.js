@@ -10,6 +10,7 @@
 		build = require('./routes/build.js'),
 		test = require('./routes/test.js'),
 		common = require('./routes/common.js'),
+		config = require('./routes/config.js'),
 		jobs = require('./routes/jobs.js'),
 		release = require('./routes/release.js'),
 		util = require('./app/util'),
@@ -131,11 +132,20 @@
 	);
 	
 	app.get("/config", 
-		common.sendConfigPage
+		config.sendConfigPage
 	);
 	app.post("/config", 
-		common.updateConfiguration
+		config.updateConfiguration
 	);
+	
+	app.post("/config/githook", 
+		config.addGitHook
+	);
+	app.delete("/config/githook/:name", 
+		config.removeGitHook
+	);
+	
+	
 	app.listen(appConfig.server.port);
 	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 }());

@@ -5,6 +5,8 @@
 	
 	var fs = require("fs"),
 		path = require("path"),
+		io = require("./io-util.js"),
+		errorPage = require("./error-page.js"),
 		test = require("./test.js"),
 		appConfig = require("../app-config.js"),
 		fsmgmt = require("./fs-management.js"),
@@ -58,26 +60,6 @@
 			buf.push(pad(d.getHours()) + pad(d.getMinutes()) + pad(d.getSeconds()) + "_" + pad(d.getMilliseconds()));
 
 			return buf.join("-");
-		},
-		writeFile = function (filepath, content, callback, errorHandler) {
-			console.log(filepath);
-			var buffer = new Buffer(content, "utf-8");
-			fs.open(filepath, "w", function (err, fd) {
-				if (err && errorHandler) {
-					errorHandler(err);
-					return;
-				}
-				fs.write(fd, buffer, 0, buffer.length, null, function (err) {
-					fs.close(fd, function (err) {
-						if (!err && callback) { 
-							callback(); 
-						}
-					});
-					if (err) {
-						errorHandler(err);
-					}
-				});
-			});
 		};
 	
 	/**
@@ -98,7 +80,7 @@
 			path = path.replace(/^\/*/, "");
 			path = path.replace(/ *\/$/, "");
 			
-			logger.info("serving file at: " , path);
+			logger.debug("serving file at: " , path);
 			
 			req.body.transformation = req.body.transformation || {};
 			
@@ -138,7 +120,7 @@
 		fs.stat(req.data.realPath, function(error, stats) {
 			if (error) {
 				error.statusCode = 404;
-				exports.sendErrorPage(req, res, error);
+				errorPage.sendErrorPage(req, res, error);
 			} else {
 				req.data.fileDescriptor = stats;
 				next();
@@ -226,7 +208,7 @@
 				fs.readFile(req.data.realPath, function(error, data) {
 					if (error) {
 						error.statusCode = 404;
-						exports.sendErrorPage(req, res, error);
+						errorPage.sendErrorPage(req, res, error);
 					} else {
 						if (req.data.isBinary === true) {
 							req.data.binaryData = data;
@@ -242,7 +224,7 @@
 			}
 		} catch (e) {
 		    e.statusCode = e.statusCode || 404;
-		    exports.sendErrorPage(req, res, e);
+		    errorPage.sendErrorPage(req, res, e);
 		}
 	};
 	
@@ -300,67 +282,5 @@
 	
 	exports.logError = function (error) {
 		console.log("ERROR", JSON.stringify(error));
-	};
-	
-	exports.sendErrorPage = function (req, res, err, isJSON) {
-		res.statusCode = err.statusCode || 500;
-		exports.logError(err);
-		if (isJSON === true) {
-			res.send(JSON.stringify(err));	
-		} else {
-			if (err.error) {
-				err.message = err.error.message;
-			} else {
-				err.message = err.message;
-			}
-			req.data.displayMode = "error";
-			req.data.error = err;
-			req.data.rootCause = err.error;
-			req.data.errorString = JSON.stringify(err, null, 4);
-			res.render('error', req.data);	
-		}
-	};
-	
-	exports.updateConfiguration = function (req, res) {
-		var configFilePath = path.join(__dirname, "../app-config.json");
-		fs.readFile(configFilePath, function(error, data) {
-			var configuration;
-			if (error) {
-				error.statusCode = 404;
-				exports.sendErrorPage(req, res, error);
-			} else {
-				configuration =  JSON.parse(data);
-				configuration.path.src = req.body.path;
-				
-				writeFile(configFilePath, JSON.stringify(configuration, null, 4), function() {
-					res.send(JSON.stringify({ 
-						status: "ok",
-						configuration: configuration
-					}));
-					appConfig.path.src = configuration.path.src;		
-				},
-				function (err) {
-					error.statusCode = 403;
-					exports.sendErrorPage(req, res, error);
-				});
-			}
-		});
-	};
-	
-	exports.sendConfigPage = function (req, res) {
-		res.statusCode = 200;
-		res.header("Content-Type", "text/html");
-		res.render('config', {
-			displayMode: "config",
-			context: "config",
-			repositoryPath: appConfig.path.src,
-			config: {
-				context: {
-					src: "repo",
-					dist: "dist",
-					jobs: "jobs"
-				}
-			}
-		});
 	};
 }());

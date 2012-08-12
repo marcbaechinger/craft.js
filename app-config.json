@@ -10,10 +10,13 @@
         "views": "views",
         "docroot": "public"
     },
+    "gitHooks": {
+    },
     "context": {
         "src": "repo",
         "dist": "dist",
         "jobs": "jobs",
         "default": "repo"
-    }
+    },
+    "useGit": false
 }

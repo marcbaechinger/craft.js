@@ -2,15 +2,47 @@ extends layout
 
 block content
 	.container
+		h1 Configuration
+		br
 		.row-fluid
-			h1 Configuration
-			br
 			form#configuration.well.clearfix
-				label Path to resources (absolute path or relative from CRAFTJS_BASE). The files in thisdirectory will be browsable under '<a href="/#{config.context.src}/">Repository</a>'.
+				label Path to resources (absolute path or relative from CRAFTJS_BASE). The files in this directory will be browsable under '<a href="/#{config.context.src}/">Repository</a>'.
+				label.input-label.label.label-warning
+					if useGit
+						input#use-git(type="checkbox", checked="checked")
+					else
+						input#use-git(type="checkbox")
+					span &nbsp;use GIT&nbsp;
 				if repositoryPath
-					input#resource-path.span12(type="text", placeholder="/path/to/your/resources", value="#{repositoryPath}")
+					input#resource-path.span(type="text", placeholder="/path/to/your/resources", value="#{repositoryPath}")
 				else
-					input#resource-path.span12(type="text", placeholder="/path/to/your/resources", value="#{repositoryPath}")
+					input#resource-path.span(type="text", placeholder="/path/to/your/resources", value="#{repositoryPath}")
 				button.left.btn(data-action="send-configuration") Save
 				code.left.feedback(style="display: none;")
-	
+		.well
+			.row-fluid
+				ul.toolbar.span12
+					li
+						.btn.btn-mini.btn-primary(data-action="add-repo") add GIT repository
+			.row-fluid
+				ul#git-hooks.span12
+					each url, name in gitHooks
+						li.row-fluid(data-name="#{name}")
+							span.span2
+								span.label.label-warning(onclick="document.location='/#{config.context.src}/#{name}'") repo:/#{name}
+							span.url #{url}
+							button.close(data-action="remove-git-repo") &times;
+
+	#repo-dialog.modal.hide
+		.modal-header
+			h3 Add GIT repository
+		.modal-body
+			label.label.label-important.error(style="display: none;") 
+			.label Folder name
+			input#repo-name(placeholder="folder name in craft.js")
+			.label GIT Repsitory URL
+			input#repo-url(placeholder="GIT repository url to clone from")
+		.modal-footer
+			a.btn(data-dismiss="modal") Close
+			a.btn.btn-primary Save changes
+			
