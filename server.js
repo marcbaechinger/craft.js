@@ -48,6 +48,8 @@
 	util.mkdir(appConfig.path.dist);
 	util.mkdir(appConfig.path.jobs);
 	
+	config.init(app, "/config");
+	
 	// Routes
 	app.get('/', function (req, res) {
 		res.render('index', { 
@@ -131,7 +133,6 @@
 		release.sendReleaseOutput
 	);
 	
-	config.init(app, "/config");
 	
 	
 	app.listen(appConfig.server.port);

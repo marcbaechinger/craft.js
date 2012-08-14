@@ -74,7 +74,7 @@
 				file;
 			
 			if (!path && req.body.name) {
-				path = (req.body.name || "release") + "_" + getTimeStamp() + ".js";
+				path = req.body.name + "_" + getTimeStamp() + ".js";
 			}
 			
 			path = path.replace(/^\/*/, "");
@@ -185,6 +185,7 @@
 		}
 	};
 	
+	// TODO rename to templatedFileInterceptor
 	exports.qunitInterceptor = function (req, res, next) {
 		var postfix = getPostfix(req.data.fileName);
 		req.data.postfix = postfix;

@@ -19,8 +19,10 @@
 			return data.ast;
 		},
 		translateDependencies = function (dependencies) {
+			var basePath = basePathProvider();
 			return dependencies.map(function (dep) {
-				return dep.replace(basePathProvider(), "");
+				// TODO use substring to crop basepath 
+				return dep.replace(basePath, "");
 			});
 		};
 
