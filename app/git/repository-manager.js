@@ -1,7 +1,8 @@
 /*jslint node: true */
-var clone = require("./git-clone.js").clone,
-	fs = require("fs"),
+var fs = require("fs"),
 	log = require("./git-log.js").log,
+	clone = require("./git-clone.js").clone,
+	pull = require("./git-pull.js").pull,
 	logger = require("../logger.js").logger,
 	invalidDirectoryNamePatterns = [
 		/\//,
@@ -29,7 +30,7 @@ var clone = require("./git-clone.js").clone,
 	RepositoryManager = function (basePathProvider) {
 		this.clone = function (url, repositoryName, callback, error) {
 			if (!isValidDirectoryName(repositoryName)) {
-				logger.error("app/git/git-clone.js:clone(): invalid directory name: '" + repositoryName + "'");
+				logger.error("RepositoryManager.clone(): invalid directory name: '" + repositoryName + "'");
 				error({
 					code: 99,
 					message: "invalid directory name: '" + repositoryName + "'"
@@ -37,6 +38,18 @@ var clone = require("./git-clone.js").clone,
 				return;
 			}
 			clone(basePathProvider(), url, repositoryName, callback || outputLogger, error || errorLogger);
+		};
+		this.pull = function (repositoryName, callback, error) {
+			logger.debug("RepositoryManager.pull()", repositoryName);
+			if (!isValidDirectoryName(repositoryName)) {
+				logger.error("RepositoryManager.pull(): invalid directory name: '" + repositoryName + "'");
+				error({
+					code: 99,
+					message: "invalid directory name: '" + repositoryName + "'"
+				});
+				return;
+			}
+			pull(basePathProvider() + "/" + repositoryName, callback || outputLogger, error || errorLogger);
 		};
 		this.log = function (repositoryName, callback, error) {
 			log(basePathProvider() + "/" + repositoryName, callback || outputLogger, error || errorLogger);
