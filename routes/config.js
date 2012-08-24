@@ -7,6 +7,7 @@
 		path = require("path"),
 		wrench = require("wrench"),
 		io = require("./io-util.js"),
+		cdn = require("../app/cdn/cdn.js"),
 		errorPage = require("./error-page.js"),
 		appConfig = require("../app-config.js"),
 		RepositoryManager = require("../app/git/repository-manager.js").RepositoryManager,
@@ -104,6 +105,24 @@
 				}
 			});
 		},
+		addCdnResource = function (req, res) {
+			var resource = req.body;
+			cdn.storeResource(resource.url, appConfig.path.src + "/cdn/" + resource.name, createErrorDelegator(res));
+			res.send(JSON.stringify({
+				status: "ok",
+				message: "succesfully added CDN resource " + req.body.name
+			}));
+		},
+		gitPull = function (req, res) {
+			var repositoryName = req.body.name;
+			repositoryManager.pull(repositoryName, function () {
+				logger.debug("succesfully pulled director " + repositoryName);
+				res.send(JSON.stringify({
+					status: "ok",
+					message: "succesfully pulled director " + repositoryName
+				}));
+			}, createErrorDelegator(res));
+		},
 		addGitHook = function (req, res) {
 			var configFilePath = getConfigFilePath(),
 				gitHook = req.body,
@@ -165,5 +184,7 @@
 		app.post(contextPath,  updateConfiguration);
 		app.post(contextPath + "/githook",  addGitHook);
 		app.delete(contextPath + "/githook/:name", removeGitHook);
+		app.put(contextPath + "/githook/:name", gitPull);
+		app.post(contextPath + "/cdn/:name", addCdnResource);
 	};
 }());

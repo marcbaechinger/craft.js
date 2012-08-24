@@ -23,19 +23,49 @@ block content
 			.row-fluid
 				ul.toolbar.span12
 					li
-						.btn.btn-mini.btn-primary(data-action="add-repo") add GIT repository
+						.btn.btn-mini.btn-primary(data-action="add-repo", style="margin-top: -2px;") add GIT repository
+						label(style="display: inline-block; margin-left: 12px; ") 
+							|Use remote 
+							code(style="color: #F89406;") https://github.com/janl/mustache.js.git
+							|&nbsp;or local 
+							code(style="color: #F89406;") file:////home/user/code
+							|&nbsp;urls
 			.row-fluid
 				ul#git-hooks.span12
 					each url, name in gitHooks
 						li.row-fluid(data-name="#{name}")
 							span.span2
 								span.label.label-warning(onclick="document.location='/#{config.context.src}/#{name}'") repo:/#{name}
+							a.btn.btn-primary.btn-mini(data-action="git-pull") pull
 							span.url #{url}
 							button.close(data-action="remove-git-repo") &times;
+
+		.well
+			.row-fluid
+				ul.toolbar.span12
+					li
+						.btn.btn-mini.btn-primary(data-action="open-cdn-dialog", style="margin-top: -2px;") add CDN library
+						label(style="display: inline-block; margin-left: 12px; ") 
+							|Use http GET requests like
+							code(style="color: darkgreen;") https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+			.row-fluid
+				ul#git-hooks.span12
+					li.row-fluid
+						span.span2
+							span.label.label-success jquery-1.7.1.js
+						span.url 
+							a(target="_blank", href="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js") https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+						button.close(data-action="remove-git-repo") &times;
 
 	#repo-dialog.modal.hide
 		.modal-header
 			h3 Add GIT repository
+			label(style="display: inline-block;") 
+				|Use remote 
+				code(style="color: #990000;") https://github.com/janl/mustache.js.git
+				|&nbsp;or local 
+				code(style="color: #990000;") file:////home/user/code
+				|&nbsp;urls
 		.modal-body
 			label.label.label-important.error(style="display: none;") 
 			.label Folder name
@@ -44,5 +74,22 @@ block content
 			input#repo-url(placeholder="GIT repository url to clone from")
 		.modal-footer
 			a.btn(data-dismiss="modal") Close
-			a.btn.btn-primary Save changes
+			a.btn.btn-primary Add repository
+			
+	
+	#cdn-dialog.modal.hide
+		.modal-header
+			h3 Add CDN resource
+			label(style="display: inline-block;") 
+				|Currently only http is supported&nbsp;
+				code(style="color: #990000;") http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+		.modal-body
+			label.label.label-important.error(style="display: none;") 
+			.label Resource name
+			input#repo-name(placeholder="file name in craft.js")
+			.label Resource URL
+			input#repo-url(placeholder="url to download from")
+		.modal-footer
+			a.btn(data-dismiss="modal") Close
+			a.btn.btn-primary Add resource
 			
