@@ -1,3 +1,7 @@
 #!/bin/sh
-cd $1
-git clone $2 $3
+if cd $1
+then
+	git clone $2 $3
+	exit 0
+fi
+exit 1
