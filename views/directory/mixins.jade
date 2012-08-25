@@ -1,24 +1,30 @@
 mixin jsfile(file, idx)
 	li.directory-item
 		a.file(href="/#{context}/#{file.path}", title="#{file.size} bytes - #{file.mtime}") #{file.name}
-		span.label #{file.size} bytes - #{file.mtime}
-		label(for="plain-#{idx}") plaintext
-			input.plain(id="plain-#{idx}", name="plain", type="checkbox")
+		label(for="plain-#{idx}")
+			span.label.label-success plaintext&nbsp;
+				input.plain(id="plain-#{idx}", name="plain", type="checkbox")
 			span(style="padding-left: 24px;") |
 		if context === config.context.src
-			label(for="expand-#{idx}") expand
-				input.expand(id="expand-#{idx}", name="expand", type="checkbox")
-		label(for="mangle-#{idx}")  mangle
-			input.mangle(id="mangle-#{idx}", name="mangle", type="checkbox")
-		label(for="squeeze-#{idx}")  squeeze
-			input.squeeze(id="squeeze-#{idx}", name="squeeze", type="checkbox")
-		label(for="minimize-#{idx}")  minimize
-			input.minimize(id="minimize-#{idx}", name="minimize", type="checkbox")
-		label(for="beautify-#{idx}")  beautify
-			input.beautify(id="beautify-#{idx}", name="beautify", type="checkbox")
+			label(for="expand-#{idx}")
+				span.label.label-info expand&nbsp;
+					input.expand(id="expand-#{idx}", name="expand", type="checkbox")
+		label(for="mangle-#{idx}") 
+			span.label.label-info mangle&nbsp;
+				input.mangle(id="mangle-#{idx}", name="mangle", type="checkbox")
+		label(for="squeeze-#{idx}")
+			span.label.label-info squeeze&nbsp;
+				input.squeeze(id="squeeze-#{idx}", name="squeeze", type="checkbox")
+		label(for="minimize-#{idx}")
+			span.label.label-info minimize&nbsp;
+				input.minimize(id="minimize-#{idx}", name="minimize", type="checkbox")
+		label(for="beautify-#{idx}")
+			span.label.label-info beautify&nbsp;
+				input.beautify(id="beautify-#{idx}", name="beautify", type="checkbox")
 		span(style="padding-left: 24px;") |
-		label(for="lint-#{idx}") lint
-			input.lint(id="lint-#{idx}", name="lint", type="checkbox", checked="checked")
+		label(for="lint-#{idx}")
+			span.label.label-warning lint&nbsp;
+				input.lint(id="lint-#{idx}", name="lint", type="checkbox", checked="checked")
 		button.btn.btn-mini.btn-primary(data-action="build", data-path="#{file.path}", style="margin-left: 12px;") transform
 		if context === config.context.dist
 			button.btn.btn-mini.btn-primary.transform(data-action="delete-file", data-path="#{file.path}") delete
@@ -26,14 +32,12 @@ mixin jsfile(file, idx)
 mixin htmlfile(file, idx)
 	li.directory-item
 		a.file(href="/#{context}/#{file.path}?viewer=true", title="#{file.size} bytes - #{file.mtime}") #{file.name}
-		span.label #{file.size} bytes - #{file.mtime}
 		a(href="/#{context}/#{file.path}")
 			button.btn.btn-mini.btn-primary.transform show
 
 mixin qunitfile(file, idx)
 	li.directory-item
 		a.file(href="/#{context}/#{file.path}?viewer=true", title="#{file.size} bytes - #{file.mtime}") #{file.name}
-		span.label #{file.size} bytes - #{file.mtime}
 		a(href="/#{context}/#{file.path}")
 			button.btn.btn-mini.btn-primary.transform in-browser
 		a(href="/#{context}/#{file.path}?phantom=true")
