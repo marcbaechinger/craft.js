@@ -19,43 +19,48 @@ block content
 					input#resource-path.span(type="text", placeholder="/path/to/your/resources", value="#{repositoryPath}")
 				button.left.btn(data-action="send-configuration") Save
 				code.left.feedback(style="display: none;")
-		.well
-			.row-fluid
-				ul.toolbar.span12
-					li
-						.btn.btn-mini.btn-primary(data-action="add-repo", style="margin-top: -2px;") add GIT repository
-						label(style="display: inline-block; margin-left: 12px; ") 
-							|Use remote 
-							code(style="color: #F89406;") https://github.com/janl/mustache.js.git
-							|&nbsp;or local 
-							code(style="color: #F89406;") file:////home/user/code
-							|&nbsp;urls
-			.row-fluid
-				ul#git-hooks.span12
-					each url, name in gitHooks
-						li.row-fluid(data-name="#{name}")
-							span.span2
-								span.label.label-warning(onclick="document.location='/#{config.context.src}/#{name}'") repo:/#{name}
-							a.btn.btn-primary.btn-mini(data-action="git-pull") pull
-							span.url #{url}
-							button.close(data-action="remove-git-repo") &times;
+		
+		#git
+			#git-alert
+			.well
+				.row-fluid
+					ul.toolbar.span12
+						li
+							.btn.btn-mini.btn-primary(data-action="add-repo", style="margin-top: -2px;") add GIT repository
+							label(style="display: inline-block; margin-left: 12px; ") 
+								|Use remote 
+								code(style="color: #F89406;") https://github.com/janl/mustache.js.git
+								|&nbsp;or local 
+								code(style="color: #F89406;") file:////home/user/code
+								|&nbsp;urls
+				.row-fluid
+					ul#git-hooks.span12
+						each url, name in gitHooks
+							li.row-fluid(data-name="#{name}")
+								span.span2
+									span.label.label-warning(onclick="document.location='/#{config.context.src}/#{name}'") repo:/#{name}
+								a.btn.btn-primary.btn-mini(data-action="git-pull") pull
+								span.url #{url}
+								button.close(data-action="remove-git-repo") &times;
 
-		.well
-			.row-fluid
-				ul.toolbar.span12
-					li
-						.btn.btn-mini.btn-primary(data-action="open-cdn-dialog", style="margin-top: -2px;") add CDN library
-						label(style="display: inline-block; margin-left: 12px; ") 
-							|Use http GET requests like
-							code(style="color: darkgreen;") https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
-			.row-fluid
-				ul#git-hooks.span12
-					li.row-fluid
-						span.span2
-							span.label.label-success jquery-1.7.1.js
-						span.url 
-							a(target="_blank", href="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js") https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
-						button.close(data-action="remove-git-repo") &times;
+		#cdn
+			#cdn-alert
+			.well
+				.row-fluid
+					ul.toolbar.span12
+						li
+							.btn.btn-mini.btn-primary(data-action="open-cdn-dialog", style="margin-top: -2px;") add CDN library
+							label(style="display: inline-block; margin-left: 12px; ") 
+								|Use http GET requests like
+								code(style="color: darkgreen;") https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+				.row-fluid
+					ul#git-hooks.span12
+						li.row-fluid
+							span.span2
+								span.label.label-success jquery-1.7.1.js
+							span.url 
+								a(target="_blank", href="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js") https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+							button.close(data-action="remove-git-repo") &times;
 
 	#repo-dialog.modal.hide
 		.modal-header
@@ -93,3 +98,25 @@ block content
 			a.btn(data-dismiss="modal") Close
 			a.btn.btn-primary Add resource
 			
+	script#alert-template(type="template/mustache")
+		div(class="alert alert-{{type}}")
+			button.close(type="button", data-dismiss="alert") ×
+			strong {{label}}&nbsp;
+			{{message}}
+			
+	script#git-pull-template(type="template/mustache")
+		div(class="alert alert-{{type}}")
+			button.close(type="button", data-dismiss="alert") ×
+			strong {{label}}&nbsp;
+			pre {{message}}
+			
+	script
+		modules.push(function () {
+			var configurationModel = new model.Model({
+				data: {
+					name: "Marc Bächinger"
+				}
+			});
+			new craftjs.GitConfigController(configurationModel, "git").init();
+			new craftjs.CdnConfigController(configurationModel, "cdn").init();
+		});

@@ -115,11 +115,12 @@
 		},
 		gitPull = function (req, res) {
 			var repositoryName = req.body.name;
-			repositoryManager.pull(repositoryName, function () {
+			repositoryManager.pull(repositoryName, function (data) {
 				logger.debug("succesfully pulled director " + repositoryName);
 				res.send(JSON.stringify({
 					status: "ok",
-					message: "succesfully pulled director " + repositoryName
+					message: "succesfully pulled director " + repositoryName,
+					output: data
 				}));
 			}, createErrorDelegator(res));
 		},
