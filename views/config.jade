@@ -54,13 +54,15 @@ block content
 								|Use http GET requests like
 								code(style="color: darkgreen;") https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
 				.row-fluid
-					ul#git-hooks.span12
-						li.row-fluid
-							span.span2
-								span.label.label-success jquery-1.7.1.js
-							span.url 
-								a(target="_blank", href="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js") https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
-							button.close(data-action="remove-git-repo") &times;
+					ul#cdn-libs.span12
+						each url, name in cdnLibs
+							li.row-fluid(data-name="#{name}")
+								span.span2
+									a(href="/#{config.context.src}/cdn/#{name}")
+										span.label.label-success #{name}
+								span.url 
+									a(target="_blank", href="#{url}") #{url}
+								button.close(data-action="remove-cdn-lib") &times;
 
 	#repo-dialog.modal.hide
 		.modal-header
@@ -91,9 +93,9 @@ block content
 		.modal-body
 			label.label.label-important.error(style="display: none;") 
 			.label Resource name
-			input#repo-name(placeholder="file name in craft.js")
+			input#lib-name(placeholder="file name in craft.js")
 			.label Resource URL
-			input#repo-url(placeholder="url to download from")
+			input#lib-url(placeholder="url to download from")
 		.modal-footer
 			a.btn(data-dismiss="modal") Close
 			a.btn.btn-primary Add resource
@@ -102,14 +104,23 @@ block content
 		div(class="alert alert-{{type}}")
 			button.close(type="button", data-dismiss="alert") ×
 			strong {{label}}&nbsp;
-			{{message}}
+			{{&message}}
 			
 	script#git-pull-template(type="template/mustache")
-		div(class="alert alert-{{type}}")
+		div(class="alert alert-pre alert-{{type}}")
 			button.close(type="button", data-dismiss="alert") ×
 			strong {{label}}&nbsp;
 			pre {{message}}
-			
+
+	script#cdn-item-template(type="template/mustache")
+		li.row-fluid(data-name="{{name}}")
+			span.span2
+				a(href="/repo/cdn/{{name}}")
+					span.label.label-success {{name}}
+			span.url
+				a(href="{{url}}", target="_blank") {{url}}
+			button.close(data-action="remove-cdn-lib") ×
+
 	script
 		modules.push(function () {
 			var configurationModel = new model.Model({

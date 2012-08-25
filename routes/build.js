@@ -3,6 +3,7 @@
 	"use strict";
 
 	var common = require("./common.js"),
+		errorPage = require("./error-page.js"),
 		concat = require("../app/dependency.js"),
 		appConfig = require("../app-config.js"),
 		uglify = require("../app/uglify.js"),
@@ -34,7 +35,7 @@
 			req.data.dependencies = translateDependencies(req.data.realPathDependencies);
 			next();
 		} catch (e) {
-			common.sendErrorPage(req, res, {
+			errorPage.sendErrorPage(req, res, {
 				type: "resolve-failed",
 				path: req.data.realPath,
 				statusCode: 400,

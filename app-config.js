@@ -1,8 +1,9 @@
 /*jslint node: true */
-(function () {	
+(function () {
 	var config = JSON.parse(require("fs").readFileSync('app-config.json')),
 		repositoryPath,
-		gitHooks = {};
+		gitHooks = {},
+		cdnLibs = {};
 	
 	exports.server = {
 		port: config.server.port
@@ -25,7 +26,12 @@
 		gitHooks = config.gitHooks;
 	}
 	
+	if (config.cdnLibs) {
+		cdnLibs = config.cdnLibs;
+	}
+	
 	exports.gitHooks = gitHooks;
+	exports.cdnLibs = cdnLibs;
 	exports.path = {
 		base: __dirname,
 		src: repositoryPath,

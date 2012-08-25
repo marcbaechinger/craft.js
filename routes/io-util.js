@@ -25,3 +25,7 @@ exports.writeFile = function (filepath, content, callback, errorHandler) {
 		});
 	});
 };
+
+exports.deleteFile = function (path, errorCallback) {
+	fs.unlink(path, errorCallback);
+};

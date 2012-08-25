@@ -4,14 +4,16 @@
     },
     "path": {
         "base": "",
-        "src": "resources/repository",
+        "src": "/Users/marcbaechinger/projects/node/craft.js-client/",
         "dist": "resources/dist",
         "jobs": "resources/jobs",
         "views": "views",
         "docroot": "public"
     },
     "gitHooks": {
+        "craft.js-client": "https://github.com/marcbaechinger/craft.js-client.git"
     },
+    "cdnLibs": {},
     "context": {
         "src": "repo",
         "dist": "dist",

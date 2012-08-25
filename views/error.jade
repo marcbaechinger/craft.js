@@ -1,7 +1,8 @@
 extends layout
 
 block content
-	h1 #{error.message}
-	
-	.panel
-		pre #{errorString}
+	#error-panel
+		h1 Ooooupsss. That should not happen. Sorry!
+		#error-message #{error.message}
+		.panel
+			pre #{errorString}

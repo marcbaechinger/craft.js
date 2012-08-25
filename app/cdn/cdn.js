@@ -4,13 +4,26 @@
 	"use strict";
 	
 	var http = require("http"),
+		https = require("https"),
 		urlUtil = require("url"),
 		io = require("../../routes/io-util.js"),
 		download = function (url, callback, errorHandler) {
 			
+			var scheme = http;
+			
+			if (url.match(/^https:\/\//)) {
+				scheme = https;
+			} else if (!url.match(/^http:\/\//)) {
+				errorHandler({
+					status: 1001,
+					message: "currently only http:// supported"
+				});
+				return;
+			}
+			
 			var options = urlUtil.parse(url),
 				content = [],
-				req = http.request(options, function (res) {
+				req = scheme.request(options, function (res) {
 					if (res.statusCode >= 200 && res.statusCode < 300) {
 						res.setEncoding('utf8');
 						res.on('data', function (chunk) {
@@ -19,10 +32,12 @@
 						res.on('end', function () {
 							callback(content.join(""));
 						});
+					} else if(res.statusCode === 301) {
+						download(res.headers.location, callback, errorHandler);
 					} else {
 						errorHandler({
 							status: res.statusCode,
-							message: "Unsupported http status code: " + res.statusCode
+							message: "Server sends unsupported http status code: " + res.statusCode
 						});
 					}
 				});
@@ -33,9 +48,13 @@
 			req.write('data\n');
 			req.end();
 		},
-		storeResource = function (url, targetPath, errorHandler) {
+		storeResource = function (url, targetPath, callback, errorHandler) {
 			download(url, function (content) {
-				io.writeFile(targetPath, content, function () {}, errorHandler);
+				io.writeFile(targetPath, content, function () {
+					if (callback) {
+						callback(content);
+					}
+				}, errorHandler);
 			}, errorHandler);
 		};
 

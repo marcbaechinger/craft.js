@@ -107,11 +107,64 @@
 		},
 		addCdnResource = function (req, res) {
 			var resource = req.body;
-			cdn.storeResource(resource.url, appConfig.path.src + "/cdn/" + resource.name, createErrorDelegator(res));
-			res.send(JSON.stringify({
-				status: "ok",
-				message: "succesfully added CDN resource " + req.body.name
-			}));
+			readConfiguration(function (configuration) {
+				if (configuration.cdnLibs[resource.name]) {
+					res.send(JSON.stringify({
+						status: "error",
+						message: "a cdn library with name '" + resource.name + "' already exists"
+					}));
+				} else {
+					cdn.storeResource(resource.url, appConfig.path.src + "/cdn/" + resource.name, function (content) {
+						configuration.cdnLibs[resource.name] = resource.url;
+						writeConfiguration(req, res, configuration, function () {
+							appConfig.cdnLibs[resource.name] = resource.url;
+						});
+						res.send(JSON.stringify({
+							status: "ok",
+							message: "succesfully added CDN resource " + req.body.name
+						}));
+					}, createErrorDelegator(res));
+				}
+			}, function () {
+				res.send(JSON.stringify({
+					status: "error",
+					message: "cont read configuration file in " + getConfigFilePath()
+				}));
+			});
+		},
+		removeCdnResource = function (req, res) {
+			var resource = req.body;
+			readConfiguration(function (configuration) {
+				if (!configuration.cdnLibs[resource.name]) {
+					res.send(JSON.stringify({
+						status: "error",
+						message: "a cdn library with name '" + resource.name + "' does not exists"
+					}));
+				} else {
+					delete configuration.cdnLibs[resource.name];
+					writeConfiguration(req, res, configuration, function () {
+						delete appConfig.cdnLibs[resource.name];
+						io.deleteFile(appConfig.path.src + "/cdn/" + resource.name, function(e) {
+							if (!e) {
+								res.send(JSON.stringify({
+									status: "ok",
+									message: "succesfully removed CDN resource " + req.body.name
+								}));
+							} else {
+								res.send(JSON.stringify({
+									status: "error",
+									message: "error deleting cdn resource " + req.body.name
+								}));
+							}
+						});
+					});
+				}
+			}, function () {
+				res.send(JSON.stringify({
+					status: "error",
+					message: "cont read configuration file in " + getConfigFilePath()
+				}));
+			});
 		},
 		gitPull = function (req, res) {
 			var repositoryName = req.body.name;
@@ -169,6 +222,7 @@
 				context: "config",
 				useGit: appConfig.useGit,
 				gitHooks: appConfig.gitHooks,
+				cdnLibs: appConfig.cdnLibs,
 				repositoryPath: appConfig.path.src,
 				config: {
 					context: {
@@ -187,5 +241,6 @@
 		app.delete(contextPath + "/githook/:name", removeGitHook);
 		app.put(contextPath + "/githook/:name", gitPull);
 		app.post(contextPath + "/cdn/:name", addCdnResource);
+		app.delete(contextPath + "/cdn/:name", removeCdnResource);
 	};
 }());
