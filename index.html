@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Craft.js : JavaScript crafting tool" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Craft.js</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/marcbaechinger/craft.js">View on GitHub</a>
+
+          <h1 id="project_title">Craft.js</h1>
+          <h2 id="project_tagline">JavaScript crafting tool</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/marcbaechinger/craft.js/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/marcbaechinger/craft.js/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>craft.js - javascript build tool</h1>
+
+<p>See <a href="http://ec2-23-20-159-125.compute-1.amazonaws.com/">a live demo</a>.</p>
+
+<p>craft.js helps to manage, assess, build and distribute from a common JavaScript source code base.</p>
+
+<h2>Installation</h2>
+
+<pre><code> # get craft.js from github
+git clone https://github.com/marcbaechinger/craft.js.git
+
+ # install dependencies
+cd craft.js/ &amp;&amp; npm install
+
+ # start application
+node server.js
+
+</code></pre>
+
+<h2>Configuration</h2>
+
+<p>Change the <code>app-config.json</code> to adjust the <code>port</code> on which the appication should listen.</p>
+
+<pre><code>{
+    "server": {
+        "port": 3000
+    },
+    "path": {
+        "base": "",
+        "src": "resources/repository",
+        "dist": "resources/dist",
+        "jobs": "resources/jobs",
+        "views": "views",
+        "docroot": "public"
+    },
+    "context": {
+        "src": "repo",
+        "dist": "dist",
+        "jobs": "jobs",
+        "default": "repo"
+    }
+}
+</code></pre>
+
+<h2>declaring dependencies in a script</h2>
+
+<p>Declare dependencies of a script with a processing instruction at the top of a JavaScript file:</p>
+
+<pre><code>//= require "../../model/collection, ../../model/model"
+//= require "/common/array"
+//= require "ui-helper"
+</code></pre>
+
+<p>Multiple dependencies can be declared in a single processing instruction or with multiple instructions. craft.js takes care to concatenate the script in the declared order and avoids including the same file twice. The .js post fix must be omitted when declaring dependencies with a processing instruction. </p>
+
+<h2>Usage</h2>
+
+<h3>Browse repository</h3>
+
+<ul>
+<li>Navigate your Browser to <a href="http://localhost:3000/repo/">http://localhost:3000/repo/</a> to browse the JavaScript in the <code>resources</code> directory (see installation instructions).</li>
+<li>Browse to a JavaScript of your choice.</li>
+<li>Show JavaScript and play with the <code>expand</code>, <code>mangle</code>, <code>squeeze</code>, <code>minimize</code>, <code>beautify</code> and <code>lint</code> options. The transformed JavaScript file is displayed accordingly.</li>
+</ul><h3>Create a distribution</h3>
+
+<ul>
+<li>Browse to a file</li>
+<li>Add teh file to the project by clicking 'add to project' on the top right of the page</li>
+<li>Repeat with as many files as you require for build</li>
+<li>Click the project name to change the name of the project (part of the dist file name)</li>
+<li>Click the project bar on the top to show current project configuration</li>
+<li>Click the 'build' button to create a build </li>
+<li>The browser is redirected to the new file stored on the server side</li>
+</ul><h3>Delivering JavaScripts on the fly</h3>
+
+<p>Expanding repositories and transforming the resulting source code can be done on the fly and delivered with content type text/javascript. Hence it's easy to create a single 'bootstrap.js' declare the required dependencies with the 'require' processing instructions and load the file on the fly while development or for testing.</p>
+
+<pre><code>curl http://marc.no.de/repo/src/applications/craftjs/bootstrap.js?plain=true&amp;mangle=true&amp;squeeze=true&amp;minimize=true
+</code></pre>
+
+<p><em>Query parameters</em></p>
+
+<ul>
+<li>plain: deliver raw script with content type text/javascript</li>
+<li>mangle: rename local variables to miminize script</li>
+<li>squeeze: minimize even more (see JSHint docu)</li>
+<li>minimize: transforme to minimized script</li>
+<li>beautify: transform to pretty-printed script<br>
+</li>
+</ul><p>The web applicaton of craft.js uses this technique to serve the JavaScript for its web user interface.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Craft.js maintained by <a href="https://github.com/marcbaechinger">marcbaechinger</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
