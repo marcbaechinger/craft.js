@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<link type="text/css" href="/repo/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+	<link type="text/css" href="/repo/jquery-ui/css/smoothness/jquery-ui-1.8.23.custom.css" rel="stylesheet"/>
+	<link type="text/css" href="100m.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div style="margin-left: 24px;">
+          <a class="brand" href="#" style="color: #fff">100m</a>
+		  <div id="filter" class="row clearfix">	
+			<span id="filter-range" class="badge badge-inverse">9.5 - 10.0 sec</span>
+			<div id="time-slider" class="span10"></div>
+		</div>
+        </div>
+      </div>
+    </div>
+
+	<article class="container">
+		<div id="displayed-records-count" class="badge badge-success">records displayed: -</div>
+		<div id="data-timestamp" class="badge badge-warning">data until: 2012-09-02</div>
+		<section id="chart"></section>
+		<ul id="runners"></ul>
+	</article>
+	<div id="runner-filter" class="clearfix panel">
+		<div class="row" style="margin-bottom: 8px;">
+			<button data-action="show-athlets" disabled="disabled" class="athlet btn btn-inverse span1" style="width: 102px">Athlet</button>
+			<button data-action="show-countries" class="country btn span1" style="width: 102px">Country</button>
+		</div>
+		<div class="row">
+			<input id="runner-query" type="search" style="margin-left: 20px; margin-right: 0px;"/>
+		</div>
+		<ul id="athlet-list" class="row">
+		</ul>
+		<ul id="country-list" class="row" >
+		</ul>
+	</div>
+	
+	<script id="country-template" type="text/template">
+		{{#countries}}
+			<li>
+				<label class="label" data-color='{{color}}'>
+					<input type="checkbox"  data-country="{{country}}"/>
+					<span>{{countryLabel}}</span>
+				</label>
+			</li>
+		{{/countries}}
+	</script>
+	<script id="runner-filter-item" type="text/template">
+		{{#runners}}
+			<li id="{{id}}"><label class="label label-inverse" data-color='{{color}}'><input data-runner="{{name}}" type="checkbox"/>{{nameLabel}}</label></li>
+		{{/runners}}
+	</script>
+	<script id="runner-popup" type="text/template">
+		{{#runners}}
+		<li class='runner popup' data-action='hide-popup' id='{{id}}'>
+			<span class="pull-right label label-warning" style="background-color: {{color}}">{{numberOfRecords}} records</span>
+			<span><b>{{name}}</b><br/>{{birthday}} ({{country}})</span>
+			<ul class="record-list">
+				{{#records}}
+				<li class="{{id}}">{{date}} - {{time}} sec <span class="pull-right">{{location}}</span></li>
+				{{/records}}
+			</ul>
+		</li>
+		{{/runners}}
+	</script>
+	<script src="https://www.google.com/jsapi"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="/repo/bootstrap/js/bootstrap.min.js?plain=true"></script>
+	<script src="/repo/jquery-ui/js/jquery-ui-1.8.23.custom.min.js?plain=true"></script>
+    <script src="100m.js?plain=true&expand=true"> </script>
+    <script>
+      google.load('visualization', '1.0', {'packages':['corechart']});
+    </script>
+  </body>
+</html>
