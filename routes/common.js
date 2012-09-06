@@ -12,10 +12,11 @@
 		fsmgmt = require("./fs-management.js"),
 		logger = require("../app/logger.js").logger,
 		plainFileContentTypes = {
-			"html": "text/html",
-			"css": "text/css",
-			"json": "application/json",
-			"suite": "application/json"
+			"html": "text/html;charset=utf-8",
+			"css": "text/css;charset=utf-8",
+			"txt": "text/plain;charset=utf-8",
+			"json": "application/json;charset=utf-8",
+			"suite": "application/json;charset=utf-8"
 		},
 		binaryFileContentTypes = {
 			"jpg": "image/jpeg",
@@ -93,7 +94,7 @@
 				isBinary: typeof binaryFileContentTypes[postFix] !== "undefined",
 				fileName: fileName,
 				realPath: baseProvider() + "/" + path,
-				sourceCode: "// no source code to view",
+				sourceCode: "// no source code to view for '" + fileName + "'",
 				job: {
 					expand: evaluateBooleanProperty(req.query, req.body, "expand"),
 					transformation: {
@@ -266,7 +267,7 @@
 	
 	exports.fileViewer = function (req, res) {
 		if (req.query.plain) {
-			res.header("Content-Type", "text/javascript");
+			res.header("Content-Type", "text/javascript; charset=utf-8");
 			res.render('source/plain', req.data);
 		} else if (req.data.plain) {
 			res.header("Content-Type", plainFileContentTypes[req.data.postfix]);
