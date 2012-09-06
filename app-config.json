@@ -4,7 +4,7 @@
     },
     "path": {
         "base": "",
-        "src": "/Users/marcbaechinger/projects/node/craft.js-client/",
+        "src": "resources/repository",
         "dist": "resources/dist",
         "jobs": "resources/jobs",
         "views": "views",
