@@ -141,3 +141,28 @@ ul {
 #country-list {
 	display: none;
 }
+
+
+
+#ribbon {
+	position: fixed;
+	z-index: 11000;
+	left: -90px;
+	top: 64px;
+	font-size: 16px;
+	width: 300px;
+	box-shadow: 3px 3px 9px #333;
+	background-color: #333;
+	color: #fff;
+	padding: 4px 0 6px 0;
+	text-align: center;
+	-moz-transform:rotate(-45deg);
+	-webkit-transform:rotate(-45deg);
+	-o-transform:rotate(-45deg);
+	-ms-transform:rotate(-45deg);
+}
+
+#ribbon a {
+	color: #F3D354;
+	text-decoration: none;
+}
