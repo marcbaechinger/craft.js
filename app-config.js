@@ -30,8 +30,13 @@
 		cdnLibs = config.cdnLibs;
 	}
 	
+	if (config.cronJobs) {
+		cronJobs = config.cronJobs;
+	}
+	
 	exports.gitHooks = gitHooks;
 	exports.cdnLibs = cdnLibs;
+	exports.cronJobs = cronJobs;
 	exports.path = {
 		base: __dirname,
 		src: repositoryPath,
