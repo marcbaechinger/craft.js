@@ -8,6 +8,7 @@
 			cjs: "cjs",
 			qunit: "qunit",
 			html: "html",
+			jade: "jade",
 			css: "css",
 			txt: "txt",
 			json: "json",

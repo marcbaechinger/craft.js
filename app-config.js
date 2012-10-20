@@ -3,7 +3,8 @@
 	var config = JSON.parse(require("fs").readFileSync('app-config.json')),
 		repositoryPath,
 		gitHooks = {},
-		cdnLibs = {};
+		cdnLibs = {}
+		cronJobs = {};
 	
 	exports.server = {
 		port: config.server.port

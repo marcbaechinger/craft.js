@@ -14,6 +14,7 @@
 		plainFileContentTypes = {
 			"html": "text/html;charset=utf-8",
 			"webapp": "application/x-web-app-manifest+json;charset=utf-8",
+			"jade": "text/plain;charset=utf-8",
 			"css": "text/css;charset=utf-8",
 			"txt": "text/plain;charset=utf-8",
 			"json": "application/json;charset=utf-8",

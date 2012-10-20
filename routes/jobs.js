@@ -98,11 +98,9 @@
 		var files = req.data.job.javascripts,
 			file, deps = [];
 			
-		for (file in files) {
-			if (files.hasOwnProperty(file)) {
-				deps.push(concat.resolve(basePath + "/" + file));
-			}
-		}
+		req.data.job.javascripts.forEach(function (file) {
+			deps.push(concat.resolve(basePath + "/" + file));
+		});
 		req.data.realPathDependencies = concat.joinDependencies.apply(undefined, deps);
 		req.data.dependencies = translateDependencies(req.data.realPathDependencies);
 		next();
