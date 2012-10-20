@@ -7,6 +7,7 @@
 
 	var appConfig = require("./app-config"),
 		express = require('express'),
+		cron = require("./app/cron-jobs.js").init(),
 		build = require('./routes/build.js'),
 		test = require('./routes/test.js'),
 		common = require('./routes/common.js'),
@@ -49,6 +50,7 @@
 	util.mkdir(appConfig.path.jobs);
 	
 	config.init(app, "/config");
+	test.init(app, "/test");
 	
 	// Routes
 	app.get('/', function (req, res) {

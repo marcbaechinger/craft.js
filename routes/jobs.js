@@ -95,7 +95,7 @@
 	};
 	
 	exports.resolve = function (req, res, next) {
-		var files = req.data.job.files,
+		var files = req.data.job.javascripts,
 			file, deps = [];
 			
 		for (file in files) {

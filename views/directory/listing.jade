@@ -7,11 +7,11 @@ ul.directory
 			mixin directory(file)
 		else if context === config.context.jobs
 			mixin jobfile(file, idx)
-		else if file.type === "html" || file.type === "css" || file.type === "txt" || file.type === "app"
+		else if file.type === "html" || file.type === "css" || file.type === "txt"
 			mixin htmlfile(file, idx)
 		else if file.type === "qunit"
 			mixin qunitfile(file, idx)
-		else if file.type === "json" || file.type === "suite"
+		else if file.type === "json" || file.type === "suite" ||  file.type === "webapp"
 			mixin jsonfile(file, idx)
 		else if file.type === "png" || file.type === "gif" || file.type === "jpg" || file.type === "jpeg"
 			mixin binaryfile(file, idx)

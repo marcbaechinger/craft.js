@@ -2,6 +2,7 @@
 (function () {
 	"use strict";
 	var fs = require("fs"),
+		wrench = require("wrench"),
 		validFilePostfixes = {
 			js: "js",
 			cjs: "cjs",
@@ -14,7 +15,8 @@
 			png: "png",
 			gif: "gif",
 			jpg: "jpg",
-			jpeg: "jpeg"
+			jpeg: "jpeg",
+			webapp: "webapp"
 		},
 		createFileDescriptor = function (basePath, path, filename) {
 			var postfix = filename.substring(filename.lastIndexOf(".") + 1),
@@ -69,6 +71,21 @@
 			});
 			fsNode.children.sort(fileDescriptorComparator);
 			return fsNode;
+		},
+		searchFiles = function (directory, pattern, callback) {
+			var matches = []
+			wrench.readdirRecursive(directory, function(err, files) {
+				if (!err && !files) {
+					callback(null, matches);
+				} else if (files) {
+					files.forEach(function (file) {
+						if (file.match(pattern)) {
+							matches.push(file);
+						}
+					});
+				}
+			});
 		};
 	exports.createSourceTree = createSourceTree;
+	exports.searchFiles = searchFiles;
 }());

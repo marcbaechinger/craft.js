@@ -1,0 +1,105 @@
+
+mixin formLabel(inputId, label)
+	label.label.label-important.error(id="#{inputId}-error", style="display: none;") 
+	.label.label-success #{label}
+
+mixin option(name, value, label)
+	label.label.input.option #{label}
+		input(type="radio", name="#{name}", id="#{name}", value="#{value}")
+
+mixin checkbox(name, label)
+	label.label.label-info.input.option #{label}
+		input(type="checkbox", id="#{name}", name="#{name}")
+
+mixin infoOption(name, value, label)
+	label.label.label-info.input.option #{label}
+		input(type="radio", name="#{name}", id="#{name}", value="#{value}")
+
+#job-dialog.modal.hide
+	.modal-header
+		h3.cron 1/4 Job settings
+		h3.tests 2/4 Add test cases to run
+		h3.build 3/4 Add JavaScript files to build 
+		h3.save 4/4 Summary and confirmation 
+	.modal-body
+		.cron
+			section.clearfix
+				mixin formLabel("job-name", "Job name")
+				input#job-name(type="text", placeholder="name of this build job")
+				mixin formLabel("job-notification", "Notification email")
+				input#job-notification(type="text", placeholder="comma delimited list of email addresses")
+
+			section.clearfix
+				mixin formLabel("cron-type", "Build automation frequency")
+				div
+					mixin option("cron-type", "daily", "Run daily")
+					mixin option("cron-type", "hourly", "Run hourly")
+					mixin option("cron-type", "commit", "On commit")
+					mixin option("cron-type", "manuall", "manual only")
+			section.clearfix
+				mixin formLabel("ast-flags", "Source code transformation")
+				div
+					mixin checkbox("mangle", "mangle")
+					mixin checkbox("squeeze", "squeeze")
+					mixin infoOption("output", "minimize", "minimize")
+					mixin infoOption("output", "beautify", "pretty-print")
+		.tests
+			input#test-filter(type="text", placeholder="filter tests")
+			ul.test-list
+		.build
+			input#javascript-filter(type="text", placeholder="filter javascripts")
+			ul.javascript-list
+		#save-panel.save
+
+	.modal-footer.tests.build
+		a.btn(data-dismiss="modal") Close
+		a.btn.btn-primary(data-action="previous") previous
+		a.btn.btn-primary(data-action="next") next
+	.modal-footer.cron
+		a.btn(data-dismiss="modal") Close
+		a.btn.btn-primary(data-action="next") next
+	.modal-footer.save
+		a.btn(data-dismiss="modal") Close
+		a.btn.btn-primary(data-action="previous") previous
+		a.btn.btn-primary(data-action="save") Save
+
+script#test-list-item(type="text/template")
+	{{#tests}}
+	li.clearfix(data-name="{{.}}")
+		label.label.input.label-warning {{.}}
+			input(type="checkbox", value="{{.}}")
+	{{/tests}}
+
+script#javascript-list-item(type="text/template")
+	{{#tests}}
+	li.clearfix(data-name="{{.}}")
+		label.input.label.label-special {{.}}
+			input(type="checkbox", value="{{.}}")
+	{{/tests}}
+
+script#summary-template(type="text/template")
+	.line.clearfix
+		.label Name 
+		span {{name}}
+	{{#notification}}
+	.line.clearfix
+		.label Notification 
+		span {{notification}}
+	{{/notification}}
+	.line.clearfix
+		.label Cron type 
+		span {{cronType}}
+	.line.clearfix
+		.label Transformation 
+		span mangle: {{transformation.mangle}} / squeeze: {{transformation.squeeze}} / minimize: {{transformation.minimize}} / beautify: {{transformation.beautify}}
+	h3 Tests to run 
+	ul
+		{{#tests}}
+		li {{.}}
+		{{/tests}}
+	h3 JavaScripts to build
+	ul
+		{{#javascripts}}
+		li {{.}}
+		{{/javascripts}}
+	

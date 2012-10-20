@@ -1,0 +1,105 @@
+#job-dialog {
+	.modal-body > div {
+		display: none;
+	}
+	ul {
+		list-style: none;
+		margin-left: 0px;
+		li {
+			display: block;
+		}
+	}
+	section {
+		padding-top: 12px;
+	}
+	section:first-child {
+		padding-top: 0;
+	}
+	.modal-body {
+		height: 320px;
+	}
+	.modal-body > div:first-child {
+		display: block;
+	}
+	.modal-footer .btn-primary {
+		width: 60px;
+	}
+	.label-special {
+		background-color: #dedede;
+		color: #333;
+		border: 1px solid #999;
+		text-shadow: none;
+	}
+	
+	.label.input {
+		position: relative;
+		display: inline-block;
+		padding-top: 3px;
+		padding-bottom: 3px;
+		float: left;
+		margin-right: 6px;
+		input[type=checkbox] {
+			left: 4px;
+			margin-top: 1px;
+			position: absolute;
+		}
+		input[type=radio] {
+			left: 4px;
+			margin-top: 1px;
+			position: absolute;
+		}
+	}
+	.label.option {
+		padding-left: 26px;
+		font-size: 14px;
+		margin-bottom: 12px;
+	}
+	.test-list,
+	.javascript-list {
+		max-height: 280px;
+		margin-left: 0px;
+		overflow: auto;
+		
+		.label {
+			position: relative;
+			padding-left: 26px;
+			font-size: 14px;
+		}
+		
+		li {
+			margin-bottom: 4px;
+			span {
+				margin-left: 12px;
+			}
+		}
+	}
+	.save {
+		.line:first-child {
+			margin-top: 0px;
+		}
+		.line:last-child {
+			margin-bottom: 12px;
+		}
+		.line {
+			border-bottom: 1px dotted #333;
+			margin-top: 4px;
+			> div {
+				float: left;
+			}
+			> span {
+				margin-top: 0px;
+				float: left;
+			}
+		}
+		.label {
+			width: 80px;
+		}
+		ul {
+			list-style: none;
+			margin-left: 0;
+		}
+		.label {
+			margin-right: 12px;
+		}
+	}
+}

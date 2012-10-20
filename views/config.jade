@@ -76,9 +76,9 @@ block content
 		.modal-body
 			label.label.label-important.error(style="display: none;") 
 			.label Folder name
-			input#repo-name(placeholder="folder name in craft.js")
+			input#repo-name(type="text", placeholder="folder name in craft.js")
 			.label GIT Repsitory URL
-			input#repo-url(placeholder="GIT repository url to clone from")
+			input#repo-url(type="text", placeholder="GIT repository url to clone from")
 		.modal-footer
 			a.btn(data-dismiss="modal") Close
 			a.btn.btn-primary Add repository
@@ -93,9 +93,9 @@ block content
 		.modal-body
 			label.label.label-important.error(style="display: none;") 
 			.label Resource name
-			input#lib-name(placeholder="file name in craft.js")
+			input#lib-name(type="text", placeholder="file name in craft.js")
 			.label Resource URL
-			input#lib-url(placeholder="url to download from")
+			input#lib-url(type="text", placeholder="url to download from")
 		.modal-footer
 			a.btn(data-dismiss="modal") Close
 			a.btn.btn-primary Add resource
