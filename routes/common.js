@@ -18,7 +18,8 @@
 			"css": "text/css;charset=utf-8",
 			"txt": "text/plain;charset=utf-8",
 			"json": "application/json;charset=utf-8",
-			"suite": "application/json;charset=utf-8"
+			"suite": "application/json;charset=utf-8",
+			"appcache": "text/cache-manifest"
 		},
 		binaryFileContentTypes = {
 			"jpg": "image/jpeg",

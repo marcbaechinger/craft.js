@@ -17,7 +17,8 @@
 			gif: "gif",
 			jpg: "jpg",
 			jpeg: "jpeg",
-			webapp: "webapp"
+			webapp: "webapp",
+			appcache: "appcache"
 		},
 		createFileDescriptor = function (basePath, path, filename) {
 			var postfix = filename.substring(filename.lastIndexOf(".") + 1),
