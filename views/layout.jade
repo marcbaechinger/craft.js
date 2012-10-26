@@ -26,13 +26,13 @@ html
 		
 		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
 		script(src="/javascript/bootstrap.js")
-		//script(src="/repo/src/applications/craftjs/bootstrap.js?expand=true&plain=true")
+		//script(src="/repo/src/applications/craftjs/bootstrap.js?expand=true")
 		script(src="/javascript/craftjs.js")
 		script(type="template/mustache", id="project-file")
 			li
 				a.label.label-important(href="#", data-action="remove-from-project", data-path="{{path}}")-
 				|&nbsp;
-				a(href="/repo/{{path}}")
+				a(href="/repo/{{path}}?jsviewer=true")
 					{{path}}
 				br
 		script(type="template/mustache", id="lint-options-tmpl")

@@ -1,6 +1,6 @@
 mixin jsfile(file, idx)
 	li.directory-item
-		a.file(href="/#{context}/#{file.path}", title="#{file.size} bytes - #{file.mtime}") #{file.name}
+		a.file(href="/#{context}/#{file.path}?jsviewer=true", title="#{file.size} bytes - #{file.mtime}") #{file.name}
 		label.plain(for="plain-#{idx}")
 			span.label.label-success plaintext&nbsp;
 				input.plain(id="plain-#{idx}", name="plain", type="checkbox")

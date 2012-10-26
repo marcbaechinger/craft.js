@@ -95,6 +95,7 @@
 				config: appConfig,
 				base: baseProvider(),
 				path: path,
+				postfix: postFix,
 				isBinary: typeof binaryFileContentTypes[postFix] !== "undefined",
 				fileName: fileName,
 				realPath: baseProvider() + "/" + path,
@@ -270,8 +271,12 @@
 	};
 	
 	exports.fileViewer = function (req, res) {
-		if (req.query.plain) {
-			res.header("Content-Type", "text/javascript; charset=utf-8");
+		if (req.query.jsviewer) {
+			req.data.lines = req.data.sourceCode.split("\n");
+			res.render('source-viewer', req.data);
+		} else if (req.data.postfix === "js") {
+			res.header("Content-Type", "text/javascript;charset=utf-8");
+			req.data.displayMode = "plain";
 			res.render('source/plain', req.data);
 		} else if (req.data.plain) {
 			res.header("Content-Type", plainFileContentTypes[req.data.postfix]);

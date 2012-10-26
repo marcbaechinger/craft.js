@@ -20,7 +20,7 @@ block content
 				li
 					span.testcase(data-path="/#{config.context.src}#{dep}", data-action="create-test") create test
 					&nbsp;
-					a(href="/#{config.context.src}#{dep}") #{dep}
+					a(href="/#{config.context.src}#{dep}?jsviewer=true") #{dep}
 	if displayMode === "js" && typeof dependencies !== "undefined"
 		#dependencies.collapser(data-dependent="#deps-panel", data-slide="true") Referenced dependencies
 		
