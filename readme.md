@@ -81,15 +81,14 @@ Multiple dependencies can be declared in a single processing instruction or with
 Expanding repositories and transforming the resulting source code can be done on the fly and delivered with content type text/javascript. Hence it's easy to create a single 'bootstrap.js' declare the required dependencies with the 'require' processing instructions and load the file on the fly while development or for testing.
  
 ```
-curl http://marc.no.de/repo/src/applications/craftjs/bootstrap.js?plain=true&mangle=true&squeeze=true&minimize=true
+curl http://marc.no.de/repo/src/applications/craftjs/bootstrap.js?mangle=true&squeeze=true&minimize=true
 ```
 
 *Query parameters*
 
-- plain: deliver raw script with content type text/javascript
 - mangle: rename local variables to miminize script
 - squeeze: minimize even more (see JSHint docu)
 - minimize: transforme to minimized script
 - beautify: transform to pretty-printed script   
+- jsviewer: show js file in the web viewer (text/html not text/javascript)
 
-The web applicaton of craft.js uses this technique to serve the JavaScript for its web user interface.
